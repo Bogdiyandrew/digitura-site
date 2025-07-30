@@ -1,26 +1,38 @@
+/*
+  Acesta este fișierul tău global de stiluri, actualizat cu sintaxa modernă.
+*/
+
+/* Pasul 1: Importă stilurile Tailwind CSS folosind metoda actualizată. */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Pasul 2: Definește fonturile tale locale folosind @font-face.
+  Calea url('../...') este relativă la locația acestui fișier (src/app/globals.css).
+*/
+@font-face {
+  font-family: 'Ethnocentric';
+  /* Calea corectă: ieșim din 'app' (../), intrăm în 'assets/fonts' */
+  src: url('../assets/fonts/Ethnocentric Rg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Asigură că textul este vizibil în timp ce fontul se încarcă */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: 'Exo2';
+  /* Calea corectă: ieșim din 'app' (../), intrăm în 'assets/fonts' */
+  src: url('../assets/fonts/Exo2-VariableFont_wght.ttf') format('truetype');
+  /* Pentru fonturi variabile, putem specifica un interval de grosimi */
+  font-weight: 100 900; 
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/*
+  Pasul 3 (Opțional, dar recomandat): Setează niște stiluri de bază pentru întregul site.
+  Aici putem seta un fundal și o culoare de text default.
+*/
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0f172a; /* Un albastru-închis similar cu cel din designul tău */
+  color: #e2e8f0; /* Un gri-deschis pentru text, ușor de citit */
 }
