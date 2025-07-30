@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect, FormEvent, useCallback } from 'react';
+import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon } from 'lucide-react';
 
@@ -17,11 +17,13 @@ interface PricingPackage {
   icon: React.ReactElement;
 }
 
+// Interfața a fost actualizată pentru a include culoarea
 interface ContactItem {
   icon: LucideIcon;
   label: string;
   value: string;
   href: string;
+  color: 'teal' | 'blue'; // Adăugăm proprietatea pentru culoare
 }
 
 interface ToastState {
@@ -35,7 +37,7 @@ const ToastNotification: React.FC<ToastProps> = ({ message, type, onClose }) => 
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 5000); // Notificarea dispare automat după 5 secunde
+    }, 5000);
     return () => clearTimeout(timer);
   }, [onClose]);
 
@@ -72,12 +74,12 @@ const Contact: React.FC = () => {
     { id: 'motor-ecommerce', name: 'Motor E-Commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
   ];
 
+  // Lista de contact a fost actualizată cu proprietatea 'color'
   const contactItems: ContactItem[] = [
-    { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro' },
-    { icon: Phone, label: 'WhatsApp & Telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329' },
+    { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro', color: 'teal' },
+    { icon: Phone, label: 'WhatsApp & Telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
   ];
   
-  // Efect pentru animația de apariție la scroll
   useEffect(() => {
     const sectionElement = document.getElementById('contact');
     if (!sectionElement) return;
@@ -94,7 +96,6 @@ const Contact: React.FC = () => {
     return () => observer.unobserve(sectionElement);
   }, []);
 
-  // Efect pentru a pre-selecta pachetul din URL
   useEffect(() => {
     const packageParam = searchParams.get('package');
     if (packageParam) {
@@ -102,9 +103,8 @@ const Contact: React.FC = () => {
     }
   }, [searchParams]);
 
-  // --- Funcția de trimitere a formularului (CORECȚIE MAJORĂ) ---
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault(); // Previne reîncărcarea paginii
+    e.preventDefault();
     if (!selectedPackage) {
       setToast({ show: true, message: 'Te rugăm să selectezi un pachet.', type: 'error' });
       return;
@@ -117,44 +117,37 @@ const Contact: React.FC = () => {
       return;
     }
 
-    // 1. Extrage datele din formular într-un obiect simplu
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
-    
-    // 2. Adaugă pachetul selectat în obiectul de date
     data.package = selectedPackage;
 
     try {
-      // 3. Trimite datele către noua rută API în format JSON
-      const response = await fetch('/api/send-email', { // <-- Aici este schimbarea critică!
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Convertim obiectul în string JSON
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
-        // Dacă serverul returnează o eroare, o preluăm și o afișăm
         const errorData = await response.json();
         throw new Error(errorData.message || 'A apărut o eroare de la server.');
       }
 
-      // Dacă totul a mers bine
       setToast({ show: true, message: 'Solicitare trimisă cu succes! Te vom contacta în curând.', type: 'success' });
-      if (formRef.current) formRef.current.reset(); // Golește formularul
-      setSelectedPackage(''); // Resetează pachetul selectat
+      if (formRef.current) formRef.current.reset();
+      setSelectedPackage('');
 
     } catch (error) {
       console.error('Eroare la trimiterea formularului:', error);
       const errorMessage = error instanceof Error ? error.message : 'A apărut o eroare. Te rugăm să încerci din nou.';
       setToast({ show: true, message: errorMessage, type: 'error' });
     } finally {
-      setIsSending(false); // Oprește indicatorul de încărcare
+      setIsSending(false);
     }
   };
 
-  // Funcție ajutătoare pentru a crea câmpurile de input
   const renderInputField = (name: string, placeholder: string, type: string, required: boolean, icon: LucideIcon) => {
     const Icon = icon;
     return (
@@ -184,7 +177,7 @@ const Contact: React.FC = () => {
       <div className="relative max-w-6xl mx-auto px-6 w-full z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
-            Transformă Ideea în Realitatea vietii 
+            Transformă Ideea în Realitate
           </h2>
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
             Alege pachetul, completează formularul sau contactează-ne direct. Suntem gata să construim împreună.
@@ -239,10 +232,11 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
+            {/* --- MODIFICARE: Butonul de trimitere actualizat --- */}
             <button 
               type="submit" 
               disabled={isSending} 
-              className="w-full bg-gradient-to-r from-teal-500 to-blue-600 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/30 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-teal-500 via-blue-500 to-cyan-500 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all duration-300 text-lg hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSending ? (
                 <>
@@ -258,26 +252,42 @@ const Contact: React.FC = () => {
             </button>
           </form>
 
-          {/* --- Detalii de Contact Direct --- */}
-          <div className={`lg:col-span-2 flex flex-col gap-6 transition-all duration-1000 ease-out delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h3 className="text-xl font-bold text-white text-center lg:text-left">Sau contactează-ne direct</h3>
-            {contactItems.map((item) => (
-              <a 
-                key={item.label} 
-                href={item.href} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 p-5 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-teal-500/50 transition-all duration-300 hover:scale-105"
-              >
-                <div className="p-3 rounded-lg bg-slate-800">
-                   <item.icon className="text-teal-400" size={24} />
-                </div>
-                <div>
-                  <div className="text-slate-400 text-sm">{item.label}</div>
-                  <div className="text-slate-100 font-semibold text-base">{item.value}</div>
-                </div>
-              </a>
-            ))}
+          {/* --- MODIFICARE: Detalii de Contact Direct actualizate --- */}
+          <div className={`lg:col-span-2 flex flex-col gap-8 transition-all duration-1000 ease-out delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h3 className="text-2xl font-bold text-white text-center lg:text-left">Sau contactează-ne direct</h3>
+            {contactItems.map((item) => {
+              const Icon = item.icon;
+              const isWhatsApp = item.label === 'WhatsApp & Telefon';
+              return (
+                <a 
+                  key={item.label} 
+                  href={item.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`group flex items-center gap-6 p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer ${
+                    isWhatsApp 
+                      ? 'bg-gradient-to-br from-blue-600/20 to-slate-800/30 border-2 border-blue-500/50 shadow-lg shadow-blue-500/10 hover:border-blue-400' 
+                      : 'bg-slate-800/30 border border-slate-700/30 hover:border-slate-500/50'
+                  }`}
+                >
+                  <div className={`p-3 rounded-full bg-${item.color}-500/10`}>
+                     <Icon className={`text-${item.color}-400 group-hover:scale-110 transition-transform duration-300`} size={28} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-slate-400 text-sm font-medium">{item.label}</div>
+                    <div className="text-slate-200 font-semibold text-lg">{item.value}</div>
+                  </div>
+                  <Send size={16} className="text-slate-500 group-hover:text-teal-400 transition-all -rotate-45 group-hover:rotate-0" />
+                </a>
+              );
+            })}
+            {/* --- ADAUGARE: Secțiunea "Răspuns Rapid" --- */}
+            <div className="mt-4 p-6 rounded-2xl bg-gradient-to-br from-slate-800/20 to-slate-900/20 backdrop-blur-sm border border-slate-700/30 text-center">
+              <h4 className="text-xl font-bold mb-2 bg-gradient-to-r from-teal-300 to-blue-300 bg-clip-text text-transparent">
+                Răspuns Rapid
+              </h4>
+              <p className="text-slate-300 leading-relaxed">Timpul tău este prețios. Pentru un răspuns instant și o discuție eficientă, <span className="text-blue-400 font-semibold">scrie-ne direct pe WhatsApp.</span></p>
+            </div>
           </div>
         </div>
       </div>
