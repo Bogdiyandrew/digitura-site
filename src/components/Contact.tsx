@@ -73,7 +73,7 @@ const Contact: React.FC = () => {
   ];
 
   const contactItems: ContactItem[] = [
-    { icon: Mail, label: 'Email', value: 'contact@digitura.ro', href: 'mailto:contact@digitura.ro' },
+    { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro' },
     { icon: Phone, label: 'WhatsApp & Telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329' },
   ];
   

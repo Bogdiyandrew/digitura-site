@@ -189,9 +189,9 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-semibold text-white mb-4 tracking-wider">Contact</h3>
             <div className="flex flex-col gap-4">
-              <a href="mailto:contact@digitura.ro" className="flex items-center gap-3 group">
+              <a href="mailto:suport@digitura.ro" className="flex items-center gap-3 group">
                 <Mail size={20} className="text-slate-400 group-hover:text-teal-400 transition-colors duration-300" />
-                <span className="group-hover:text-teal-400 transition-colors duration-300">contact@digitura.ro</span>
+                <span className="group-hover:text-teal-400 transition-colors duration-300">suport@digitura.ro</span>
               </a>
               <a href="tel:+40750488329" className="flex items-center gap-3 group">
                 <Phone size={20} className="text-slate-400 group-hover:text-teal-400 transition-colors duration-300" />
