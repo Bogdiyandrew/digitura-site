@@ -9,19 +9,16 @@ export async function POST(req) {
     const { nume, company_name, email, phone, activity_field, project_details, package: selectedPackage } = body;
 
     // Configurare transporter pentru serverul mail.digitura.ro
+    // Configurare transporter pentru serverul Zoho Mail
     const transporter = nodemailer.createTransport({
-      host: 'mail.digitura.ro',
-      port: 465,
-      secure: true, // true pentru portul 465 (SSL)
-      auth: {
-        user: process.env.EMAIL_SERVER_USER,
-        pass: process.env.EMAIL_SERVER_PASSWORD,
-      },
-      // Adaugam o setare pentru a permite certificatele self-signed (uneori necesar la hosting)
-      tls: {
-          rejectUnauthorized: false
-      }
-    });
+    host: process.env.EMAIL_SERVER_HOST, // Folosim noul host de la Zoho
+    port: process.env.EMAIL_SERVER_PORT, // Folosim noul port de la Zoho
+    secure: true, // true pentru portul 465 (SSL)
+        auth: {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD,
+  },
+});
 
     const mailOptions = {
       from: `"Formular Site" <${process.env.EMAIL_SERVER_USER}>`,
