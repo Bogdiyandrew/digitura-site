@@ -35,4 +35,5 @@
 body {
   background-color: #0f172a; /* Un albastru-închis similar cu cel din designul tău */
   color: #e2e8f0; /* Un gri-deschis pentru text, ușor de citit */
+  font-family: 'Exo2', sans-serif; /* Asigură utilizarea imediată a fontului preîncărcat */
 }
