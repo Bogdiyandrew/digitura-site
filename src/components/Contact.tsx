@@ -184,7 +184,7 @@ const Contact: React.FC = () => {
       <div className="relative max-w-6xl mx-auto px-6 w-full z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
-            Transformă Ideea în Realitatea vietii
+            Transformă Ideea în Realitatea vietii tale
           </h2>
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
             Alege pachetul, completează formularul sau contactează-ne direct. Suntem gata să construim împreună.
