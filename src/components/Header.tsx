@@ -81,7 +81,7 @@ const Header: React.FC = () => {
   }, [mobileOpen]);
 
   // *** FUNCȚIE CENTRALIZATĂ PENTRU NAVIGARE ***
-  const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement>, isMobile: boolean = false): void => {
+  const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>, isMobile: boolean = false): void => {
     e.preventDefault();
 
     if (isMobile) {
@@ -106,6 +106,7 @@ const Header: React.FC = () => {
         if (pathname === '/') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
+            // Aici nu ar trebui să se ajungă dacă folosim Link, dar lăsăm ca fallback
             window.location.href = '/';
         }
     } else {
@@ -133,9 +134,10 @@ const Header: React.FC = () => {
       >
         <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo și Brand */}
-          <a 
+          {/* MODIFICARE: Am înlocuit <a> cu <Link>. Atributele sunt aceleași. */}
+          <Link 
             href="/" 
-            onClick={(e) => handleLinkClick('/', e)} 
+            onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
             className="group flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
           >
             <Image 
@@ -156,7 +158,7 @@ const Header: React.FC = () => {
             >
               DIGITURA
             </span>
-          </a>
+          </Link>
 
           {/* Meniu Desktop */}
           <nav className="hidden lg:flex gap-1">
