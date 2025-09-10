@@ -1,3 +1,5 @@
+// src/components/Header.tsx
+
 'use client';
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
@@ -19,11 +21,11 @@ interface MousePosition {
 
 // Lista de linkuri pentru meniu (fără "Contact")
 const menuLinks: MenuLink[] = [
-  {href: '#despre', label: 'Despre'},
-  {href: '#servicii', label: 'Servicii'},
-  {href: '#beneficii', label: 'Beneficii'},
-  {href: '#portofoliu', label: 'Portofoliu'},
-  {href: '#preturi', label: 'Prețuri'},
+  { href: '#despre', label: 'Despre' },
+  { href: '#servicii', label: 'Servicii' },
+  { href: '#beneficii', label: 'Beneficii' },
+  { href: '#portofoliu', label: 'Portofoliu' },
+  { href: '#preturi', label: 'Prețuri' },
 ];
 
 const Header: React.FC = () => {
@@ -68,66 +70,50 @@ const Header: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
-  
+
   // Blochează scroll-ul paginii când meniul mobil este deschis
   useEffect(() => {
     if (typeof document === 'undefined') return;
-
     document.body.style.overflow = mobileOpen ? 'hidden' : 'auto';
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [mobileOpen]);
 
-  // Funcție pentru navigare lină la click
-  const handleNavClick = (href: string, e: MouseEvent<HTMLAnchorElement>): void => {
-    if (!href.startsWith('#')) return;
+  // *** FUNCȚIE CENTRALIZATĂ PENTRU NAVIGARE ***
+  const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement>, isMobile: boolean = false): void => {
     e.preventDefault();
 
-    if (typeof window === 'undefined') return;
-
-    const id = href.replace('#', '');
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (isMobile) {
+      setMobileOpen(false);
     }
-  };
-
-  const handleLogoClick = (e: MouseEvent<HTMLAnchorElement>): void => {
-    if (pathname !== "/") {
-      e.preventDefault();
-      if (typeof window !== 'undefined') {
-        window.location.href = "/";
+    
+    // Verificăm dacă link-ul este o ancoră (începe cu #)
+    if (href.startsWith('#')) {
+      // Dacă suntem pe altă pagină, navigăm la pagina principală și apoi la ancoră
+      if (pathname !== '/') {
+        window.location.href = `/${href}`;
+      } else {
+        // Dacă suntem pe pagina principală, facem scroll lin
+        const id = href.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
+    } else if (href === '/') {
+        // Logică specială pentru logo/acasă
+        if (pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            window.location.href = '/';
+        }
     } else {
-      e.preventDefault();
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      // Pentru orice alt link, navigăm direct
+      window.location.href = href;
     }
   };
 
-  const handleMenuLinkClick = (link: MenuLink) => (e: MouseEvent<HTMLAnchorElement>): void => {
-    e.preventDefault();
-    if (pathname !== "/") {
-      if (typeof window !== 'undefined') {
-        window.location.href = `/${link.href}`;
-      }
-    } else {
-      handleNavClick(link.href, e);
-    }
-  };
-
-  const handleMobileMenuLinkClick = (link: MenuLink) => (e: MouseEvent<HTMLAnchorElement>): void => {
-    setMobileOpen(false);
-    if (pathname !== "/") {
-      if (typeof window !== 'undefined') {
-        window.location.href = `/${link.href}`;
-      }
-    } else {
-      handleNavClick(link.href, e);
-    }
-  };
 
   return (
     <>
@@ -147,9 +133,9 @@ const Header: React.FC = () => {
       >
         <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           {/* Logo și Brand */}
-          <Link 
+          <a 
             href="/" 
-            onClick={handleLogoClick} 
+            onClick={(e) => handleLinkClick('/', e)} 
             className="group flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
           >
             <Image 
@@ -170,7 +156,7 @@ const Header: React.FC = () => {
             >
               DIGITURA
             </span>
-          </Link>
+          </a>
 
           {/* Meniu Desktop */}
           <nav className="hidden lg:flex gap-1">
@@ -179,7 +165,7 @@ const Header: React.FC = () => {
                 key={link.href}
                 href={link.href}
                 className="relative text-slate-200 hover:text-white transition-colors duration-300 font-medium px-4 py-2 group overflow-hidden"
-                onClick={handleMenuLinkClick(link)}
+                onClick={(e) => handleLinkClick(link.href, e)}
               >
                 <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
                 <span className="relative z-10">{link.label}</span>
@@ -190,7 +176,7 @@ const Header: React.FC = () => {
           {/* Buton CTA Desktop ÎMBUNĂTĂȚIT */}
           <a 
             href="#contact" 
-            onClick={(e) => handleNavClick('#contact', e)} 
+            onClick={(e) => handleLinkClick('#contact', e)} 
             className="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden transform hover:scale-105 cta-button-glow"
           >
              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -223,6 +209,7 @@ const Header: React.FC = () => {
             <button 
               onClick={() => setMobileOpen(false)} 
               className="p-2 text-slate-400 hover:text-white transition-colors"
+              aria-label="Închide meniul"
             >
               <X size={28} />
             </button>
@@ -239,7 +226,7 @@ const Header: React.FC = () => {
                   opacity: mobileOpen ? 1 : 0,
                   transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
                 }}
-                onClick={handleMobileMenuLinkClick(link)}
+                onClick={(e) => handleLinkClick(link.href, e, true)}
               >
                 <div className="absolute -inset-x-3 -inset-y-2 z-0 rounded-full bg-slate-800/0 group-hover:bg-slate-800/80 scale-95 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                 <span className="relative z-10 block p-3">{link.label}</span>
@@ -251,10 +238,7 @@ const Header: React.FC = () => {
              <a
               href="#contact"
               className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden cta-button-glow"
-              onClick={(e) => {
-                setMobileOpen(false);
-                handleNavClick('#contact', e);
-              }}
+              onClick={(e) => handleLinkClick('#contact', e, true)}
               style={{
                   transform: mobileOpen ? 'scale(1)' : 'scale(0.8)',
                   opacity: mobileOpen ? 1 : 0,

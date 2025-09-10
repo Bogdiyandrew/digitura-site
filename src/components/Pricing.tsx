@@ -53,8 +53,8 @@ interface FaqItemProps {
 const mainPlans: MainPlan[] = [
   {
     name: 'Lansare Rapidă',
-    price: '199€',
-    subtitle: 'Impact maxim, investiție minimă.',
+    price: '749<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    subtitle: ' Intră online în 7 zile.',
     description: 'Soluția perfectă pentru a valida o idee, a lansa o campanie sau a promova un singur serviciu. Direct la țintă.',
     icon: <Target className="w-8 h-8 text-teal-400" />,
     features: [
@@ -62,9 +62,9 @@ const mainPlans: MainPlan[] = [
       'Design Optimizat pentru Conversie',
       'Formular de Contact/Lead-uri',
       'Viteză de Încărcare Fulger',
-      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Spot Video AI (VEO)</span>',
+      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">30 zile suport & update-uri gratuite</span>',
     ],
-    ctaText: 'Începe Acum',
+    ctaText: 'Lansează site-ul azi',
     gradient: 'from-slate-800/20 to-slate-900/20',
     border: 'border-slate-700',
     hover: 'hover:border-slate-500',
@@ -72,8 +72,8 @@ const mainPlans: MainPlan[] = [
   },
   {
     name: 'Partener Digital',
-    price: '499€',
-    subtitle: 'Pachetul complet pentru creștere.',
+    price: '1999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    subtitle: 'Site complet pentru creștere.',
     description: 'Devino o prezență dominantă în nișa ta. Aceasta nu este o cheltuială, ci fundația digitală a afacerii tale.',
     icon: <Globe className="w-8 h-8 text-blue-400" />,
     features: [
@@ -82,10 +82,8 @@ const mainPlans: MainPlan[] = [
       'Arhitectură de pagini flexibilă',
       'Optimizare SEO Avansată',
       'Consultanță Strategică Inclusă',
-      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Branding Complet (Logo & Ghid)</span>',
-      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Spot Video AI (VEO)</span>',
-    ],
-    ctaText: 'Alegerea Inteligentă',
+      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">60 zile mentenanță + 1 automatizare CRM gratuită</span>',    ],
+    ctaText: 'Crește-ți afacerea acum',
     gradient: 'from-blue-500/10 to-teal-500/10',
     border: 'border-blue-500/30',
     hover: 'hover:border-blue-400/60 hover:shadow-blue-400/20',
@@ -94,19 +92,19 @@ const mainPlans: MainPlan[] = [
   },
   {
     name: 'Motor E-Commerce',
-    price: '999€',
-    subtitle: 'Afacerea ta. Automatizată.',
+    price: '3999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    subtitle: 'Vinde online fără bătăi de cap.',
     description: 'Soluția completă pentru a construi un brand de succes în e-commerce și a vinde la scară națională sau internațională.',
     icon: <ShoppingCart className="w-8 h-8 text-teal-400" />,
     features: [
-      'Magazin Online Complet Funcțional',
-      'Integrare Plăți & Curierat',
-      'Management Ușor Produse & Comenzi',
-      'Optimizare SEO pentru Produse',
-      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Branding Complet (Logo & Ghid)</span>',
-      '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Automatizare & Eficiență</span>',
+        'Magazin Online Complet Funcțional',
+        'Integrare Plăți & Curierat',
+        'Management Ușor Produse & Comenzi',
+        'Optimizare SEO pentru Produse',
+        '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">90 zile suport + automatizare pentru comenzi</span>',
+        '<strong>BONUS:</strong> <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Automatizare & Eficiență</span>',
     ],
-    ctaText: 'Începe să Vinzi',
+    ctaText: 'Începe să vinzi online',
     gradient: 'from-teal-500/10 to-green-500/10',
     border: 'border-teal-500/30',
     hover: 'hover:border-teal-400/60 hover:shadow-teal-400/20',
@@ -124,7 +122,7 @@ const customServices: CustomService[] = [
 const faqs: FAQ[] = [
   {
   question: 'Cât costă un site?',
-  answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – 199€, Website de prezentare – 499€, Magazin online – 999€. Fiecare pachet include un set clar de livrabile. Dacă ai nevoie de ceva în plus, discutăm separat.'
+  answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">749<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">1999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>. Fiecare pachet include un set clar de livrabile. Dacă ai nevoie de ceva în plus, discutăm separat.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
@@ -163,7 +161,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ faq, isOpen, onClick }) => (
       <ChevronDown className={`transform transition-all duration-300 text-slate-400 group-hover:text-teal-400 ${isOpen ? 'rotate-180' : ''}`} />
     </button>
     <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
-      <p className="text-slate-300 leading-relaxed">{faq.answer}</p>
+      <p className="text-slate-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: faq.answer }}></p>
     </div>
   </div>
 );
@@ -173,27 +171,18 @@ const Pricing: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const router = useRouter(); // Inițializează router-ul
 
-  // *** START: Funcție nouă pentru scroll animat ***
   const handlePlanClick = (e: React.MouseEvent<HTMLAnchorElement>, planName: string) => {
-    e.preventDefault(); // Previne comportamentul default al link-ului
-
-    // Construiește noul URL
+    e.preventDefault(); 
     const newUrl = `?package=${encodeURIComponent(planName)}#contact`;
-    
-    // Actualizează URL-ul fără a reîncărca pagina și fără scroll default
     router.push(newUrl, { scroll: false });
-
-    // Realizează scroll-ul animat cu GSAP
     gsap.to(window, {
-      duration: 1.2, // Durata animației în secunde
-      scrollTo: "#contact", // ID-ul secțiunii țintă
-      ease: "power2.inOut", // Efect de accelerare/decelerare pentru un feel natural
+      duration: 1.2,
+      scrollTo: "#contact",
+      ease: "power2.inOut",
     });
   };
-  // *** END: Funcție nouă pentru scroll animat ***
 
   useEffect(() => {
-    // Restul efectelor GSAP pentru animațiile de intrare rămân neschimbate
     if (typeof window === 'undefined') return;
     const ctx = gsap.context(() => {
         gsap.fromTo('.pricing-title', { opacity: 0, y: 50, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'back.out(1.2)', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true } });
@@ -244,7 +233,7 @@ const Pricing: React.FC = () => {
               </div>
               <h3 className="text-2xl font-bold text-white text-center">{plan.name}</h3>
               <p className="text-slate-400 text-center mt-2 font-medium h-10">{plan.subtitle}</p>
-              <p className="text-5xl font-extrabold text-white text-center my-6">{plan.price}</p>
+              <div className="text-5xl font-extrabold text-white text-center my-6" dangerouslySetInnerHTML={{ __html: plan.price }} />
               <ul className="space-y-4 mb-8 flex-grow">
                 {plan.features.map((feature: string, i: number) => (
                   <li key={i} className="flex items-start gap-3">
@@ -256,7 +245,7 @@ const Pricing: React.FC = () => {
               
               <a
                 href={`?package=${encodeURIComponent(plan.name)}#contact`}
-                onClick={(e) => handlePlanClick(e, plan.name)} // Adaugă evenimentul onClick
+                onClick={(e) => handlePlanClick(e, plan.name)}
                 className={`block text-center w-full mt-auto font-semibold px-6 py-4 rounded-xl transition-all duration-300 group cursor-pointer` +
                   (plan.isPopular
                     ? ' bg-gradient-to-r from-teal-500 to-blue-500 text-white hover:scale-105 shadow-lg hover:shadow-teal-400/30'
