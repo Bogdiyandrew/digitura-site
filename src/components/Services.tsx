@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Globe, Target, Zap, Wrench, Palette, TrendingUp, X, LucideIcon } from 'lucide-react';
+import { ShoppingCart, Globe, Target, Zap, Wrench, Palette, TrendingUp, X, LucideIcon, Shield, Gauge, Rocket, Sparkles, Clock, Settings, Users } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useMediaQuery from '../hooks/useMediaQuery';
+import useScrollLock from '../hooks/useScrollLock';
 
-// Asigură-te că ai gsap instalat și configurat pentru Next.js
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -22,6 +22,13 @@ interface ServicePosition {
   mobile: Position;
 }
 
+interface Benefit {
+    icon: LucideIcon;
+    stat: string;
+    label: string;
+    color: 'teal' | 'blue';
+}
+
 interface ServiceData {
   id: string;
   title: string;
@@ -30,82 +37,98 @@ interface ServiceData {
   position: ServicePosition;
   image: string;
   color: 'teal' | 'blue';
+  benefits: Benefit[];
 }
 
 type ConnectionPair = [string, string];
 
-// --- MODIFICARE TEXTE SERVICII ---
-// Am rescris descrierile pentru a se concentra pe beneficiul final al clientului.
+// --- MODIFICARE: Poziții noi pentru un layout hexagonal pe mobil ---
 const servicesData: ServiceData[] = [
   { 
     id: 'ecommerce', 
     title: 'Magazin Online', 
-    desc: 'Motorul tău de vânzări care funcționează 24/7, chiar și când dormi. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență de cumpărături memorabilă.', 
+    desc: 'Motorul tău de vânzări care funcționează 24/7. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență memorabilă.', 
     icon: ShoppingCart, 
-    position: { desktop: { x: 20, y: 35 }, mobile: { x: 30, y: 20 } }, 
+    position: { desktop: { x: 30, y: 25 }, mobile: { x: 50, y: 15 } }, // Top
     image: '/services/MAGAZIN.webp',
     color: 'teal',
+    benefits: [
+        { icon: Gauge, stat: '<1.5s', label: 'Încărcare Rapidă', color: 'blue' },
+        { icon: Zap, stat: '24/7', label: 'Vânzări Automate', color: 'teal' },
+    ]
   },
   { 
     id: 'website', 
     title: 'Website Prezentare', 
-    desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism, transformând scepticii în clienți.', 
+    desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism.', 
     icon: Globe, 
-    position: { desktop: { x: 50, y: 20 }, mobile: { x: 70, y: 20 } }, 
+    position: { desktop: { x: 50, y: 45 }, mobile: { x: 80, y: 35 } }, // Top-dreapta
     image: '/services/WEBSITEPREZENTARE.webp',
     color: 'blue',
+    benefits: [
+        { icon: Sparkles, stat: '100%', label: 'Profesionalism', color: 'teal' },
+        { icon: Target, stat: 'Claritate', label: 'Magnet de Clienți', color: 'blue' },
+    ]
   },
   { 
     id: 'landing', 
     title: 'Landing Page', 
-    desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiunea dorită.', 
+    desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiune.', 
     icon: Target, 
-    position: { desktop: { x: 80, y: 35 }, mobile: { x: 50, y: 35 } }, 
+    position: { desktop: { x: 70, y: 25 }, mobile: { x: 80, y: 65 } }, // Jos-dreapta
     image: '/services/LGPAGE.webp',
     color: 'teal',
+    benefits: [
+        { icon: TrendingUp, stat: '+ Conversii', label: 'Orientat spre Rezultat', color: 'teal' },
+        { icon: Rocket, stat: 'Zile', label: 'Lansare Rapidă', color: 'blue' },
+    ]
   },
   { 
     id: 'automation', 
     title: 'Automatizare', 
-    desc: 'Îți redăm cel mai de preț activ: timpul. Implementăm sisteme inteligente care preiau sarcinile repetitive, elimină erorile umane și îți permit să te concentrezi pe inovație.', 
+    desc: 'Îți redăm cel mai de preț activ: timpul. Implementăm sisteme inteligente care preiau sarcinile repetitive și elimină erorile umane.', 
     icon: Zap, 
-    position: { desktop: { x: 35, y: 60 }, mobile: { x: 25, y: 50 } }, 
+    position: { desktop: { x: 25, y: 70 }, mobile: { x: 20, y: 35 } }, // Top-stânga
     image: '/services/AUTO.webp',
     color: 'blue',
+    benefits: [
+        { icon: Clock, stat: '+20h', label: 'Timp Salvat / Lună', color: 'blue' },
+        { icon: Settings, stat: 'Eficiență', label: 'Procese Optimizate', color: 'teal' },
+    ]
   },
   { 
     id: 'maintenance', 
     title: 'Mentenanță', 
-    desc: 'Liniștea ta, garantată. Ne asigurăm că afacerea ta online este mereu protejată, actualizată și funcționează la performanță maximă. Dormi liniștit, noi veghem pentru tine.', 
+    desc: 'Liniștea ta, garantată. Ne asigurăm că afacerea ta online este mereu protejată, actualizată și funcționează la performanță maximă.', 
     icon: Wrench, 
-    position: { desktop: { x: 65, y: 60 }, mobile: { x: 75, y: 50 } }, 
+    position: { desktop: { x: 50, y: 90 }, mobile: { x: 50, y: 85 } }, // Jos
     image: '/services/MAINTENANCE.webp',
     color: 'teal',
-  },
-  { 
-    id: 'design', 
-    title: 'Design & Branding', 
-    desc: 'ADN-ul vizual care te face de neuitat. Creăm o identitate puternică și coerentă care te separă de zgomotul pieței și construiește un brand pe care oamenii îl iubesc și în care au încredere.', 
-    icon: Palette, 
-    position: { desktop: { x: 40, y: 90 }, mobile: { x: 30, y: 80 } }, 
-    image: '/services/BRAND.webp',
-    color: 'blue',
+     benefits: [
+        { icon: Shield, stat: 'Zero', label: 'Stres Tehnic', color: 'blue' },
+        { icon: Wrench, stat: '100%', label: 'Performanță', color: 'teal' },
+    ]
   },
   { 
     id: 'marketing', 
     title: 'Marketing Digital', 
-    desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO, Ads și conținut, nu doar atragem trafic, ci construim audiențe care cumpără.', 
+    desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO și Ads, nu doar atragem trafic, ci construim audiențe care cumpără.', 
     icon: TrendingUp, 
-    position: { desktop: { x: 70, y: 90 }, mobile: { x: 70, y: 80 } }, 
+    position: { desktop: { x: 75, y: 70 }, mobile: { x: 20, y: 65 } }, // Jos-stânga
     image: '/services/MARK.webp',
     color: 'teal',
+    benefits: [
+        { icon: Target, stat: 'Creștere', label: 'Clienți Potriviți', color: 'blue' },
+        { icon: TrendingUp, stat: 'Măsurabil', label: 'ROI Pozitiv', color: 'teal' },
+    ]
   }
 ];
 
+// --- MODIFICARE: Conexiuni actualizate pentru noul layout ---
 const connections: ConnectionPair[] = [
-  ['website', 'ecommerce'], ['website', 'landing'], ['website', 'design'], 
-  ['ecommerce', 'automation'], ['landing', 'marketing'], ['design', 'automation'], 
-  ['design', 'maintenance'], ['marketing', 'maintenance']
+  ['ecommerce', 'website'], ['website', 'landing'], ['landing', 'maintenance'], 
+  ['maintenance', 'marketing'], ['marketing', 'automation'], ['automation', 'ecommerce'],
+  ['website', 'maintenance']
 ];
 
 const Services: React.FC = () => {
@@ -113,6 +136,8 @@ const Services: React.FC = () => {
     const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const sectionRef = useRef<HTMLElement>(null);
+
+    useScrollLock(!!activeServiceId);
 
     const handleNodeClick = (id: string): void => {
         if (isAnimating) return;
@@ -175,12 +200,12 @@ const Services: React.FC = () => {
             
             <div className="text-center px-6 pointer-events-none relative z-10">
                  <div className="section-title">
-                    {/* --- MODIFICARE TITLU & SUBTITLU --- */}
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 opacity-0">
-                      Servicii individuale? Nu. <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Un singur Ecosistem.</span>
+                    {/* --- MODIFICARE: Titlu și subtitlu responsive --- */}
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 opacity-0">
+                      Servicii? Nu. <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Un Ecosistem de Creștere.</span>
                     </h2>
-                    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto opacity-0">
-                      Fiecare serviciu îl alimentează pe celălalt, creând un motor de creștere unificat pentru afacerea ta.
+                    <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto opacity-0">
+                      Fiecare serviciu este o piesă dintr-un motor de creștere. Dă click pe o componentă pentru a vedea cum te ajută direct.
                     </p>
                 </div>
             </div>
@@ -226,9 +251,9 @@ const Services: React.FC = () => {
                                 onClick={(e) => { e.stopPropagation(); handleNodeClick(service.id); }}
                                 aria-label={`Vezi detalii despre ${service.title}`}
                             >
-                                <div className={`absolute w-10 h-10 md:w-16 md:h-16 bg-${service.color}-400/15 rounded-full blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-${service.color}-400/25 z-[-1]`}></div>
-                                <div className={`relative p-3 md:p-5 bg-slate-900/95 border-2 rounded-full backdrop-blur-sm transition-all duration-200 shadow group-hover:shadow-lg ${service.color === 'teal' ? 'border-teal-400/40 group-hover:border-teal-300' : 'border-blue-400/40 group-hover:border-blue-300'}`}>
-                                    <IconComponent className={`w-8 h-8 md:w-12 md:h-12 ${service.color === 'teal' ? 'text-teal-300' : 'text-blue-300'} transition-all duration-200`} />
+                                <div className={`absolute w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-${service.color}-400/15 rounded-full blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-${service.color}-400/25 z-[-1]`}></div>
+                                <div className={`relative p-3 sm:p-4 md:p-5 bg-slate-900/95 border-2 rounded-full backdrop-blur-sm transition-all duration-200 shadow group-hover:shadow-lg ${service.color === 'teal' ? 'border-teal-400/40 group-hover:border-teal-300' : 'border-blue-400/40 group-hover:border-blue-300'}`}>
+                                    <IconComponent className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${service.color === 'teal' ? 'text-teal-300' : 'text-blue-300'} transition-all duration-200`} />
                                 </div>
                                 <span className="mt-2 text-xs md:text-sm text-white text-center font-semibold leading-tight drop-shadow-md" style={{ fontFamily: 'Exo2, sans-serif' }}>{service.title}</span>
                             </button>
@@ -241,7 +266,8 @@ const Services: React.FC = () => {
                     style={{opacity: 0, pointerEvents: 'none'}} 
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <div className="relative w-full aspect-[9/16] md:aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50">
+                    {/* --- MODIFICARE: Aspect ratio nou pentru mobil --- */}
+                    <div className="relative w-full aspect-[4/5] sm:aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50">
                         {activeService && (
                             <>
                                 <div 
@@ -252,20 +278,36 @@ const Services: React.FC = () => {
                                     }}
                                 ></div>
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20"></div>
                                 
-                                <div className="details-content absolute bottom-0 left-0 right-0 p-6 md:p-10 text-left">
-                                    <h3 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-white drop-shadow-lg" style={{ fontFamily: 'Exo2, sans-serif' }}>
+                                {/* --- MODIFICARE: Dimensiuni și padding responsive pentru text --- */}
+                                <div className="details-content absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-10 text-left">
+                                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-white drop-shadow-lg" style={{ fontFamily: 'Exo2, sans-serif' }}>
                                         {activeService.title}
                                     </h3>
-                                    <p className="text-slate-200 text-base md:text-lg leading-relaxed max-w-2xl drop-shadow-md">
+                                    <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 max-w-2xl drop-shadow-md">
                                         {activeService.desc}
                                     </p>
+                                    
+                                    <div className="mt-4 md:mt-6 flex flex-wrap gap-3 md:gap-6">
+                                        {activeService.benefits.map((benefit, index) => {
+                                            const BenefitIcon = benefit.icon;
+                                            return (
+                                                <div key={index} className="flex items-center gap-3 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
+                                                    <BenefitIcon className={`w-5 h-5 ${benefit.color === 'teal' ? 'text-teal-300' : 'text-blue-300'}`} />
+                                                    <div>
+                                                        <div className={`text-base sm:text-lg font-bold ${benefit.color === 'teal' ? 'text-teal-300' : 'text-blue-300'}`}>{benefit.stat}</div>
+                                                        <div className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider">{benefit.label}</div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
 
                                 <button 
                                     onClick={() => activeServiceId && handleNodeClick(activeServiceId)} 
-                                    className="absolute top-4 right-4 text-slate-300 hover:text-white bg-black/30 hover:bg-black/60 backdrop-blur-sm rounded-full p-2 transition-all duration-200 z-20 hover:scale-110"
+                                    className="absolute top-4 right-4 text-slate-300 hover:text-white bg-black/30 hover:bg-black/60 backdrop-blur-sm rounded-full p-2 transition-all duration-200 z-20 hover:scale-110 cursor-pointer"
                                     aria-label="Închide detaliile"
                                 >
                                     <X size={20}/>

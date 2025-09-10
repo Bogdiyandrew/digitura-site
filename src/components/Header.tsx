@@ -23,7 +23,6 @@ interface MousePosition {
 const menuLinks: MenuLink[] = [
   { href: '#despre', label: 'Despre' },
   { href: '#servicii', label: 'Servicii' },
-  { href: '#beneficii', label: 'Beneficii' },
   { href: '#portofoliu', label: 'Portofoliu' },
   { href: '#preturi', label: 'Prețuri' },
 ];
