@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon } from 'lucide-react';
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Layers } from 'lucide-react'; // MODIFICARE: Am adăugat icon-ul "Layers"
 
 // --- Interfețe TypeScript pentru claritate ---
 interface ToastProps {
@@ -68,10 +68,12 @@ const Contact: React.FC = () => {
   
   const searchParams = useSearchParams();
 
+  // MODIFICARE: Am adăugat pachetul "Soluție Personalizată" aici
   const pricingPackages: PricingPackage[] = [
     { id: 'lansare-rapida', name: 'Lansare Rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'partener-digital', name: 'Partener Digital', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'motor-ecommerce', name: 'Motor E-Commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'solutie-personalizata', name: 'Soluție Personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> }, // Pachetul nou
   ];
 
   // Lista de contact a fost actualizată cu proprietatea 'color'
@@ -193,13 +195,15 @@ const Contact: React.FC = () => {
           >
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">1. Alege Pachetul de Start</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* MODIFICARE: Am ajustat grid-ul pentru 4 coloane pe ecrane medii și mari */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {pricingPackages.map((pkg) => (
                   <button 
                     key={pkg.id} 
                     type="button" 
                     onClick={() => setSelectedPackage(pkg.name)}
-                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 ${selectedPackage === pkg.name ? 'bg-teal-500/10 border-teal-400 scale-105' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
+                    // MODIFICARE: Am adăugat "cursor-pointer" pentru a fi explicit
+                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${selectedPackage === pkg.name ? 'bg-teal-500/10 border-teal-400 scale-105' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
                   >
                     <div className={selectedPackage === pkg.name ? 'text-teal-300' : 'text-slate-400'}>{pkg.icon}</div>
                     <span className="font-bold block text-sm mt-1">{pkg.name}</span>
