@@ -52,7 +52,7 @@ const mainPlans: MainPlan[] = [
   {
     name: 'Lansare Rapidă',
     price: '749<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
-    subtitle: 'Pentru un start rapid și la obiect.',
+    subtitle: 'Intră online în 7 zile.',
     description: 'Perfect dacă vrei să-ți validezi o idee sau să prezinți un serviciu, fără complicații. Gata în câteva zile.',
     icon: <Target className="w-8 h-8 text-teal-400" />,
     features: [
@@ -71,7 +71,7 @@ const mainPlans: MainPlan[] = [
   {
     name: 'Partener Digital',
     price: '1999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
-    subtitle: 'O prezență online completă.',
+    subtitle: 'Site complet pentru creștere.',
     description: 'Site-ul de care afacerea ta are nevoie pentru a arăta profesionist și a câștiga încrederea clienților.',
     icon: <Globe className="w-8 h-8 text-blue-400" />,
     features: [
