@@ -114,7 +114,7 @@ const Hero: FC = () => {
           <Award size={16} />
           <span className="flex items-center gap-2">
             <Star size={14} className="fill-current text-yellow-400" />
-            4.9/5 din 50+ clienți mulțumiți
+            4.9/5 din 51+ clienți mulțumiți
           </span>
         </div>
 
