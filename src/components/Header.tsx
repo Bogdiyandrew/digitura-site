@@ -25,6 +25,7 @@ const menuLinks: MenuLink[] = [
   { href: '#servicii', label: 'Servicii' },
   { href: '#portofoliu', label: 'Portofoliu' },
   { href: '#preturi', label: 'Prețuri' },
+  { href: '/ai', label: 'Laborator AI' },
 ];
 
 const Header: React.FC = () => {
