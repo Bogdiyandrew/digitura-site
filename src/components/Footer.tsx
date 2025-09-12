@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, MouseEvent } from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, ArrowUp } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, ArrowUp } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
@@ -102,25 +102,22 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-4 mt-4">
               <a 
-                href="#" 
+                href="https://www.facebook.com/profile.php?id=61575720485744" 
                 aria-label="Facebook" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-110"
               >
                 <Facebook size={22} />
               </a>
               <a 
-                href="#" 
+                href="https://www.instagram.com/digituraro/" 
                 aria-label="Instagram" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-110"
               >
                 <Instagram size={22} />
-              </a>
-              <a 
-                href="#" 
-                aria-label="LinkedIn" 
-                className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-110"
-              >
-                <Linkedin size={22} />
               </a>
             </div>
           </div>
