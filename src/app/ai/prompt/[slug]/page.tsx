@@ -9,6 +9,7 @@ import { prompts } from '@/lib/prompts';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Copy, Check, Video } from 'lucide-react';
+import CallToAction from '@/components/CallToAction';
 
 // Toată logica va fi acum într-o singură componentă client
 export default function PromptPage() {
@@ -82,7 +83,7 @@ export default function PromptPage() {
             </div>
           </div>
 
-          {/* Am scos componenta CallToAction de aici */}
+          <CallToAction />
 
         </div>
       </main>
