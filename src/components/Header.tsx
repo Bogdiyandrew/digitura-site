@@ -8,10 +8,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-// Interfețe TypeScript
+// --- MODIFICARE 1: Am adăugat proprietatea 'isSpecial' la interfață ---
 interface MenuLink {
   href: string;
   label: string;
+  isSpecial?: boolean; // Proprietate opțională pentru a marca link-ul
 }
 
 interface MousePosition {
@@ -19,13 +20,14 @@ interface MousePosition {
   y: number;
 }
 
-// Lista de linkuri pentru meniu (fără "Contact")
+// Lista de linkuri pentru meniu
 const menuLinks: MenuLink[] = [
   { href: '#despre', label: 'Despre' },
   { href: '#servicii', label: 'Servicii' },
   { href: '#portofoliu', label: 'Portofoliu' },
   { href: '#preturi', label: 'Prețuri' },
-  { href: '/ai', label: 'Laborator AI' },
+  // --- MODIFICARE 2: Am marcat link-ul "Laborator AI" ca fiind special ---
+  { href: '/ai', label: 'Laborator AI', isSpecial: true },
 ];
 
 const Header: React.FC = () => {
@@ -80,7 +82,7 @@ const Header: React.FC = () => {
     };
   }, [mobileOpen]);
 
-  // *** FUNCȚIE CENTRALIZATĂ PENTRU NAVIGARE ***
+  // Funcție centralizată pentru navigare
   const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>, isMobile: boolean = false): void => {
     e.preventDefault();
 
@@ -88,13 +90,10 @@ const Header: React.FC = () => {
       setMobileOpen(false);
     }
     
-    // Verificăm dacă link-ul este o ancoră (începe cu #)
     if (href.startsWith('#')) {
-      // Dacă suntem pe altă pagină, navigăm la pagina principală și apoi la ancoră
       if (pathname !== '/') {
         window.location.href = `/${href}`;
       } else {
-        // Dacă suntem pe pagina principală, facem scroll lin
         const id = href.substring(1);
         const element = document.getElementById(id);
         if (element) {
@@ -102,15 +101,12 @@ const Header: React.FC = () => {
         }
       }
     } else if (href === '/') {
-        // Logică specială pentru logo/acasă
         if (pathname === '/') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-            // Aici nu ar trebui să se ajungă dacă folosim Link, dar lăsăm ca fallback
             window.location.href = '/';
         }
     } else {
-      // Pentru orice alt link, navigăm direct
       window.location.href = href;
     }
   };
@@ -118,7 +114,6 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {/* Header Principal */}
       <header
         className={`fixed top-0 left-0 w-full transition-all duration-500 z-50 ${visible ? 'translate-y-0' : '-translate-y-full'} ${
           scrolled
@@ -133,8 +128,6 @@ const Header: React.FC = () => {
         }}
       >
         <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          {/* Logo și Brand */}
-          {/* MODIFICARE: Am înlocuit <a> cu <Link>. Atributele sunt aceleași. */}
           <Link 
             href="/" 
             onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
@@ -160,22 +153,33 @@ const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* Meniu Desktop */}
-          <nav className="hidden lg:flex gap-1">
+          {/* --- MODIFICARE 3: Am adăugat logica pentru stilul special în meniul Desktop --- */}
+          <nav className="hidden lg:flex items-center gap-1">
             {menuLinks.map((link: MenuLink) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative text-slate-200 hover:text-white transition-colors duration-300 font-medium px-4 py-2 group overflow-hidden"
-                onClick={(e) => handleLinkClick(link.href, e)}
-              >
-                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
-                <span className="relative z-10">{link.label}</span>
-              </a>
+              link.isSpecial ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="bg-teal-500/20 text-teal-300 font-semibold px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-teal-500/30 hover:text-white border border-teal-500/30"
+                  onClick={(e) => handleLinkClick(link.href, e)}
+                  style={{ textShadow: '0 1px 4px rgba(20, 184, 166, 0.2)' }}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="relative text-slate-200 hover:text-white transition-colors duration-300 font-medium px-4 py-2 group overflow-hidden"
+                  onClick={(e) => handleLinkClick(link.href, e)}
+                >
+                  <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
+                  <span className="relative z-10">{link.label}</span>
+                </a>
+              )
             ))}
           </nav>
 
-          {/* Buton CTA Desktop ÎMBUNĂTĂȚIT */}
           <a 
             href="#contact" 
             onClick={(e) => handleLinkClick('#contact', e)} 
@@ -186,7 +190,6 @@ const Header: React.FC = () => {
             <span className="relative z-10">Contact</span>
           </a>
 
-          {/* Buton Hamburger */}
           <button 
             className="lg:hidden p-2 text-teal-300" 
             onClick={() => setMobileOpen(true)} 
@@ -197,7 +200,6 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Meniu Mobil */}
       <div className={`fixed inset-0 z-[60] transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-slate-950 animated-gradient" onClick={() => setMobileOpen(false)} />
         <nav className={`absolute top-0 right-0 h-full w-full max-w-sm bg-slate-900/80 backdrop-blur-2xl border-l border-slate-700/50 shadow-2xl flex flex-col transition-transform duration-500 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -217,22 +219,39 @@ const Header: React.FC = () => {
             </button>
           </div>
           
+          {/* --- MODIFICARE 4: Am adăugat logica pentru stilul special în meniul Mobil --- */}
           <div className="flex flex-col p-6 gap-2">
             {menuLinks.map((link: MenuLink, index: number) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="group relative text-xl font-semibold text-slate-200 hover:text-white transition-all duration-300"
-                style={{
-                  transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
-                  opacity: mobileOpen ? 1 : 0,
-                  transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-                }}
-                onClick={(e) => handleLinkClick(link.href, e, true)}
-              >
-                <div className="absolute -inset-x-3 -inset-y-2 z-0 rounded-full bg-slate-800/0 group-hover:bg-slate-800/80 scale-95 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                <span className="relative z-10 block p-3">{link.label}</span>
-              </a>
+              link.isSpecial ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="group w-full text-center bg-teal-500/20 border border-teal-500/30 text-teal-300 font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-teal-500/30 hover:text-white text-xl"
+                  style={{
+                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
+                    opacity: mobileOpen ? 1 : 0,
+                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+                  }}
+                  onClick={(e) => handleLinkClick(link.href, e, true)}
+                >
+                   {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="group relative text-xl font-semibold text-slate-200 hover:text-white transition-all duration-300"
+                  style={{
+                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
+                    opacity: mobileOpen ? 1 : 0,
+                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+                  }}
+                  onClick={(e) => handleLinkClick(link.href, e, true)}
+                >
+                  <div className="absolute -inset-x-3 -inset-y-2 z-0 rounded-full bg-slate-800/0 group-hover:bg-slate-800/80 scale-95 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                  <span className="relative z-10 block p-3">{link.label}</span>
+                </a>
+              )
             ))}
           </div>
 
@@ -255,7 +274,6 @@ const Header: React.FC = () => {
         </nav>
       </div>
 
-      {/* Stiluri CSS pentru animații custom */}
       <style jsx>{`
         @keyframes gradient-animation {
           0% { background-position: 0% 50%; }
@@ -267,7 +285,6 @@ const Header: React.FC = () => {
           background-size: 400% 400%;
           animation: gradient-animation 15s ease infinite;
         }
-        /* Animație nouă pentru butonul CTA */
         @keyframes pulse-glow {
           0%, 100% {
             box-shadow: 0 0 20px -5px rgba(20, 184, 166, 0.4), 0 0 30px -10px rgba(10, 150, 130, 0.3);
