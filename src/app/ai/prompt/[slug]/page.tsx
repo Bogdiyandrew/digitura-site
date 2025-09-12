@@ -8,15 +8,10 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import PromptClientPage from './PromptClientPage'; // Importăm componenta client
 
-// Props pentru pagina noastră
-interface PromptPageProps {
-  params: {
-    slug: string;
-  };
-}
+// Am eliminat interfața 'PromptPageProps' și am schimbat modul de definire a componentei
 
-// Componenta principală a paginii (acum o Componentă Server)
-const PromptPage = ({ params }: PromptPageProps) => {
+// Definim tipul pentru props direct în semnătura funcției
+export default function PromptPage({ params }: { params: { slug: string } }) {
   const { slug } = params; // Accesarea aici este corectă pentru Server Components
   const promptData = prompts.find(p => p.slug === slug);
 
@@ -46,5 +41,3 @@ const PromptPage = ({ params }: PromptPageProps) => {
     </>
   );
 };
-
-export default PromptPage;
