@@ -1,46 +1,53 @@
-// src/app/api/send-email/route.js
+// src/app/api/send-email/route.ts
 
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Functia se numeste POST, pentru ca formularul face o cerere de tip POST
-export async function POST(req) {
+// Definim o interfață pentru datele pe care le așteptăm de la formular
+interface RequestBody {
+  nume: string;
+  company_name: string;
+  email: string;
+  phone?: string; // Opțional
+  activity_field: string;
+  project_details: string;
+  package: string;
+}
+
+// Handler-ul pentru metoda POST, acum cu tipuri TypeScript
+export async function POST(req: Request) {
   try {
-    // Citim datele trimise de formular
-    const body = await req.json();
-    const { 
-      nume, 
-      company_name, 
-      email, 
-      phone, 
-      activity_field, 
-      project_details, 
-      package: selectedPackage 
+    const body: RequestBody = await req.json();
+    const {
+      nume,
+      company_name,
+      email,
+      phone,
+      activity_field,
+      project_details,
+      package: selectedPackage
     } = body;
 
     // --- VALIDARE PE SERVER ---
-    // Verificăm dacă datele esențiale au fost trimise
     if (!nume || !company_name || !email || !activity_field || !project_details || !selectedPackage) {
       return NextResponse.json({ message: 'Toate câmpurile obligatorii trebuie completate.' }, { status: 400 });
     }
-    
-    // Validare simplă pentru email
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        return NextResponse.json({ message: 'Adresa de email este invalidă.' }, { status: 400 });
+      return NextResponse.json({ message: 'Adresa de email este invalidă.' }, { status: 400 });
     }
 
-    // Configurare transporter pentru serverul Zoho Mail
+    // Configurare transporter folosind variabilele de mediu
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_SERVER_HOST,
-      port: process.env.EMAIL_SERVER_PORT,
+      port: Number(process.env.EMAIL_SERVER_PORT), // Convertim portul la număr
       secure: true, // true pentru portul 465 (SSL)
       auth: {
         user: process.env.EMAIL_SERVER_USER,
         pass: process.env.EMAIL_SERVER_PASSWORD,
       },
-      // Adaugă timeout pentru a preveni blocarea cererii
-      connectionTimeout: 10000, 
+      connectionTimeout: 10000,
       greetingTimeout: 10000,
       socketTimeout: 10000,
     });
@@ -78,13 +85,13 @@ export async function POST(req) {
 
     // Trimitem email-ul
     await transporter.sendMail(mailOptions);
-    
-    // Returnam un raspuns JSON de succes
+
+    // Returnăm un răspuns JSON de succes
     return NextResponse.json({ message: 'Email trimis cu succes!' }, { status: 200 });
 
   } catch (error) {
     console.error('[API_ERROR]', error);
-    // Returnam un raspuns de eroare mai specific
+    // Returnăm un răspuns de eroare mai specific
     return NextResponse.json({ message: 'Serviciul de email a întâmpinat o problemă. Vă rugăm să încercați mai târziu sau să ne contactați direct.' }, { status: 500 });
   }
 }
