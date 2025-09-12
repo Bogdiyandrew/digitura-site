@@ -6,15 +6,42 @@ import { prompts } from '@/lib/prompts';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import PromptClientPage from './PromptClientPage'; // Importăm componenta client
+import PromptClientPage from './PromptClientPage';
+import type { Metadata } from 'next';
 
-// Am eliminat interfața 'PromptPageProps' și am schimbat modul de definire a componentei
+// --- Funcții Speciale pentru Build și SEO ---
 
-// Definim tipul pentru props direct în semnătura funcției
+// 1. Spunem lui Next.js ce pagini să pre-construiască la deploy
+export async function generateStaticParams() {
+  return prompts.map((prompt) => ({
+    slug: prompt.slug,
+  }));
+}
+
+// 2. Generăm dinamic metadatele (titlul paginii în tab-ul browser-ului)
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const prompt = prompts.find(p => p.slug === params.slug);
+  
+  if (!prompt) {
+    return {
+      title: 'Prompt negăsit',
+    };
+  }
+
+  return {
+    title: `${prompt.title} | Digitura AI`,
+    description: `Detalii și utilizare pentru prompt-ul AI: ${prompt.title}`,
+  };
+}
+
+
+// --- Componenta Paginii (Server Component) ---
+
 export default function PromptPage({ params }: { params: { slug: string } }) {
-  const { slug } = params; // Accesarea aici este corectă pentru Server Components
+  const { slug } = params;
   const promptData = prompts.find(p => p.slug === slug);
 
+  // Dacă nu găsim prompt-ul, afișăm o pagină 404
   if (!promptData) {
     notFound();
   }
@@ -33,11 +60,10 @@ export default function PromptPage({ params }: { params: { slug: string } }) {
               Înapoi la {backLinkText}
             </Link>
           </div>
-          {/* Trimitem datele către componenta client pentru a fi afișate */}
           <PromptClientPage promptData={promptData} />
         </div>
       </main>
       <Footer />
     </>
   );
-};
+}
