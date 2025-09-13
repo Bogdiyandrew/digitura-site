@@ -9,6 +9,7 @@ export default function sitemap() {
     '/politica-cookies',
     '/politica-de-confidentialitate',
     '/termeni',
+    '/ai',
   ];
 
   const pageUrls = pages.map((page) => ({
