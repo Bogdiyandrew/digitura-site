@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { Copy, Check, Video } from 'lucide-react';
 import type { Prompt } from '@/lib/prompts';
 
-// Componenta primește toate proprietățile unui obiect 'Prompt'
 const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, videoUrl, tags }) => {
   const [copied, setCopied] = useState(false);
 
@@ -56,9 +55,10 @@ const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, video
             ))}
           </div>
           <div className="relative bg-slate-800 p-4 rounded-lg mt-auto">
-            {/* Acum TypeScript știe că jsonPrompt și jsonPrompt.task există întotdeauna */}
+            {/* --- MODIFICARE AICI --- */}
             <p className="text-slate-300 text-sm leading-relaxed font-mono pr-10 truncate">
-              {jsonPrompt.task}
+              {/* Afișează 'task', dacă nu există, afișează 'goal', altfel titlul */}
+              {jsonPrompt.task || jsonPrompt.goal || title}
             </p>
             <button
               onClick={handleCopy}
@@ -74,4 +74,4 @@ const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, video
   );
 };
 
-export default PromptCard;  
+export default PromptCard;
