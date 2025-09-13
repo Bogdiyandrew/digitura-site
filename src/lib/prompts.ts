@@ -1,10 +1,14 @@
 // src/lib/prompts.ts
 
+// Definim o interfață specifică pentru obiectul JSON
 interface JsonPrompt {
   task: string;
-  [key: string]: any;
+  // --- MODIFICARE AICI ---
+  // Am înlocuit 'any' cu 'unknown' pentru a respecta regula ESLint.
+  [key: string]: unknown; 
 }
 
+// Actualizăm interfața principală
 export interface Prompt {
   id: number;
   slug: string;
@@ -35,15 +39,14 @@ export const prompts: Prompt[] = [
       "render": { "resolution": "900x900", "file_format": "PNG or high-quality JPEG", "quality": "hyperrealistic, photorealistic, professional ad-grade", "rules": "no distortions, no surreal alterations, preserve authenticity" },
       "intended_message": "The product embodies exclusivity, sophistication, and timeless elegance — balancing urban luxury with golden-hour nostalgia."
     },
-    imageUrl: '/sauvageafter.webp',
+    imageUrl: '/image_3c865a.jpg',
     beforeImageUrl: '/sauvage.webp',
     tags: ['Produs', 'Cinematic', 'Publicitate', 'JSON Prompt'],
     type: 'image',
-    // --- INSTRUCȚIUNI ACTUALIZATE ---
     instructions: [
-      "Deschideți ChatGPT, încărcați poza pe care vreți să o modificați și adăugați prompt-ul de mai sus.",
+      "Deschideți ChatGPT (versiunea 4o), încărcați poza pe care vreți să o modificați și adăugați prompt-ul de mai sus.",
       "Pentru modificări, puteți schimba detaliile din prompt pentru a se potrivi produsului dvs. Dacă nu știți cum, puteți întreba ChatGPT să facă acest lucru pentru voi.",
-      "Pentru întrebări suplimentare, ne puteți contacta la suport@digitura.ro"
+      "Pentru întrebări suplimentare, ne puteți contacta la suport@digitura.ro."
     ],
   },
   {
