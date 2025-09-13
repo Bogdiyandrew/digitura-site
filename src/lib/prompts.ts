@@ -24,7 +24,7 @@ export interface Prompt {
 
 export const prompts: Prompt[] = [
   {
-    id: 54,
+    id: 1,
     slug: 'dior-sauvage-cinematic-sunset',
     title: 'Transformare Cinematică: Dior Sauvage',
     jsonPrompt: {
@@ -39,7 +39,7 @@ export const prompts: Prompt[] = [
       "render": { "resolution": "900x900", "file_format": "PNG or high-quality JPEG", "quality": "hyperrealistic, photorealistic, professional ad-grade", "rules": "no distortions, no surreal alterations, preserve authenticity" },
       "intended_message": "The product embodies exclusivity, sophistication, and timeless elegance — balancing urban luxury with golden-hour nostalgia."
     },
-    imageUrl: '/image_3c865a.jpg',
+    imageUrl: '/sauvageafter.webp',
     beforeImageUrl: '/sauvage.webp',
     tags: ['Produs', 'Cinematic', 'Publicitate', 'JSON Prompt'],
     type: 'image',
