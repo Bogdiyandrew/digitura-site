@@ -13,9 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // <-- ADAUGĂ LINIA DE MAI JOS
+  metadataBase: new URL("https://digitura.ro"),
+
   title: "Digitura - Partenerul Tău Strategic în Digital",
   description: "Creăm site-uri web și experiențe digitale care nu doar arată bine, ci transformă vizitatorii în clienți. Contactează-ne pentru un prototip gratuit.",
-  // Aici poți adăuga și alte meta tag-uri importante (keywords, openGraph etc.)
+  
+  // <-- ADAUGĂ ACESTE 3 LINII
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // <-- AM SCHIMBAT AICI "en" ÎN "ro"
+    <html lang="ro">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
