@@ -8,7 +8,8 @@ import Footer from '@/components/Footer';
 import { prompts } from '@/lib/prompts';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Copy, Check, Video } from 'lucide-react';
+// Am adăugat iconițe noi
+import { ArrowLeft, Copy, Check, Video, Info, CheckCircle2 } from 'lucide-react';
 import CallToAction from '@/components/CallToAction';
 import ImageComparator from '@/components/ImageComparator';
 
@@ -24,10 +25,7 @@ export default function PromptPage() {
   }
 
   const handleCopy = () => {
-    const textToCopy = promptData.jsonPrompt 
-      ? JSON.stringify(promptData.jsonPrompt, null, 2) 
-      : promptData.prompt;
-      
+    const textToCopy = JSON.stringify(promptData.jsonPrompt, null, 2);
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -77,37 +75,46 @@ export default function PromptPage() {
                   <span key={tag} className="text-xs font-semibold text-blue-300 bg-blue-500/10 px-3 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
-              {promptData.videoUrl && (
-                <a href={promptData.videoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-teal-500/10 text-teal-300 font-semibold px-4 py-2 rounded-lg mb-6 hover:bg-teal-500/20 transition-colors self-start">
-                  <Video size={18} />
-                  Vezi Conceptul Video
-                </a>
-              )}
               
               <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg flex-grow flex flex-col max-h-[50vh]">
                 <div className="flex justify-between items-center mb-3 flex-shrink-0">
                   <h2 className="text-sm uppercase tracking-widest text-slate-400">Prompt Complet</h2>
-                  {/* --- MODIFICARE AICI --- */}
                   <button
                     onClick={handleCopy}
-                    // Am adăugat 'cursor-pointer' pentru a schimba cursorul la hover
                     className="p-2 text-slate-400 bg-slate-800 rounded-md hover:bg-teal-500 hover:text-white transition-all cursor-pointer"
                     aria-label="Copiază prompt-ul"
                   >
                     {copied ? <Check size={18} /> : <Copy size={18} />}
                   </button>
                 </div>
-                
                 <div className="overflow-y-auto">
                   <pre className="text-slate-200 text-sm leading-relaxed font-mono whitespace-pre-wrap">
                     <code>
-                      {promptData.jsonPrompt 
-                        ? JSON.stringify(promptData.jsonPrompt, null, 2) 
-                        : promptData.prompt}
+                      {JSON.stringify(promptData.jsonPrompt, null, 2)}
                     </code>
                   </pre>
                 </div>
               </div>
+
+              {/* --- NOU: Secțiunea de Instrucțiuni --- */}
+              {/* Aceasta se va afișa doar dacă există instrucțiuni în prompts.ts */}
+              {promptData.instructions && (
+                <div className="mt-6 bg-slate-900 border border-slate-800 p-6 rounded-lg">
+                  <h3 className="flex items-center gap-2 text-sm uppercase tracking-widest text-slate-400 mb-4">
+                    <Info size={16} />
+                    Instrucțiuni de Utilizare
+                  </h3>
+                  <ul className="space-y-3 text-slate-300 text-sm">
+                    {promptData.instructions.map((instruction, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle2 size={18} className="text-teal-400 mt-0.5 flex-shrink-0" />
+                        <span>{instruction}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
             </div>
           </div>
 

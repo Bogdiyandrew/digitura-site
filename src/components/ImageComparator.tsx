@@ -1,8 +1,9 @@
 // src/components/ImageComparator.tsx
 'use client';
 
-import React, { useState } from 'react'; // Am adăugat 'useState'
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { MousePointerClick } from 'lucide-react';
 
 interface ImageComparatorProps {
   beforeImage: string;
@@ -11,21 +12,22 @@ interface ImageComparatorProps {
 }
 
 const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterImage, alt }) => {
-  // --- MODIFICARE 1: Adăugăm o stare pentru a controla vizibilitatea ---
   const [isAfterVisible, setIsAfterVisible] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
-  // Funcția care schimbă starea la fiecare click/tap
   const toggleImage = () => {
     setIsAfterVisible(!isAfterVisible);
+    if (!hasInteracted) {
+      setHasInteracted(true);
+    }
   };
 
   return (
-    // --- MODIFICARE 2: Adăugăm 'onClick' și 'cursor-pointer' ---
     <div
       onClick={toggleImage}
       className="relative w-full aspect-square cursor-pointer select-none overflow-hidden rounded-xl border border-slate-800 group bg-black/20"
     >
-      {/* Imaginea "Before" (vizibilă implicit) */}
+      {/* Imaginea "Before" */}
       <Image
         src={beforeImage}
         alt={`Before - ${alt}`}
@@ -33,22 +35,34 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterIma
         objectFit="contain"
         className="transition-opacity duration-700 ease-in-out"
       />
-      {/* Imaginea "After" (acum este controlată de starea 'isAfterVisible') */}
+      {/* Imaginea "After" */}
       <Image
         src={afterImage}
         alt={`After - ${alt}`}
         layout="fill"
         objectFit="contain"
-        // --- MODIFICARE 3: Clasa de opacitate este acum dinamică ---
         className={`transition-opacity duration-700 ease-in-out ${isAfterVisible ? 'opacity-100' : 'opacity-0'}`}
       />
-      {/* Etichetele "Before" / "After" sunt și ele controlate de stare */}
+      {/* Etichetele "Before" / "After" */}
       <div className={`absolute top-3 right-3 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-sm transition-opacity duration-300 ${isAfterVisible ? 'opacity-0' : 'opacity-100'}`}>
         Before
       </div>
       <div className={`absolute top-3 right-3 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-sm transition-opacity duration-300 ${isAfterVisible ? 'opacity-100' : 'opacity-0'}`}>
         After
       </div>
+
+      {/* Sugestia de interacțiune */}
+      {!hasInteracted && (
+        // --- MODIFICARE AICI ---
+        // Am înlocuit 'backdrop-blur-sm' cu 'backdrop-blur-xs' pentru un efect mai subtil.
+        // Dacă vrei să scoți complet blur-ul, șterge 'backdrop-blur-xs'.
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xs pointer-events-none transition-opacity duration-500">
+          <div className="flex items-center gap-3 text-white bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700 animate-pulse">
+            <MousePointerClick size={20} />
+            <span className="font-semibold text-sm">Apasă pentru a compara</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
