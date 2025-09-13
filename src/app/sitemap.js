@@ -1,26 +1,35 @@
 // app/sitemap.js
 
+// Importă lista de prompturi din sursa ta de date
+import { prompts } from '../src/lib/prompts'; 
+
 export default function sitemap() {
   const baseUrl = 'https://digitura.ro';
 
-  // Lista paginilor tale
-  const pages = [
+  // 1. Paginile statice (cele pe care le aveai deja)
+  const staticPages = [
     '/',
+    '/ai', // Am adăugat și pagina principală de AI
     '/politica-cookies',
     '/politica-de-confidentialitate',
     '/termeni',
-    '/ai',
   ];
 
-  const pageUrls = pages.map((page) => ({
+  const staticUrls = staticPages.map((page) => ({
     url: `${baseUrl}${page}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: page === '/' ? 1 : 0.8,
   }));
 
-  return [
-    ...pageUrls,
-    // Aici poți adăuga și alte pagini pe viitor, dacă vei avea
-  ];
+  // 2. Paginile dinamice pentru fiecare prompt
+  const promptUrls = prompts.map((prompt) => ({
+    url: `${baseUrl}/ai/prompt/${prompt.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly', // Produsele se pot schimba, deci verificăm mai des
+    priority: 0.7, // Prioritate puțin mai mică decât paginile principale
+  }));
+
+  // 3. Combină cele două liste și returnează rezultatul
+  return [...staticUrls, ...promptUrls];
 }

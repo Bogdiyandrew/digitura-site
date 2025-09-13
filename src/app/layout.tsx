@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // <-- ADAUGĂ LINIA DE MAI JOS
+  // <-- ADAUGĂ LINIA DE MAI JOS 
   metadataBase: new URL("https://digitura.ro"),
 
   title: "Digitura - Partenerul Tău Strategic în Digital",
