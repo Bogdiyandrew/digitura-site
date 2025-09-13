@@ -49,17 +49,5 @@ export const prompts: Prompt[] = [
       "Pentru întrebări suplimentare, ne puteți contacta la suport@digitura.ro."
     ],
   },
-  {
-    id: 55,
-    slug: 'logo-3d-apa-youtube',
-    title: 'Logo 3D din Apă pentru Brand de Băuturi',
-    jsonPrompt: {
-        "task": "Generate a hyperrealistic 3D render of the YouTube logo made of liquid water.",
-        "details": "The water should form the exact shape of the logo, with dynamic, flowing contours.",
-        "effects": "Enhance with splashes and realistic light refraction."
-    },
-    imageUrl: '/IMG_7997.jpg',
-    tags: ['Branding', 'Logo', '3D Render'],
-    type: 'image',
-  },
+  // Alte prompturi...
 ];
