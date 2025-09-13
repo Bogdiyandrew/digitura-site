@@ -1,5 +1,5 @@
 // src/app/ai/prompt/[slug]/page.tsx
-'use client'; // Transformăm întreaga pagină într-o componentă client
+'use client'; 
 
 import { useState } from 'react';
 import { useParams, notFound } from 'next/navigation';
@@ -10,17 +10,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Copy, Check, Video } from 'lucide-react';
 import CallToAction from '@/components/CallToAction';
+import ImageComparator from '@/components/ImageComparator'; // <-- 1. IMPORTĂM NOUA COMPONENTĂ
 
-// Toată logica va fi acum într-o singură componentă client
 export default function PromptPage() {
-  const params = useParams(); // Hook pentru a citi parametrii din URL
+  const params = useParams();
   const slug = params.slug;
-
   const [copied, setCopied] = useState(false);
-  
   const promptData = prompts.find(p => p.slug === slug);
 
-  // Dacă nu găsim prompt-ul după ce componenta s-a încărcat, afișăm 404
   if (!promptData) {
     notFound();
   }
@@ -47,17 +44,30 @@ export default function PromptPage() {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
-            <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-slate-900/80 border border-slate-800">
-              <Image
-                src={promptData.imageUrl}
+            
+            {/* <-- 2. AICI FOLOSIM NOUA COMPONENTĂ SAU IMAGINEA NORMALĂ --> */}
+            {promptData.beforeImageUrl ? (
+              <ImageComparator 
+                beforeImage={promptData.beforeImageUrl}
+                afterImage={promptData.imageUrl}
                 alt={promptData.title}
-                width={800}
-                height={800}
-                className="w-full h-auto object-cover"
               />
-            </div>
+            ) : (
+              <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-slate-900/80 border border-slate-800">
+                <Image
+                  src={promptData.imageUrl}
+                  alt={promptData.title}
+                  width={800}
+                  height={800}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            )}
+
             <div className="flex flex-col h-full">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{promptData.title}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                Prompt #{promptData.id}: <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">{promptData.title}</span>
+              </h1>
               <div className="flex flex-wrap gap-2 mb-6">
                 {promptData.tags.map(tag => (
                   <span key={tag} className="text-xs font-semibold text-blue-300 bg-blue-500/10 px-3 py-1 rounded-full">{tag}</span>
