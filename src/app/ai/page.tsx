@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React from 'react';
 import Link from 'next/link';
-import { ImageIcon, VideoIcon } from 'lucide-react';
+import Image from 'next/image'; // Am importat componenta Image
 
 const LaboratorAIHub: React.FC = () => {
   return (
@@ -26,24 +26,41 @@ const LaboratorAIHub: React.FC = () => {
           </p>
         </div>
         
-        <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Card pentru Imagini */}
-          <Link href="/ai/images" className="group block">
-            <div className="h-full p-8 bg-slate-900/50 border border-slate-800 rounded-2xl text-center transition-all duration-300 hover:border-teal-500/50 hover:shadow-2xl hover:shadow-teal-500/10 transform hover:-translate-y-2">
-              <ImageIcon className="w-16 h-16 mx-auto mb-4 text-teal-400" />
-              <h2 className="text-2xl font-bold text-white mb-2">Prompt-uri Imagini</h2>
-              <p className="text-slate-400">Generează logo-uri, mascote, fotografii de produs și concepte vizuale uimitoare.</p>
+        {/* Am actualizat structura grid-ului și a cardurilor */}
+        <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Card pentru Imagini cu Imagine de Fundal */}
+          <Link href="/ai/images" className="group relative block h-80 overflow-hidden rounded-2xl shadow-2xl shadow-teal-500/10 border border-slate-800">
+            <Image
+              src="/ai-category-image.png" // Asigură-te că imaginea există în /public
+              alt="Categorie Prompt-uri Imagini"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 ease-in-out group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 group-hover:from-black/70"></div>
+            <div className="relative z-10 flex flex-col items-center justify-end h-full text-center p-8">
+              <h2 className="text-3xl font-bold text-white mb-2 transform transition-transform duration-300 group-hover:-translate-y-1">Prompt-uri Imagini</h2>
+              <p className="text-slate-300 max-w-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">Generează logo-uri, mascote, fotografii de produs și concepte vizuale uimitoare.</p>
             </div>
           </Link>
           
-          {/* Card pentru Video */}
-          <Link href="/ai/videos" className="group block">
-            <div className="h-full p-8 bg-slate-900/50 border border-slate-800 rounded-2xl text-center transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2">
-              <VideoIcon className="w-16 h-16 mx-auto mb-4 text-blue-400" />
-              <h2 className="text-2xl font-bold text-white mb-2">Prompt-uri Video</h2>
-              <p className="text-slate-400">Transformă imagini statice în clipuri cinematice sau generează concepte video de la zero.</p>
+          {/* Card pentru Video cu Imagine de Fundal */}
+          <Link href="/ai/videos" className="group relative block h-80 overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10 border border-slate-800">
+             <Image
+              src="/ai-category-video.png" // Asigură-te că imaginea există în /public
+              alt="Categorie Prompt-uri Video"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 ease-in-out group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 group-hover:from-black/70"></div>
+            <div className="relative z-10 flex flex-col items-center justify-end h-full text-center p-8">
+              <h2 className="text-3xl font-bold text-white mb-2 transform transition-transform duration-300 group-hover:-translate-y-1">Prompt-uri Video</h2>
+              <p className="text-slate-300 max-w-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">Transformă imagini statice în clipuri cinematice sau generează concepte video de la zero.</p>
             </div>
           </Link>
+
         </div>
       </main>
       <Footer />
