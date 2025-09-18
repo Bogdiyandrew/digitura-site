@@ -6,41 +6,38 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 
-// Asigură-te că ai gsap instalat și configurat pentru Next.js
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Interfețe TypeScript
+// Interfața TypeScript
 interface ConceptProject {
   title: string;
   description: string;
   image: string;
-  link: string;
+  link: string; // Aici vei adăuga link-urile către demo-urile live
   tags: string[];
   Icon: LucideIcon;
 }
 
-// --- Proiecte Concept ---
-// Am creat proiecte fictive, dar realiste, pentru a demonstra capabilitățile.
-// Când proiectele tale reale vor fi gata, pur și simplu înlocuiești datele de aici.
+// --- AICI ESTE MODIFICAREA: Am înlocuit proiectele cu demo-urile noastre ---
 const conceptProjects: ConceptProject[] = [
   {
-    title: 'Aura - Magazin Online de Cafea Artizanală',
-    description: 'Un studiu de caz complet pentru un brand de e-commerce premium. Am proiectat o experiență de cumpărături fluidă, cu accent pe povestea brandului și pe conversia vizitatorilor în clienți fideli. Include sistem de plăți, management de stoc și automatizări de marketing.',
-    // Imaginea este un placeholder profesional. Modifică textul și culorile după cum dorești.
-    image: 'https://placehold.co/800x600/020617/99f6e4?text=Aura+Concept',
-    link: '#', // Adaugă link-ul când proiectul este live
-    tags: ['E-commerce', 'Branding', 'Automatizare'],
+    title: 'Aura - Cafenea & Magazin Artizanal',
+    description: 'Studiu de caz pentru un brand de e-commerce premium. Am creat o experiență de cumpărături imersivă cu un design ultra-modern, fundal animat, efecte de glassmorphism și un coș de cumpărături funcțional. Proiectul demonstrează atenție la detalii, animații fluide cu Framer Motion și o structură hibridă (magazin și meniu de prezentare).',
+    // Imagine placeholder actualizată. Când ai un screenshot, înlocuiește-l aici.
+    image: '/photos/aura-demo.png',
+    link: 'https://aura-cafea-demo.vercel.app/', // TODO: Adaugă link-ul către demo-ul "Aura"
+    tags: ['E-commerce', 'Branding', 'Next.js', 'Framer Motion', 'UI/UX'],
     Icon: ShoppingBag,
   },
   {
-    title: 'Connecta - Landing Page pentru Startup Tech',
-    description: 'Concept pentru o pagină de lansare care trebuie să capteze atenția și să genereze lead-uri. Design-ul este minimalist, mesajul este puternic, iar apelul la acțiune este optimizat pentru a maximiza înscrierile înainte de lansarea oficială a produsului.',
-    // Placeholder profesional și pentru acest concept.
-    image: 'https://placehold.co/800x600/020617/60a5fa?text=Connecta+Concept',
-    link: '#',
-    tags: ['Landing Page', 'UI/UX Design', 'Generare Lead-uri'],
+    title: 'Quantum - Landing Page pentru SaaS',
+    description: 'O pagină de prezentare custom pentru o aplicație tech, axată pe un design memorabil și interacțiuni avansate. Demo-ul include un hero section cu efect 3D care reacționează la mișcarea mouse-ului, o secțiune de features cu scroll orizontal animat și un cursor personalizat, demonstrând tehnici de front-end care depășesc un template standard.',
+    // Imagine placeholder actualizată.
+    image: '/photos/quantum-demo.png',
+    link: 'https://quantum-demo-gamma.vercel.app/', // TODO: Adaugă link-ul către demo-ul "Quantum"
+    tags: ['SaaS', 'Landing Page', 'Animații Avansate', 'Next.js', 'TypeScript'],
     Icon: Layers,
   },
 ];
@@ -52,53 +49,22 @@ const Portfolio: React.FC = () => {
     if (typeof window === 'undefined') return;
 
     const ctx = gsap.context(() => {
-      // Animații pentru titlu și subtitlu
+      // Animații pentru titlu și subtitlu (păstrate)
       gsap.fromTo('.portfolio-title', 
         { opacity: 0, y: 50 }, 
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: 'power3.out', 
-          scrollTrigger: { 
-            trigger: sectionRef.current, 
-            start: 'top 80%' 
-          } 
-        }
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } }
       );
-
       gsap.fromTo('.portfolio-subtitle', 
         { opacity: 0, y: 40 }, 
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: 'power3.out', 
-          delay: 0.2, 
-          scrollTrigger: { 
-            trigger: sectionRef.current, 
-            start: 'top 80%' 
-          } 
-        }
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2, scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } }
       );
 
-      // Animații pentru cardurile de portofoliu
+      // Animații pentru cardurile de portofoliu (păstrate)
       const cards = document.querySelectorAll('.portfolio-card');
       cards.forEach((card, i) => {
         gsap.fromTo(card,
           { opacity: 0, y: 80, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1,
-            ease: 'back.out(1.2)',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-            },
-            delay: 0.4 + (i * 0.2)
-          }
+          { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'back.out(1.2)', scrollTrigger: { trigger: card, start: 'top 85%' }, delay: 0.4 + (i * 0.2) }
         );
       });
     }, sectionRef);
@@ -110,7 +76,6 @@ const Portfolio: React.FC = () => {
     <section ref={sectionRef} className="bg-slate-950 py-28 px-6" id="portofoliu" style={{ fontFamily: 'Exo2, sans-serif' }}>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          {/* --- MODIFICARE TITLU & SUBTITLU --- */}
           <h2 className="portfolio-title text-4xl md:text-5xl font-bold mb-6 text-white">
             Laboratorul Nostru de <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Inovație</span>
           </h2>
@@ -125,7 +90,6 @@ const Portfolio: React.FC = () => {
             
             return (
               <div key={index} className="portfolio-card grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center opacity-0">
-                {/* Coloana de text, ordonată diferit pentru varietate vizuală */}
                 <div className={`text-left ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="p-2 bg-slate-800 border border-slate-700 rounded-lg">
@@ -147,12 +111,11 @@ const Portfolio: React.FC = () => {
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-blue-400 font-semibold hover:text-blue-300 transition-colors duration-300"
                   >
-                    <span>Vezi Studiul de Caz (în curând)</span>
+                    <span>Vezi Studiul de Caz</span>
                     <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </div>
 
-                {/* Coloana de imagine */}
                 <div className={`group relative rounded-xl overflow-hidden shadow-2xl shadow-slate-900/80 border border-slate-800 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
                   <Image
