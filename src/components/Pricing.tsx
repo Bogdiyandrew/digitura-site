@@ -51,7 +51,7 @@ interface FaqItemProps {
 const mainPlans: MainPlan[] = [
   {
     name: 'Lansare Rapidă',
-    price: '749<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    price: '999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
     subtitle: 'Intră online în 7 zile.',
     description: 'Perfect dacă vrei să-ți validezi o idee sau să prezinți un serviciu, fără complicații. Gata în câteva zile.',
     icon: <Target className="w-8 h-8 text-teal-400" />,
@@ -70,7 +70,7 @@ const mainPlans: MainPlan[] = [
   },
   {
     name: 'Partener Digital',
-    price: '1999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    price: '2499<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
     subtitle: 'Site complet pentru creștere.',
     description: 'Site-ul de care afacerea ta are nevoie pentru a arăta profesionist și a câștiga încrederea clienților.',
     icon: <Globe className="w-8 h-8 text-blue-400" />,
@@ -91,7 +91,7 @@ const mainPlans: MainPlan[] = [
   },
   {
     name: 'Motor E-Commerce',
-    price: '3999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
+    price: '4999<sup class="text-3xl font-bold align-top -top-2 relative">,99</sup> lei',
     subtitle: 'Vinde online, fără bătăi de cap.',
     description: 'Lansăm magazinul tău online complet echipat, gata să primească comenzi și să proceseze plăți.',
     icon: <ShoppingCart className="w-8 h-8 text-teal-400" />,
@@ -143,7 +143,7 @@ const customServices: CustomService[] = [
 const faqs: FAQ[] = [
   {
   question: 'Cât costă un site?',
-  answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">749<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">1999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+  answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">2499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">4999<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',

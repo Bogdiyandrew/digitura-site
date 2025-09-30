@@ -1,5 +1,3 @@
-// src/components/Header.tsx
-
 'use client';
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
@@ -24,9 +22,9 @@ interface MousePosition {
 const menuLinks: MenuLink[] = [
   { href: '#despre', label: 'Despre' },
   { href: '#servicii', label: 'Servicii' },
-  { href: '#portofoliu', label: 'Portofoliu' },
   { href: '#preturi', label: 'Prețuri' },
-  // --- MODIFICARE 2: Am marcat link-ul "Laborator AI" ca fiind special ---
+  { href: '#contact', label: 'Contact' },
+  { href: '/portofoliu', label: 'Portofoliu', isSpecial: true },
   { href: '/ai', label: 'Laborator AI', isSpecial: true },
 ];
 
@@ -131,7 +129,7 @@ const Header: React.FC = () => {
           <Link 
             href="/" 
             onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
-            className="group flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
+            className="group flex-shrink-0 flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
           >
             <Image 
               src="/favicon.ico" 
@@ -154,44 +152,37 @@ const Header: React.FC = () => {
           </Link>
 
           {/* --- MODIFICARE 3: Am adăugat logica pentru stilul special în meniul Desktop --- */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {menuLinks.map((link: MenuLink) => (
-              link.isSpecial ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="bg-teal-500/20 text-teal-300 font-semibold px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-teal-500/30 hover:text-white border border-teal-500/30"
-                  onClick={(e) => handleLinkClick(link.href, e)}
-                  style={{ textShadow: '0 1px 4px rgba(20, 184, 166, 0.2)' }}
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="relative text-slate-200 hover:text-white transition-colors duration-300 font-medium px-4 py-2 group overflow-hidden"
-                  onClick={(e) => handleLinkClick(link.href, e)}
-                >
-                  <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
-                  <span className="relative z-10">{link.label}</span>
-                </a>
-              )
+          <nav className="hidden lg:flex items-center gap-6 mx-auto">
+            {menuLinks.filter(link => !link.isSpecial).map((link: MenuLink) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${
+                  link.label === 'Contact'
+                    ? 'text-teal-300 hover:text-white'
+                    : 'text-slate-200 hover:text-white'
+                }`}
+                onClick={(e) => handleLinkClick(link.href, e)}
+              >
+                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
+                <span className="relative z-10">{link.label}</span>
+              </a>
+            ))}
+            <div className="h-6 border-l border-slate-700/40 mx-4"></div>
+            {menuLinks.filter(link => link.isSpecial).map((link: MenuLink) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-2.5 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 leading-none"
+                onClick={(e) => handleLinkClick(link.href, e)}
+              >
+                {link.label}
+              </a>
             ))}
           </nav>
 
-          <a 
-            href="#contact" 
-            onClick={(e) => handleLinkClick('#contact', e)} 
-            className="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden transform hover:scale-105 cta-button-glow"
-          >
-             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-            <Send size={18} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-rotate-12"/>
-            <span className="relative z-10">Contact</span>
-          </a>
-
           <button 
-            className="lg:hidden p-2 text-teal-300" 
+            className="lg:hidden flex-shrink-0 p-2 text-teal-300" 
             onClick={() => setMobileOpen(true)} 
             aria-label="Deschide meniul"
           >
@@ -226,7 +217,7 @@ const Header: React.FC = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group w-full text-center bg-teal-500/20 border border-teal-500/30 text-teal-300 font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-teal-500/30 hover:text-white text-xl"
+                  className="group w-full text-center bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-3 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 text-lg"
                   style={{
                     transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
                     opacity: mobileOpen ? 1 : 0,
@@ -255,22 +246,6 @@ const Header: React.FC = () => {
             ))}
           </div>
 
-          <div className="mt-auto p-6 border-t border-slate-800">
-             <a
-              href="#contact"
-              className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden cta-button-glow"
-              onClick={(e) => handleLinkClick('#contact', e, true)}
-              style={{
-                  transform: mobileOpen ? 'scale(1)' : 'scale(0.8)',
-                  opacity: mobileOpen ? 1 : 0,
-                  transition: `transform 0.6s 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-              <Send className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-rotate-12" />
-              <span className="relative z-10">Contact</span>
-            </a>
-          </div>
         </nav>
       </div>
 
