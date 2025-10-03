@@ -9,14 +9,14 @@ export async function generateStaticParams() {
 }
 
 interface PromptPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
-export default function PromptPage({ params }: PromptPageProps) {
-  const { slug } = params;
+export default async function PromptPage({ params }: PromptPageProps) {
+  const { slug } = await params;
   const prompt = prompts.find((p) => p.slug === slug);
-  if (!prompt) return notFound();
+  if (!prompt) {
+    return notFound();
+  }
   return <PromptClientPage promptData={prompt} />;
 }
