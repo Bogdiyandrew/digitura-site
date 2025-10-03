@@ -1,4 +1,3 @@
-// src/app/ai/prompt/[slug]/PromptClientPage.tsx
 'use client'; 
 
 import { useState } from 'react';
@@ -62,18 +61,17 @@ const PromptClientPage: React.FC<PromptClientPageProps> = ({ promptData }) => {
                 onClick={handleCopy}
                 className="p-2 text-slate-400 bg-slate-800 rounded-md hover:bg-teal-500 hover:text-white transition-all cursor-pointer"
                 aria-label="Copiază prompt-ul"
+                title="Copiază prompt-ul"
               >
                 {copied ? <Check size={18} /> : <Copy size={18} />}
               </button>
             </div>
-            
-            <div className="overflow-y-auto">
-              <pre className="text-slate-200 text-sm leading-relaxed font-mono whitespace-pre-wrap">
-                <code>
-                  {JSON.stringify(promptData.jsonPrompt, null, 2)}
-                </code>
-              </pre>
-            </div>
+
+            <pre className="text-slate-200 text-sm leading-relaxed font-mono whitespace-pre-wrap overflow-x-auto flex-grow">
+              <code>
+                {JSON.stringify(promptData.jsonPrompt, null, 2)}
+              </code>
+            </pre>
           </div>
 
           {/* Secțiunea de Instrucțiuni (dacă există) */}

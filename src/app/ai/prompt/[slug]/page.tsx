@@ -12,6 +12,13 @@ import { ArrowLeft, Copy, Check, Video, Info, CheckCircle2 } from 'lucide-react'
 import CallToAction from '@/components/CallToAction';
 import ImageComparator from '@/components/ImageComparator';
 
+// In App Router, generate all static params for prompt slugs
+export async function generateStaticParams() {
+  return prompts.map((prompt) => ({
+    slug: prompt.slug,
+  }));
+}
+
 export default function PromptPage() {
   const params = useParams();
   const slug = params.slug;
