@@ -8,7 +8,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function PromptPage({ params }: { params: { slug: string } }) {
+interface PromptPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function PromptPage({ params }: PromptPageProps) {
   const prompt = prompts.find((p) => p.slug === params.slug);
   if (!prompt) return notFound();
   return <PromptClientPage promptData={prompt} />;
