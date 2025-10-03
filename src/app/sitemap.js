@@ -17,15 +17,15 @@ export default function sitemap() {
 
   const staticUrls = staticPages.map((page) => ({
     url: `${baseUrl}${page}`,
-    lastModified: new Date(),
+    lastModified: new Date().toISOString(),
     changeFrequency: 'monthly',
     priority: page === '/' ? 1 : 0.8,
   }));
 
   // 2. Paginile dinamice pentru fiecare prompt
   const promptUrls = prompts.map((prompt) => ({
-    url: `${baseUrl}/ai/prompt/${prompt.slug}`,
-    lastModified: new Date(),
+    url: `${baseUrl}/ai/prompt/${encodeURIComponent(prompt.slug)}`,
+    lastModified: new Date().toISOString(),
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
