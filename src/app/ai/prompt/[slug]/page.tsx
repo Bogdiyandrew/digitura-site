@@ -14,8 +14,9 @@ interface PromptPageProps {
   };
 }
 
-export default function PromptPage({ params }: PromptPageProps) {
-  const prompt = prompts.find((p) => p.slug === params.slug);
+export default async function PromptPage({ params }: Promise<PromptPageProps["params"]>) {
+  const { slug } = await params;
+  const prompt = prompts.find((p) => p.slug === slug);
   if (!prompt) return notFound();
   return <PromptClientPage promptData={prompt} />;
 }
