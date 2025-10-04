@@ -37,3 +37,7 @@ body {
   color: #e2e8f0; /* Un gri-deschis pentru text, ușor de citit */
   font-family: 'Exo2', sans-serif; /* Asigură utilizarea imediată a fontului preîncărcat */
 }
+.menu-font {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.02em;
+}

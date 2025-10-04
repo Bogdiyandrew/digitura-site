@@ -5,6 +5,8 @@ import { Send, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { Poppins } from 'next/font/google';
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
 // --- MODIFICARE 1: Am adăugat proprietatea 'isSpecial' la interfață ---
 interface MenuLink {
@@ -152,7 +154,7 @@ const Header: React.FC = () => {
           </Link>
 
           {/* --- MODIFICARE 3: Am adăugat logica pentru stilul special în meniul Desktop --- */}
-          <nav className="hidden lg:flex items-center gap-6 mx-auto">
+          <nav className={`hidden lg:flex items-center gap-6 mx-auto ${poppins.className}`}>
             {menuLinks.filter(link => !link.isSpecial).map((link: MenuLink) => (
               <a
                 key={link.href}
