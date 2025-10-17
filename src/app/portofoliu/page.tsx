@@ -34,7 +34,7 @@ const projects = [
   {
     title: 'Pas cu Pas - Asistent AI pentru Români',
     description: 'Un site integrat cu AI care oferă conversații empatice și suport pentru probleme precum depresia, singurătatea sau anxietatea. O inițiativă dedicată să aducă inteligența artificială mai aproape de oameni, în sprijinul comunității.',
-    image: '/photos/pascupas.png',
+    image: '/photos/pascupas3.png',
     link: 'https://www.pascupas.online/',
     tags: ['AI', 'Asistență', 'Conversație', 'Suport Emoțional'],
     Icon: Bot,
