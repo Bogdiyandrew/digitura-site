@@ -40,9 +40,9 @@ const projects = [
     Icon: Bot,
   },
   {
-    title: 'SecureBase - Soluție Cloud pentru Backup',
-    description: 'Platformă cloud securizată pentru backup și restaurare automată a datelor, cu criptare end-to-end și management simplificat.',
-    image: '/photos/securebase.png',
+    title: 'ShopFlow Dashboard - Panou de Control pentru E-commerce',
+    description: 'Dashboard interactiv pentru gestionarea magazinelor online, oferind analize detaliate, managementul comenzilor și optimizarea vânzărilor.',
+    image: '/photos/shopflowrev.png',
     link: 'https://securebase-demo.vercel.app/',
     tags: ['Cloud', 'Security', 'AWS', 'Encryption'],
     Icon: Database,
