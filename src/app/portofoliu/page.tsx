@@ -42,7 +42,7 @@ const projects = [
   {
     title: 'ShopFlow Dashboard - Panou de Control pentru E-commerce',
     description: 'Dashboard interactiv pentru gestionarea magazinelor online, oferind analize detaliate, managementul comenzilor și optimizarea vânzărilor.',
-    image: '/photos/shopflowrev.png',
+    image: '/photos/dashboard-demo.png',
     link: 'https://dashboard-demo-eight.vercel.app/',
     tags: ['E-commerce', 'Dashboard', 'Analytics', 'Sales Management'],
     Icon: Database,
