@@ -47,14 +47,6 @@ const projects = [
     tags: ['E-commerce', 'Dashboard', 'Analytics', 'Sales Management'],
     Icon: Database,
   },
-  {
-    title: 'EcoTravel - Aplicație Mobilă pentru Turism Sustenabil',
-    description: 'Aplicație mobilă ce promovează turismul sustenabil, oferind recomandări personalizate și ghiduri eco-friendly.',
-    image: '/photos/dashboard-demo.png',
-    link: 'https://ecotravel-demo.vercel.app/',
-    tags: ['Mobile App', 'React Native', 'Sustainability', 'UX/UI'],
-    Icon: Layers,
-  },
 ];
 
 export default function PortofoliuPage() {
