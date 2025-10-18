@@ -33,35 +33,6 @@ const Hero = () => {
         defaults: { ease: 'power4.out' }
       });
 
-      // 1. Animație Badge - intră cu bounce și glow effect
-      masterTL.fromTo(
-        badgeRef.current,
-        { 
-          opacity: 0, 
-          scale: 0.5,
-          y: -50,
-          rotationX: -90
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 1.2,
-          ease: 'elastic.out(1, 0.6)',
-          onComplete: () => {
-            // Pulsare continuă pentru badge
-            gsap.to(badgeRef.current, {
-              scale: 1.05,
-              duration: 2,
-              repeat: -1,
-              yoyo: true,
-              ease: 'sine.inOut'
-            });
-          }
-        },
-        0.3
-      );
 
       // 2. Animație Title - smooth reveal fără character split
       masterTL.fromTo(
