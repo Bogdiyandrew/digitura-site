@@ -103,7 +103,7 @@ const mainPlans = [
 const customServices = [
   {
     name: 'Mentenanță & Suport',
-    price: 'de la 100 lei/lună',
+    price: 'de la 150 lei/lună',
     desc: 'Ne ocupăm de actualizări, securitate și backup-uri, astfel încât site-ul tău să funcționeze perfect, fără întreruperi.',
     icon: <Wrench className="w-6 h-6" />,
     features: [
@@ -117,7 +117,7 @@ const customServices = [
   },
   {
     name: 'Automatizare Digitală',
-    price: 'de la 200 lei/lună',
+    price: 'de la 300 lei/lună',
     desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează date, trimite notificări și economisește timp prețios.',
     icon: <Zap className="w-6 h-6" />,
     features: [
@@ -131,7 +131,7 @@ const customServices = [
   },
   {
     name: 'Branding Vizual',
-    price: '300 lei (one-time)',
+    price: '400 lei (one-time)',
     desc: 'Logo, paletă de culori și ghid vizual profesionist pentru orice tip de afacere.',
     icon: <Sparkles className="w-6 h-6" />,
   },
