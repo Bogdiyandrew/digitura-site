@@ -1,61 +1,203 @@
-"use client"; // <-- ACEASTA ESTE SINGURA MODIFICARE. Spune Next.js să trateze acest fișier ca o Componentă Client.
+"use client";
 
-import React, { useRef, useEffect, useState, FC } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ArrowRight, Star, Award } from 'lucide-react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const Hero: FC = () => {
-  // Am adăugat tipuri specifice pentru fiecare element DOM la care se face referire.
+// Înregistrează plugin-ul ScrollTrigger
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const separatorRef = useRef<HTMLDivElement>(null);
+  const codeSymbolRef = useRef<HTMLSpanElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const gradientRef = useRef<HTMLDivElement>(null);
 
-  // TypeScript poate infera tipul 'boolean' aici, dar este o bună practică să fim expliciți.
-  const [showBlackBg, setShowBlackBg] = useState<boolean>(false);
-  const [blackBgVisible, setBlackBgVisible] = useState<boolean>(false);
+  const [showBlackBg, setShowBlackBg] = useState(false);
+  const [blackBgVisible, setBlackBgVisible] = useState(false);
 
   useEffect(() => {
-    // Animațiile GSAP rămân neschimbate
-    if (titleRef.current && subtitleRef.current && ctaRef.current) {
-      gsap.fromTo(
+    // Context pentru cleanup
+    const ctx = gsap.context(() => {
+      // Timeline master pentru animația inițială
+      const masterTL = gsap.timeline({
+        defaults: { ease: 'power4.out' }
+      });
+
+      // 1. Animație Badge - intră cu bounce și glow effect
+      masterTL.fromTo(
+        badgeRef.current,
+        { 
+          opacity: 0, 
+          scale: 0.5,
+          y: -50,
+          rotationX: -90
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          rotationX: 0,
+          duration: 1.2,
+          ease: 'elastic.out(1, 0.6)',
+          onComplete: () => {
+            // Pulsare continuă pentru badge
+            gsap.to(badgeRef.current, {
+              scale: 1.05,
+              duration: 2,
+              repeat: -1,
+              yoyo: true,
+              ease: 'sine.inOut'
+            });
+          }
+        },
+        0.3
+      );
+
+      // 2. Animație Title - smooth reveal fără character split
+      masterTL.fromTo(
         titleRef.current,
-        { opacity: 0, y: 60 },
+        { 
+          opacity: 0, 
+          y: 100,
+          scale: 0.8,
+          rotationX: -45
+        },
         {
           opacity: 1,
           y: 0,
-          duration: 1.6,
-          ease: 'power3.out',
-          delay: 1.2,
-        }
+          scale: 1,
+          rotationX: 0,
+          duration: 1.8,
+          ease: 'power4.out'
+        },
+        0.8
       );
-      gsap.fromTo(
+
+      // 3. Animație Code Symbol - rotație 3D dramatică
+      masterTL.fromTo(
+        codeSymbolRef.current,
+        {
+          opacity: 0,
+          scale: 0,
+          rotationY: -180,
+          rotationZ: -180
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          rotationY: 0,
+          rotationZ: 0,
+          duration: 1.5,
+          ease: 'back.out(2)',
+          onComplete: () => {
+            // Rotație continuă subtilă
+            gsap.to(codeSymbolRef.current, {
+              rotationY: 360,
+              duration: 20,
+              repeat: -1,
+              ease: 'none'
+            });
+          }
+        },
+        1.5
+      );
+
+      // 4. Animație Separator - expand din centru
+      masterTL.fromTo(
+        separatorRef.current,
+        {
+          scaleX: 0,
+          opacity: 0
+        },
+        {
+          scaleX: 1,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out'
+        },
+        1.8
+      );
+
+      // 5. Animație Subtitle - wave effect
+      masterTL.fromTo(
         subtitleRef.current,
-        { opacity: 0, y: 60 },
+        {
+          opacity: 0,
+          y: 50
+        },
         {
           opacity: 1,
           y: 0,
-          duration: 1.3,
-          ease: 'power3.out',
-          delay: 2.1,
-        }
+          duration: 1.2,
+          ease: 'power3.out'
+        },
+        2
       );
-      gsap.fromTo(
+
+      // 6. Animație CTA - magnific entrance
+      masterTL.fromTo(
         ctaRef.current,
-        { opacity: 0, y: 60 },
+        {
+          opacity: 0,
+          scale: 0.8,
+          y: 30,
+          rotationX: 45
+        },
         {
           opacity: 1,
+          scale: 1,
           y: 0,
-          duration: 1.1,
-          ease: 'power3.out',
-          delay: 2.7,
-        }
+          rotationX: 0,
+          duration: 1,
+          ease: 'back.out(1.7)'
+        },
+        2.5
       );
-    }
+
+      // SCROLL TRIGGER ANIMATIONS
+      
+      // Parallax pentru video background
+      gsap.to(videoRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        },
+        y: 200,
+        scale: 1.2,
+        ease: 'none'
+      });
+
+      // Gradient shift la scroll (subtil)
+      gsap.to(gradientRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        },
+        backgroundPosition: '0% 100%',
+        ease: 'none'
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
-    // Adăugăm o verificare de tip pentru elementul video pentru a fi 100% type-safe.
-    const video = document.getElementById('hero-bg-video') as HTMLVideoElement | null;
+    const video = videoRef.current;
     if (video) {
       video.playbackRate = 0.8;
       video.onended = () => {
@@ -71,23 +213,32 @@ const Hero: FC = () => {
   }, [showBlackBg]);
 
   return (
-    // Containerul principal care se întinde pe tot ecranul
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white" style={{ fontFamily: 'Exo2, sans-serif' }}>
-      
-      {/* Video de fundal */}
+    <section 
+      ref={sectionRef}
+      className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
+      style={{ fontFamily: 'Exo2, sans-serif' }}
+    >
+      {/* Video de fundal - cropped from bottom */}
       <video
-        id="hero-bg-video"
+        ref={videoRef}
         autoPlay
         muted
         playsInline
         className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+        style={{ 
+          willChange: 'transform',
+          objectPosition: 'center 35%' // Taie mai mult de jos
+        }}
       >
         <source src="/services/back.mp4" type="video/mp4" />
-        {/* Adaugă aici și alte formate video (ex: .webm) pentru compatibilitate maximă */}
       </video>
 
-      {/* Overlay pentru a asigura lizibilitatea textului */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70" />
+      {/* Overlay gradient */}
+      <div 
+        ref={overlayRef}
+        className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70"
+        style={{ willChange: 'opacity' }}
+      />
       
       {/* Fundal negru după terminarea videoclipului */}
       {showBlackBg && (
@@ -104,13 +255,26 @@ const Hero: FC = () => {
         </div>
       )}
 
-      {/* Gradient subtil peste tot conținutul */}
-      <div className="pointer-events-none absolute inset-0 z-20" style={{background: 'linear-gradient(135deg,rgba(20,184,166,0.08) 0%, rgba(59,130,246,0.08) 50%, rgba(15,23,42,0.7) 100%)'}} />
+      {/* Gradient animat */}
+      <div 
+        ref={gradientRef}
+        className="pointer-events-none absolute inset-0 z-20"
+        style={{
+          background: 'linear-gradient(135deg, rgba(20,184,166,0.08) 0%, rgba(59,130,246,0.08) 50%, rgba(15,23,42,0.7) 100%)',
+          backgroundSize: '200% 200%',
+          willChange: 'background-position'
+        }}
+      />
 
       {/* Container pentru conținutul central */}
-      <div className="relative z-40 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
+      <div className="relative z-50 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
         
-        <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-colors duration-300 hover:bg-teal-500/20">
+        {/* Badge cu animație */}
+        <div 
+          ref={badgeRef}
+          className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105 cursor-pointer"
+          style={{ perspective: '1000px' }}
+        >
           <Award size={16} />
           <span className="flex items-center gap-2">
             <Star size={14} className="fill-current text-yellow-400" />
@@ -118,34 +282,68 @@ const Hero: FC = () => {
           </span>
         </div>
 
+        {/* Title cu animație - text mai mic */}
         <h1 
-          ref={titleRef} 
-           className="text-4xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-5xl lg:text-6xl mb-6 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
-              style={{ fontFamily: 'Exo2, sans-serif', letterSpacing: 1 }}>
-                Vezi Cum Arată Viitorul Firmei Tale.<br />
-                 <span className="mt-2 block text-white">
-                 Nu-l imagina — interacționează cu el.
-          </span>
+          ref={titleRef}
+          className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-6 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
+          style={{ 
+            fontFamily: 'Exo2, sans-serif', 
+            letterSpacing: 1,
+            perspective: '1000px'
+          }}
+        >
+          Vezi Cum Arată Viitorul Firmei Tale. Nu-l imagina — interacționează cu el.
         </h1>
 
-        <div className="mb-6 flex justify-center">
-          <span className="select-none font-mono text-3xl font-bold text-teal-400 animate-pulse md:text-4xl">
+        {/* Code symbol cu rotație 3D - mai mic */}
+        <div className="mb-6 flex justify-center" style={{ perspective: '1000px' }}>
+          <span 
+            ref={codeSymbolRef}
+            className="select-none font-mono text-2xl font-bold text-teal-400 md:text-3xl cursor-pointer"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
             &lt;/&gt;
           </span>
         </div>
 
-        <div className="mx-auto mb-8 h-1 w-32 rounded-full bg-gradient-to-r from-teal-400 to-blue-400" />
+        {/* Separator animat */}
+        <div 
+          ref={separatorRef}
+          className="mx-auto mb-8 h-1 w-32 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"
+          style={{ transformOrigin: 'center' }}
+        />
         
+        {/* Subtitle - mai mic */}
         <p 
-          ref={subtitleRef} 
-          className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-slate-200 drop-shadow sm:text-xl flex flex-wrap items-center justify-center gap-2"
+          ref={subtitleRef}
+          className="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
         >
-          Primește un prototip interactiv al noului tău site în mai puțin de 24 de ore. <span className="font-semibold text-teal-300 ml-2 whitespace-nowrap">100% gratuit.</span>
+          Primește un prototip interactiv al noului tău site în mai puțin de 24 de ore.{' '}
+          <span className="font-semibold text-teal-300">100% gratuit.</span>
         </p>
 
-        <div ref={ctaRef} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        {/* CTA Button cu hover effects */}
+        <div 
+          ref={ctaRef}
+          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          style={{ perspective: '1000px' }}
+        >
           <button
-            className="group flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-xl transition-colors duration-300 hover:from-teal-400 hover:to-blue-400 cursor-pointer"
+            className="group relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-2xl transition-all duration-300 hover:shadow-teal-500/50 hover:scale-105 cursor-pointer overflow-hidden"
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1.05,
+                boxShadow: '0 0 40px rgba(20,184,166,0.6)',
+                duration: 0.3
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1,
+                boxShadow: '0 0 0px rgba(20,184,166,0)',
+                duration: 0.3
+              });
+            }}
             onClick={() => {
               const el = document.getElementById('contact');
               if (el) {
@@ -154,9 +352,12 @@ const Hero: FC = () => {
             }}
             type="button"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" /></svg>
-            <span>Vreau Prototipul meu Gratuit</span>
-            <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
+            <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <svg xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" />
+            </svg>
+            <span className="relative z-10">Vreau Prototipul meu Gratuit</span>
+            <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>
