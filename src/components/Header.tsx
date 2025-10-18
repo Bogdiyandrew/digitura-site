@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
-import { Send, Menu, X } from 'lucide-react';
+import {Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
