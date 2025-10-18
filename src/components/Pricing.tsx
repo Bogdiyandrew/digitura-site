@@ -145,8 +145,16 @@ const customServices = [
 
 const faqs = [
   {
-  question: 'Cât costă un site?',
-  answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">2499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">4999<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    question: 'Dacă nu am toți banii acum, putem începe totuși?',
+    answer: 'Da, desigur. Înțelegem că fiecare afacere are ritmul ei, așa că putem împărți plata în mai multe etape – de exemplu, un avans pentru începerea proiectului și restul la final. Important e să pornim și să construim ceva bun împreună, nu să te blochezi din cauza bugetului.'
+  },
+  {
+    question: 'Cum iau legătura cu voi și cum se face plata?',
+    answer: 'Pentru a lua legătura cu noi, poți merge la secțiunea <strong>Contact</strong> de pe site — acolo poți completa formularul sau ne poți suna direct. După ce discutăm detaliile proiectului, stabilim împreună modul de plată. În general, lucrăm cu un avans pentru pornirea proiectului, iar restul se achită la final, după livrare.'
+  },
+  {
+    question: 'Cât costă un site?',
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">2499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">4999<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
@@ -174,7 +182,7 @@ answer: 'În general, un landing page se face în 3–6 zile, un website de prez
   },
   {
     question: 'Ce suport primesc după livrare?',
-    answer: 'Ai 30 de zile de suport gratuit pentru orice problemă tehnică sau întrebări. După, poți alege un plan de mentenanță lunar sau suport la cerere.'
+    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website + Branding</strong>, primești <strong>60 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>90 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
   }
 ];
 
