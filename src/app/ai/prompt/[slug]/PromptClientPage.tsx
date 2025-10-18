@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Copy, Check, Video } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import type { Prompt } from '@/lib/prompts';
 import ImageComparator from '@/components/ImageComparator';
 import CallToAction from '@/components/CallToAction';

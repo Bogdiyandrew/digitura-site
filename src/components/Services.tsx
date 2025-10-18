@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Globe, Target, Zap, Wrench, Palette, TrendingUp, X, LucideIcon, Shield, Gauge, Rocket, Sparkles, Clock, Settings, Users } from 'lucide-react';
+import { ShoppingCart, Globe, Target, Zap, Wrench,TrendingUp, X, LucideIcon, Shield, Gauge, Rocket, Sparkles, Clock, Settings } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useMediaQuery from '../hooks/useMediaQuery';
