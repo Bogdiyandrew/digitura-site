@@ -5,6 +5,12 @@ import Lenis from '@studio-freight/lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gsap from 'gsap';
 
+declare global {
+  interface Window {
+    lenis: Lenis;
+  }
+}
+
 // Înregistrează ScrollTrigger
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -40,7 +46,7 @@ export default function LenisSmoothScroll({ children }: LenisSmoothScrollProps) 
     gsap.ticker.lagSmoothing(0);
 
     // Expune Lenis global pentru acces în alte componente
-    (window as any).lenis = lenis;
+    window.lenis = lenis;
 
     // Cleanup la unmount
     return () => {
