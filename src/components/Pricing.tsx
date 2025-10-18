@@ -34,27 +34,26 @@ const mainPlans = [
   savings: 'Economisești 300 lei',
 },
   {
-  name: 'Partener Digital',
-  price: '2499',
-  cents: '99',
-  subtitle: 'Site complet și branding pentru creștere.',
-  description: 'Perfect pentru afaceri care vor o <strong>imagine profesionistă</strong> și <strong>încredere reală</strong> în ochii clienților.',
-  icon: <Globe className="w-8 h-8" />,
-  features: [
-    'Prezență online profesionistă, construită pentru creștere',
-    'Design personalizat care spune povestea brandului tău',
-    'Branding inclus – logo, paletă de culori și elemente vizuale coerente',
-    'Structură flexibilă – până la 10 pagini optimizate',
-    'Optimizare SEO de bază pentru vizibilitate pe Google',
-    'Consultanță și ghidaj pas cu pas în tot procesul',
-    '<strong>Bonus:</strong> 60 de zile de mentenanță și suport dedicate',
-  ],
-  ctaText: 'Alege Pachetul Popular',
-  gradient: 'from-blue-600 via-cyan-600 to-teal-600',
-  iconGradient: 'from-blue-400 to-cyan-400',
-  isPopular: true,
-  badge: { text: 'CEL MAI POPULAR' },
-  savings: 'Economisești 700 lei',
+    name: 'Website + Branding',
+    price: '2499',
+    cents: '99',
+    subtitle: 'Identitate vizuală completă și website profesionist.',
+    description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
+    icon: <Globe className="w-8 h-8" />,
+    features: [
+      'Website complet de prezentare, fără limită de pagini prestabilită',
+      'Design personalizat care reflectă brandul tău',
+      'Branding complet – logo, culori și elemente vizuale coerente',
+      'Optimizare SEO de bază pentru vizibilitate online',
+      'Consultanță și ghidaj pe tot parcursul proiectului',
+      '<strong>Bonus:</strong> 60 de zile de mentenanță și suport dedicate',
+    ],
+    ctaText: 'Construiește-ți Brandul',
+    gradient: 'from-blue-600 via-cyan-600 to-teal-600',
+    iconGradient: 'from-blue-400 to-cyan-400',
+    isPopular: true,
+    badge: { text: 'CEL MAI CĂUTAT' },
+    savings: 'Economisești 700 lei',
   },
   {
   name: 'Motor E-Commerce',
@@ -64,14 +63,13 @@ const mainPlans = [
   description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
   icon: <ShoppingCart className="w-8 h-8" />,
   features: [
-    'Magazin online complet funcțional și pregătit de vânzare',
-    'Integrare plăți cu cardul și ramburs la livrare',
-    'Configurare automată pentru firmele de curierat',
-    'Panou de administrare ușor de folosit — controlezi totul simplu',
-    'Analiză și rapoarte pentru a urmări vânzările și comenzile',
-    'Automatizări pentru e-mailuri, stocuri și notificări de comandă',
-    '<strong>Bonus:</strong> 90 de zile de mentenanță și suport extins',
-  ],
+  'Magazin online complet, pregătit de vânzare',
+  'Design personalizat adaptat identității brandului tău',
+  'Optimizare SEO tehnică de bază pentru produse și pagini',
+  'Integrare plăți online, curieri și facturare automată',
+  'Automatizări pentru comenzi, e-mailuri și stocuri',
+  '<strong>Bonus:</strong> 90 de zile de suport și optimizare post-lansare',
+],
   ctaText: 'Începe să Vinzi',
   gradient: 'from-emerald-600 via-green-600 to-lime-600',
   iconGradient: 'from-emerald-400 to-lime-400',
@@ -120,7 +118,7 @@ const customServices = [
   {
     name: 'Automatizare Digitală',
     price: 'de la 200 lei/lună',
-    desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează leaduri, trimite notificări și economisește timp prețios.',
+    desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează date, trimite notificări și economisește timp prețios.',
     icon: <Zap className="w-6 h-6" />,
     features: [
       'Automatizări pentru formulare – trimit leadurile direct în e-mail, Google Sheets sau CRM',
@@ -130,6 +128,18 @@ const customServices = [
       'Automatizări personalizate pentru procesele interne ale afacerii',
       'Setup, testare și documentație completă la livrare'
     ]
+  },
+  {
+    name: 'Branding Vizual',
+    price: '300 lei (one-time)',
+    desc: 'Logo, paletă de culori și ghid vizual profesionist pentru orice tip de afacere.',
+    icon: <Sparkles className="w-6 h-6" />,
+  },
+  {
+    name: 'Optimizare SEO',
+    price: '300 lei (one-time)',
+    desc: 'Analiză, meta tag-uri și structură semantică pentru poziționare mai bună în Google.',
+    icon: <Target className="w-6 h-6" />,
   }
 ];
 
@@ -397,29 +407,27 @@ const Pricing: React.FC = () => {
         {/* Custom Services Section */}
         <div className="custom-section mb-20 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-transparent to-blue-500/5 rounded-3xl"></div>
-          <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl p-8 lg:p-12 border border-slate-700/50 relative overflow-hidden">
+          <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 border border-slate-700/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
-              <div className="text-center mb-10">
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-                  Construiește Pachetul{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
-                    Perfect
-                  </span>
+              <div className="text-left mb-12">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+                  Construiește <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
+                  pachetul perfect</span> pentru tine
                 </h3>
-                <p className="text-slate-300 text-lg">
-                  Adaugă servicii extra pentru a-ți transforma viziunea în realitate.
+                <p className="text-slate-300 text-lg lg:text-xl max-w-2xl">
+                  Adaugă servicii extra — branding, SEO, mentenanță sau automatizări — ca să-ți transformi website-ul într-un instrument complet de business.
                 </p>
               </div>
 
-              <div className="max-w-2xl mx-auto space-y-6 lg:space-y-8">
+              <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
                 {customServices.map((service) => (
                   <div
                     key={service.name}
-                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-2xl p-6 hover:border-teal-500/50 transition-all duration-300 hover:scale-105 group opacity-0"
+                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-2xl p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 hover:scale-105 group opacity-0"
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
                       <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
                         <div className="text-white">{service.icon}</div>
                       </div>
