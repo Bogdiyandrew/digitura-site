@@ -12,83 +12,86 @@ if (typeof window !== 'undefined') {
 }
 
 const mainPlans = [
+    {
+  name: 'Lansare Rapidă',
+  price: '999',
+  cents: '99',
+  subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
+  description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
+  icon: <Target className="w-8 h-8" />,
+  features: [
+    'Site complet funcțional, într-o singură pagină',
+    'Conținut clar și orientat pe conversie',
+    'Formular de contact eficient, conectat direct la e-mailul tău',
+    'Încărcare rapidă – sub 2 secunde',
+    'Design responsive (mobil, tabletă, desktop)',
+    '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
+  ],
+  ctaText: 'Pornește Acum',
+  gradient: 'from-slate-600 via-slate-700 to-slate-800',
+  iconGradient: 'from-teal-400 to-cyan-500',
+  isPopular: false,
+  savings: 'Economisești 300 lei',
+},
   {
-    name: 'Lansare Rapidă',
-    price: '999',
-    cents: '99',
-    subtitle: 'Intră online în 7 zile.',
-    description: 'Perfect dacă vrei să-ți validezi o idee sau să prezinți un serviciu, fără complicații.',
-    icon: <Target className="w-8 h-8" />,
-    features: [
-      'Online și gata de clienți în câteva zile',
-      'O singură pagină, clară și direct la subiect',
-      'Formular de contact simplu și eficient',
-      'Pagini care se încarcă în sub 2 secunde',
-      'Design responsive (mobil, tabletă, desktop)',
-      '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
-    ],
-    ctaText: 'Începe Acum',
-    gradient: 'from-slate-600 via-slate-700 to-slate-800',
-    iconGradient: 'from-teal-400 to-cyan-500',
-    isPopular: false,
-    savings: 'Economisești 300 lei',
+  name: 'Partener Digital',
+  price: '2499',
+  cents: '99',
+  subtitle: 'Site complet și branding pentru creștere.',
+  description: 'Perfect pentru afaceri care vor o <strong>imagine profesionistă</strong> și <strong>încredere reală</strong> în ochii clienților.',
+  icon: <Globe className="w-8 h-8" />,
+  features: [
+    'Prezență online profesionistă, construită pentru creștere',
+    'Design personalizat care spune povestea brandului tău',
+    'Branding inclus – logo, paletă de culori și elemente vizuale coerente',
+    'Structură flexibilă – până la 10 pagini optimizate',
+    'Optimizare SEO de bază pentru vizibilitate pe Google',
+    'Consultanță și ghidaj pas cu pas în tot procesul',
+    '<strong>Bonus:</strong> 60 de zile de mentenanță și suport dedicate',
+  ],
+  ctaText: 'Alege Pachetul Popular',
+  gradient: 'from-blue-600 via-cyan-600 to-teal-600',
+  iconGradient: 'from-blue-400 to-cyan-400',
+  isPopular: true,
+  badge: { text: 'CEL MAI POPULAR' },
+  savings: 'Economisești 700 lei',
   },
   {
-    name: 'Partener Digital',
-    price: '2499',
-    cents: '99',
-    subtitle: 'Site complet pentru creștere.',
-    description: 'Site-ul de care afacerea ta are nevoie pentru a arăta profesionist și a câștiga încrederea clienților.',
-    icon: <Globe className="w-8 h-8" />,
-    features: [
-      'O prezență online care inspiră încredere',
-      'Design personalizat, care spune povestea brandului tău',
-      'Structură flexibilă (până la 10 pagini incluse)',
-      'Pregătit din start pentru a fi găsit pe Google (SEO de bază)',
-      'Consultanță și ghidaj pe tot parcursul',
-      '<strong>Bonus:</strong> 60 de zile de mentenanță și suport',
-    ],
-    ctaText: 'Alegerea Inteligentă',
-    gradient: 'from-blue-600 via-cyan-600 to-teal-600',
-    iconGradient: 'from-blue-400 to-cyan-400',
-    isPopular: true,
-    badge: { text: 'CEL MAI POPULAR' },
-    savings: 'Economisești 700 lei',
-  },
-  {
-    name: 'Motor E-Commerce',
-    price: '4999',
-    cents: '99',
-    subtitle: 'Vinde online, fără bătăi de cap.',
-    description: 'Lansăm magazinul tău online complet echipat, gata să primească comenzi și să proceseze plăți.',
-    icon: <ShoppingCart className="w-8 h-8" />,
-    features: [
-      'Un magazin online gata să vândă din prima zi',
-      'Integrare plăți cu cardul și ramburs la livrare',
-      'Panou de administrare ușor de folosit',
-      'Analiză și rapoarte pentru a-ți urmări vânzările',
-      'Configurare automată pentru firmele de curierat',
-      '<strong>Bonus:</strong> 90 de zile de mentenanță și suport pentru magazin',
-    ],
-    ctaText: 'Începe să Vinzi',
-    gradient: 'from-emerald-600 via-teal-600 to-cyan-600',
-    iconGradient: 'from-emerald-400 to-teal-400',
-    isPopular: false,
-    badge: { text: 'PENTRU PROFIT MAXIM' },
-    savings: 'Economisești 1.000 lei',
+  name: 'Motor E-Commerce',
+  price: '4999',
+  cents: '99',
+  subtitle: 'Magazin online complet, gata să vândă din prima zi.',
+  description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
+  icon: <ShoppingCart className="w-8 h-8" />,
+  features: [
+    'Magazin online complet funcțional și pregătit de vânzare',
+    'Integrare plăți cu cardul și ramburs la livrare',
+    'Configurare automată pentru firmele de curierat',
+    'Panou de administrare ușor de folosit — controlezi totul simplu',
+    'Analiză și rapoarte pentru a urmări vânzările și comenzile',
+    'Automatizări pentru e-mailuri, stocuri și notificări de comandă',
+    '<strong>Bonus:</strong> 90 de zile de mentenanță și suport extins',
+  ],
+  ctaText: 'Începe să Vinzi',
+  gradient: 'from-emerald-600 via-green-600 to-lime-600',
+  iconGradient: 'from-emerald-400 to-lime-400',
+  isPopular: false,
+  badge: { text: 'PENTRU PROFIT MAXIM' },
+  savings: 'Economisești 1.000 lei',
   },
   {
     name: 'Soluție Personalizată',
     price: 'La cerere',
     cents: '',
     subtitle: 'Pentru idei care nu încap în cutii.',
-    description: 'Dacă ai o viziune anume sau o nevoie complexă, construim o soluție digitală exact pe măsura ei.',
+    description: 'Ai o viziune unică sau o nevoie complexă? Construim o soluție digitală exact pe măsura ideii tale.',
     icon: <Layers className="w-8 h-8" />,
     features: [
-        'Construim exact ce ai tu în minte, oricât de complex',
-        'Funcționalități dezvoltate special pentru ideea ta',
-        'O fundație tehnică solidă, care poate crește oricât',
-        'Comunicare directă cu dezvoltatorul proiectului',
+        'Dezvoltare complet personalizată – fără limitări de funcționalitate',
+        'Design și structură adaptate obiectivelor tale de business',
+        'Scalabilitate reală – baza tehnică pregătită să crească oricât',
+        'Integrare cu platforme, API-uri și automatizări avansate',
+        'Comunicare directă cu dezvoltatorul pe tot parcursul proiectului',
         '<strong>Bonus:</strong> Suport tehnic dedicat după lansare',
     ],
     ctaText: 'Hai să Discutăm',
@@ -100,12 +103,34 @@ const mainPlans = [
 ];
 
 const customServices = [
-    {
-        name: 'Mentenanță & Suport',
-        price: 'de la 150 lei/lună',
-        desc: 'Liniștea ta digitală. Ne ocupăm de update-uri, securitate și backup-uri, asigurând funcționarea perfectă a site-ului tău.',
-        icon: <Wrench className="w-6 h-6" />
-    },
+  {
+    name: 'Mentenanță & Suport',
+    price: 'de la 100 lei/lună',
+    desc: 'Ne ocupăm de actualizări, securitate și backup-uri, astfel încât site-ul tău să funcționeze perfect, fără întreruperi.',
+    icon: <Wrench className="w-6 h-6" />,
+    features: [
+      'Update-uri regulate pentru WordPress și pluginuri',
+      'Backup automat zilnic și restaurare rapidă',
+      'Monitorizare uptime și performanță 24/7',
+      'Verificare lunară a securității și integrității datelor',
+      'Suport tehnic pentru erori și optimizări minore',
+      'Raport lunar cu statusul site-ului și recomandări'
+    ]
+  },
+  {
+    name: 'Automatizare Digitală',
+    price: 'de la 200 lei/lună',
+    desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează leaduri, trimite notificări și economisește timp prețios.',
+    icon: <Zap className="w-6 h-6" />,
+    features: [
+      'Automatizări pentru formulare – trimit leadurile direct în e-mail, Google Sheets sau CRM',
+      'Notificări automate pe WhatsApp, Slack sau e-mail',
+      'E-mailuri automate pentru cereri primite, coșuri abandonate sau confirmări',
+      'Integrare cu platforme externe – Mailerlite, Airtable, Notion etc.',
+      'Automatizări personalizate pentru procesele interne ale afacerii',
+      'Setup, testare și documentație completă la livrare'
+    ]
+  }
 ];
 
 const faqs = [
@@ -329,9 +354,10 @@ const Pricing: React.FC = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-slate-300 text-sm text-center mb-8 leading-relaxed">
-                    {plan.description}
-                  </p>
+                  <p
+                    className="text-slate-300 text-sm text-center mb-8 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: plan.description }}
+                  />
 
                   {/* Features */}
                   <ul className="space-y-3 mb-8 flex-grow">
@@ -387,7 +413,7 @@ const Pricing: React.FC = () => {
                 </p>
               </div>
 
-              <div className="max-w-2xl mx-auto">
+              <div className="max-w-2xl mx-auto space-y-6 lg:space-y-8">
                 {customServices.map((service) => (
                   <div
                     key={service.name}
