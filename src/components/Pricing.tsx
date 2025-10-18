@@ -66,6 +66,7 @@ const mainPlans = [
       'Un magazin online gata să vândă din prima zi',
       'Integrare plăți cu cardul și ramburs la livrare',
       'Panou de administrare ușor de folosit',
+      'Analiză și rapoarte pentru a-ți urmări vânzările',
       'Configurare automată pentru firmele de curierat',
       '<strong>Bonus:</strong> 90 de zile de mentenanță și suport pentru magazin',
     ],
