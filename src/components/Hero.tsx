@@ -243,7 +243,7 @@ const Hero = () => {
         {/* Badge cu animație */}
         <div 
           ref={badgeRef}
-          className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105 cursor-pointer"
+          className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105"
           style={{ perspective: '1000px' }}
         >
           <Award size={16} />
