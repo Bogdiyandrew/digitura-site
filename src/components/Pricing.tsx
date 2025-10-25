@@ -365,7 +365,6 @@ const Pricing: React.FC = () => {
                         </div>
                         {plan.savings && (
                           <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 bg-teal-500/10 border border-teal-500/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1">
-                            <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-teal-400" />
                             <span className="text-[10px] sm:text-xs text-teal-400 font-semibold">
                               {plan.savings}
                             </span>
