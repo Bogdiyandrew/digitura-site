@@ -1,5 +1,7 @@
 'use client';
 
+import Head from "next/head";
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React from 'react';
@@ -52,6 +54,13 @@ const projects = [
 export default function PortofoliuPage() {
   return (
     <>
+      <Head>
+        <title>Portofoliu | Digitura</title>
+        <meta
+          name="description"
+          content="Vezi proiectele Digitura: site-uri web, experiențe digitale și soluții creative care transformă ideile în realitate."
+        />
+      </Head>
       <Header />
       <main className="bg-slate-950 text-white font-exo2">
         {/* Hero Section */}
