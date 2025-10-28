@@ -151,7 +151,41 @@ const Services: React.FC = () => {
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const sectionRef = useRef<HTMLElement>(null);
 
-    useScrollLock(!!activeServiceId);
+    useEffect(() => {
+      if (typeof window === 'undefined') return;
+
+      // Oprire scroll Lenis când este activ un serviciu
+      if (window.lenis) {
+        if (activeServiceId) {
+          window.lenis.stop();
+        } else {
+          window.lenis.start();
+        }
+      }
+
+      // Blocare suplimentară pentru siguranță (în caz că Lenis e distrus)
+      const html = document.documentElement;
+      const body = document.body;
+      const preventTouch = (e: TouchEvent) => e.preventDefault();
+
+      if (activeServiceId) {
+        html.style.overflow = 'hidden';
+        body.style.overflow = 'hidden';
+        document.addEventListener('touchmove', preventTouch, { passive: false });
+      } else {
+        html.style.overflow = '';
+        body.style.overflow = '';
+        document.removeEventListener('touchmove', preventTouch);
+      }
+
+      return () => {
+        html.style.overflow = '';
+        body.style.overflow = '';
+        document.removeEventListener('touchmove', preventTouch);
+
+        if (window.lenis) window.lenis.start();
+      };
+    }, [activeServiceId]);
 
     const handleNodeClick = (id: string): void => {
         if (isAnimating) return;

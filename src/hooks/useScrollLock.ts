@@ -1,23 +1,33 @@
 import { useEffect } from 'react';
 
-// Acest hook blochează scroll-ul pe elementul <body>
-// atunci când este activat.
+// Hook care blochează scroll-ul pe desktop și mobil (inclusiv iOS)
 const useScrollLock = (isLocked: boolean) => {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    
+    const body = document.body;
+    const html = document.documentElement;
+    const originalBodyOverflow = body.style.overflow;
+    const originalHtmlOverflow = html.style.overflow;
+
+    const preventTouch = (e: TouchEvent) => e.preventDefault();
+
     if (isLocked) {
-      document.body.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+      html.style.overflow = 'hidden';
+      document.addEventListener('touchmove', preventTouch, { passive: false });
+    } else {
+      body.style.overflow = originalBodyOverflow;
+      html.style.overflow = originalHtmlOverflow;
+      document.removeEventListener('touchmove', preventTouch);
     }
 
-    // Când componenta este demontată sau isLocked devine false,
-    // revenim la stilul original.
     return () => {
-      document.body.style.overflow = originalStyle;
+      body.style.overflow = originalBodyOverflow;
+      html.style.overflow = originalHtmlOverflow;
+      document.removeEventListener('touchmove', preventTouch);
     };
-  }, [isLocked]); // Se re-execută doar când starea de blocare se schimbă
+  }, [isLocked]);
 };
 
 export default useScrollLock;
