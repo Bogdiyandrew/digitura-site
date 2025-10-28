@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,7 +12,29 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
-const mainPlans = [
+type OldPrice = {
+  lei: number;
+  cents?: number;
+};
+
+type PricingPlan = {
+  name: string;
+  price: string;
+  cents: string;
+  subtitle: string;
+  description: string;
+  icon: ReactNode;
+  features: string[];
+  ctaText: string;
+  gradient: string;
+  iconGradient: string;
+  isPopular: boolean;
+  oldPrice?: OldPrice;
+  savings?: string;
+  badge?: { text: string };
+};
+
+const mainPlans: PricingPlan[] = [
     {
   name: 'Lansare Rapidă',
   price: '999',
@@ -31,6 +54,7 @@ const mainPlans = [
   gradient: 'from-slate-600 via-slate-700 to-slate-800',
   iconGradient: 'from-teal-400 to-cyan-500',
   isPopular: false,
+  oldPrice: { lei: 1300 },
   savings: 'Economisești 300 lei',
 },
   {
@@ -53,6 +77,7 @@ const mainPlans = [
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
     badge: { text: 'CEL MAI CĂUTAT' },
+    oldPrice: { lei: 3199, cents: 99 },
     savings: 'Economisești 700 lei',
   },
   {
@@ -69,12 +94,13 @@ const mainPlans = [
   'Integrare plăți online, curieri și facturare automată',
   'Automatizări pentru comenzi, e-mailuri și stocuri',
   '<strong>Bonus:</strong> 90 de zile de suport și optimizare post-lansare',
-],
+  ],
   ctaText: 'Începe să Vinzi',
   gradient: 'from-emerald-600 via-green-600 to-lime-600',
   iconGradient: 'from-emerald-400 to-lime-400',
   isPopular: false,
   badge: { text: 'PENTRU PROFIT MAXIM' },
+  oldPrice: { lei: 5999, cents: 99 },
   savings: 'Economisești 1.000 lei',
   },
   {
@@ -259,6 +285,39 @@ const Pricing: React.FC = () => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
+  const parsePlanPrice = (price: string, cents?: string): number | null => {
+    const integerPart = price.replace(/[^\d]/g, '');
+    if (!integerPart) {
+      return null;
+    }
+
+    const base = Number(integerPart);
+    if (Number.isNaN(base)) {
+      return null;
+    }
+
+    const centsValue = cents
+      ? Number(cents.replace(/[^\d]/g, '').padEnd(2, '0').slice(0, 2))
+      : 0;
+
+    return base + centsValue / 100;
+  };
+
+  const formatOldPrice = (oldPrice?: { lei: number; cents?: number }): string => {
+    if (!oldPrice) {
+      return '';
+    }
+
+    const centsValue = typeof oldPrice.cents === 'number' ? oldPrice.cents : 0;
+    const decimals = centsValue > 0 ? 2 : 0;
+    const value = oldPrice.lei + centsValue / 100;
+
+    return value.toLocaleString('ro-RO', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  };
+
   return (
     <section ref={sectionRef} id="preturi" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden" style={{ fontFamily: 'Exo2, sans-serif' }}>
       {/* Background decorative elements */}
@@ -289,7 +348,21 @@ const Pricing: React.FC = () => {
 
         {/* Pricing Cards Grid */}
         <div className="pricing-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-5 lg:gap-6 mb-20 px-2 sm:px-0">
-          {mainPlans.map((plan, index: number) => (
+          {mainPlans.map((plan, index: number) => {
+            const priceValue = parsePlanPrice(plan.price, plan.cents);
+            const oldPriceValue = plan.oldPrice
+              ? plan.oldPrice.lei + ((plan.oldPrice.cents ?? 0) / 100)
+              : null;
+            const savingsAmount =
+              oldPriceValue !== null && priceValue !== null
+                ? Math.max(oldPriceValue - priceValue, 0)
+                : null;
+            const computedSavingsLabel =
+              savingsAmount && savingsAmount >= 0.5
+                ? `Economisești ${Math.round(savingsAmount).toLocaleString('ro-RO')} lei`
+                : plan.savings;
+
+            return (
             <div
               key={plan.name}
               onMouseEnter={() => setHoveredCard(index)}
@@ -353,7 +426,14 @@ const Pricing: React.FC = () => {
                   <div className="text-center mb-4 sm:mb-6">
                     {plan.price !== 'La cerere' ? (
                       <div>
-                        <div className="flex items-start justify-center gap-1">
+                        {plan.oldPrice && (
+                          <div className="flex justify-center mb-1 sm:mb-2">
+                            <span className="text-slate-500/80 text-xs sm:text-sm font-semibold line-through decoration-2 decoration-rose-400/70">
+                              {formatOldPrice(plan.oldPrice)} lei
+                            </span>
+                          </div>
+                        )}
+                        <div className="flex items-end justify-center gap-1">
                           <span className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">de la</span>
                           <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">
                             {plan.price}
@@ -363,10 +443,10 @@ const Pricing: React.FC = () => {
                             <span className="text-slate-400 text-[10px] sm:text-xs">lei</span>
                           </div>
                         </div>
-                        {plan.savings && (
+                        {(computedSavingsLabel || plan.savings) && (
                           <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 bg-teal-500/10 border border-teal-500/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1">
                             <span className="text-[10px] sm:text-xs text-teal-400 font-semibold">
-                              {plan.savings}
+                              {computedSavingsLabel || plan.savings}
                             </span>
                           </div>
                         )}
@@ -416,7 +496,8 @@ const Pricing: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Custom Services Section */}
