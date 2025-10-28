@@ -42,14 +42,14 @@ interface ServiceData {
 
 type ConnectionPair = [string, string];
 
-// --- MODIFICARE: Poziții noi pentru un layout hexagonal pe mobil ---
+// --- MODIFICARE: Poziții ajustate pentru layout circular ---
 const servicesData: ServiceData[] = [
   { 
     id: 'ecommerce', 
     title: 'Magazin Online', 
     desc: 'Motorul tău de vânzări care funcționează 24/7. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență memorabilă.', 
     icon: ShoppingCart, 
-    position: { desktop: { x: 30, y: 25 }, mobile: { x: 50, y: 15 } }, // Top
+    position: { desktop: { x: 26, y: 32 }, mobile: { x: 22, y: 28 } }, // Stânga-sus
     image: '/services/MAGAZIN.webp',
     color: 'teal',
     benefits: [
@@ -62,7 +62,7 @@ const servicesData: ServiceData[] = [
     title: 'Website Prezentare', 
     desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism.', 
     icon: Globe, 
-    position: { desktop: { x: 50, y: 45 }, mobile: { x: 80, y: 35 } }, // Top-dreapta
+    position: { desktop: { x: 50, y: 50 }, mobile: { x: 50, y: 48 } }, // Centru
     image: '/services/WEBSITEPREZENTARE.webp',
     color: 'blue',
     benefits: [
@@ -75,7 +75,7 @@ const servicesData: ServiceData[] = [
     title: 'Landing Page', 
     desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiune.', 
     icon: Target, 
-    position: { desktop: { x: 70, y: 25 }, mobile: { x: 80, y: 65 } }, // Jos-dreapta
+    position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } }, // Dreapta-sus
     image: '/services/LGPAGE.webp',
     color: 'teal',
     benefits: [
@@ -88,7 +88,7 @@ const servicesData: ServiceData[] = [
     title: 'Automatizare', 
     desc: 'Îți redăm cel mai de preț activ: timpul. Implementăm sisteme inteligente care preiau sarcinile repetitive și elimină erorile umane.', 
     icon: Zap, 
-    position: { desktop: { x: 25, y: 70 }, mobile: { x: 20, y: 35 } }, // Top-stânga
+    position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } }, // Stânga-jos
     image: '/services/AUTO.webp',
     color: 'blue',
     benefits: [
@@ -101,7 +101,7 @@ const servicesData: ServiceData[] = [
     title: 'Mentenanță', 
     desc: 'Liniștea ta, garantată. Ne asigurăm că afacerea ta online este mereu protejată, actualizată și funcționează la performanță maximă.', 
     icon: Wrench, 
-    position: { desktop: { x: 50, y: 90 }, mobile: { x: 50, y: 85 } }, // Jos
+    position: { desktop: { x: 50, y: 88 }, mobile: { x: 50, y: 84 } }, // Jos
     image: '/services/MAINTENANCE.webp',
     color: 'teal',
      benefits: [
@@ -114,21 +114,35 @@ const servicesData: ServiceData[] = [
     title: 'Marketing Digital', 
     desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO și Ads, nu doar atragem trafic, ci construim audiențe care cumpără.', 
     icon: TrendingUp, 
-    position: { desktop: { x: 75, y: 70 }, mobile: { x: 20, y: 65 } }, // Jos-stânga
+    position: { desktop: { x: 74, y: 70 }, mobile: { x: 78, y: 64 } }, // Dreapta-jos
     image: '/services/MARK.webp',
     color: 'teal',
     benefits: [
         { icon: Target, stat: 'Creștere', label: 'Clienți Potriviți', color: 'blue' },
         { icon: TrendingUp, stat: 'Măsurabil', label: 'ROI Pozitiv', color: 'teal' },
     ]
+  },
+  { 
+    id: 'branding', 
+    title: 'Branding', 
+    desc: 'Construim identități vizuale și mesaje coerente care te diferențiază și inspiră încredere. De la logo la tonul de comunicare, totul spune aceeași poveste.', 
+    icon: Sparkles, 
+    position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } }, // Sus
+    image: '/services/BRAND.webp',
+    color: 'blue',
+    benefits: [
+        { icon: Sparkles, stat: 'Memorabil', label: 'Identitate Clară', color: 'teal' },
+        { icon: Shield, stat: 'Încredere', label: 'Brand Consistent', color: 'blue' },
+    ]
   }
 ];
 
 // --- MODIFICARE: Conexiuni actualizate pentru noul layout ---
 const connections: ConnectionPair[] = [
-  ['ecommerce', 'website'], ['website', 'landing'], ['landing', 'maintenance'], 
-  ['maintenance', 'marketing'], ['marketing', 'automation'], ['automation', 'ecommerce'],
-  ['website', 'maintenance']
+  ['branding', 'website'], ['ecommerce', 'website'], ['landing', 'website'], 
+  ['marketing', 'website'], ['maintenance', 'website'], ['automation', 'website'],
+  ['branding', 'landing'], ['landing', 'marketing'], ['marketing', 'maintenance'],
+  ['maintenance', 'automation'], ['automation', 'ecommerce'], ['ecommerce', 'branding']
 ];
 
 const Services: React.FC = () => {
