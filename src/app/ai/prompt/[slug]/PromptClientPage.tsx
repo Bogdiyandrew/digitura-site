@@ -1,8 +1,8 @@
 'use client'; 
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Play, Pause } from 'lucide-react';
 import type { Prompt } from '@/lib/prompts';
 import ImageComparator from '@/components/ImageComparator';
 import CallToAction from '@/components/CallToAction';
@@ -13,6 +13,13 @@ interface PromptClientPageProps {
 
 const PromptClientPage: React.FC<PromptClientPageProps> = ({ promptData }) => {
   const [copied, setCopied] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const playButtonPositionClasses = isVideoPlaying
+    ? 'bottom-4 right-4'
+    : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2';
+  const playButtonSizeClasses = isVideoPlaying ? 'h-12 w-12' : 'h-14 w-14';
+  const playIconSize = isVideoPlaying ? 20 : 28;
 
   const handleCopy = () => {
     // --- MODIFICARE AICI ---
@@ -23,10 +30,53 @@ const PromptClientPage: React.FC<PromptClientPageProps> = ({ promptData }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleToggleVideo = () => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    if (videoRef.current.paused) {
+      videoRef.current
+        .play()
+        .then(() => setIsVideoPlaying(true))
+        .catch(() => {
+          // Intenționat gol - unele browsere pot bloca play fără interacțiune suplimentară.
+        });
+    } else {
+      videoRef.current.pause();
+      setIsVideoPlaying(false);
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setIsVideoPlaying(false);
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
-        {promptData.beforeImageUrl ? (
+        {promptData.type === 'video' && promptData.videoUrl ? (
+          <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-slate-900/80 border border-slate-800">
+            <video
+              ref={videoRef}
+              className="w-full h-auto bg-black"
+              src={promptData.videoUrl}
+              poster={promptData.imageUrl}
+              playsInline
+              onPlay={() => setIsVideoPlaying(true)}
+              onPause={() => setIsVideoPlaying(false)}
+              onEnded={handleVideoEnded}
+            />
+            <button
+              onClick={handleToggleVideo}
+              type="button"
+              className={`absolute ${playButtonPositionClasses} ${playButtonSizeClasses} rounded-full text-white flex items-center justify-center transition-colors cursor-pointer ${isVideoPlaying ? 'bg-black/60 hover:bg-black/80' : 'bg-black/70 hover:bg-teal-500'}`}
+              aria-label={isVideoPlaying ? 'Pune video-ul pe pauză' : 'Pornește video-ul'}
+            >
+              {isVideoPlaying ? <Pause size={playIconSize} /> : <Play size={playIconSize} />}
+            </button>
+          </div>
+        ) : promptData.beforeImageUrl ? (
           <ImageComparator 
             beforeImage={promptData.beforeImageUrl}
             afterImage={promptData.imageUrl}
