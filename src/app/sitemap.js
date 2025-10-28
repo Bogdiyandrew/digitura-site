@@ -9,6 +9,7 @@ export default function sitemap() {
   // 1. Paginile statice
   const staticPages = [
     '/',
+    '/portofoliu',
     '/ai',
     '/politica-cookies',
     '/politica-de-confidentialitate',
