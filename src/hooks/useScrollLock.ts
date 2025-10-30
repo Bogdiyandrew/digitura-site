@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-// Hook care blochează scroll-ul pe desktop și mobil (inclusiv iOS)
 const useScrollLock = (isLocked: boolean) => {
   useEffect(() => {
     if (typeof document === 'undefined') return;

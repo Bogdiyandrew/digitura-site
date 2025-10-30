@@ -320,14 +320,12 @@ const Pricing: React.FC = () => {
 
   return (
     <section ref={sectionRef} id="preturi" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden" style={{ fontFamily: 'Exo2, sans-serif' }}>
-      {/* Background decorative elements */}
       <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
       <div className="absolute top-1/2 left-0 w-0.5 sm:w-1 h-48 sm:h-64 bg-gradient-to-b from-transparent via-teal-500/30 to-transparent"></div>
       <div className="absolute top-1/3 right-0 w-0.5 sm:w-1 h-48 sm:h-64 bg-gradient-to-b from-transparent via-blue-500/30 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
             <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
@@ -346,7 +344,6 @@ const Pricing: React.FC = () => {
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
         <div className="pricing-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-5 lg:gap-6 mb-20 px-2 sm:px-0">
           {mainPlans.map((plan, index: number) => {
             const priceValue = parsePlanPrice(plan.price, plan.cents);
@@ -369,7 +366,6 @@ const Pricing: React.FC = () => {
               onMouseLeave={() => setHoveredCard(null)}
               className={`pricing-card relative group ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} opacity-0`}
             >
-              {/* Popular Badge */}
               {plan.badge && (
                 <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
                   <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
@@ -381,7 +377,6 @@ const Pricing: React.FC = () => {
                 </div>
               )}
 
-              {/* Card */}
               <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden
                 ${plan.isPopular ? 'bg-slate-800/50 border-2 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
                 'bg-slate-800/30 border-2 border-slate-700/50 hover:border-slate-600/80'}
@@ -390,20 +385,15 @@ const Pricing: React.FC = () => {
                   backdropFilter: 'blur(20px)',
                 }}
               >
-                {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none`}></div>
 
-                {/* Animated border glow effect */}
                 <div className={`absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
                   style={{
                     background: `linear-gradient(135deg, transparent 0%, ${plan.isPopular ? 'rgba(20, 184, 166, 0.1)' : 'rgba(71, 85, 105, 0.1)'} 50%, transparent 100%)`,
                     animation: 'shimmer 2s infinite'
                   }}
                 ></div>
-                
-                {/* Content */}
                 <div className="relative z-10 flex flex-col h-full">
-                  {/* Icon */}
                   <div className="flex justify-center mb-4 sm:mb-6">
                     <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
                       <div className="text-white">
@@ -412,17 +402,14 @@ const Pricing: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Plan Name */}
                   <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
                     {plan.name}
                   </h3>
 
-                  {/* Subtitle */}
                   <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2">
                     {plan.subtitle}
                   </p>
 
-                  {/* Price */}
                   <div className="text-center mb-4 sm:mb-6">
                     {plan.price !== 'La cerere' ? (
                       <div>
@@ -458,13 +445,11 @@ const Pricing: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Description */}
                   <p
                     className="text-slate-300 text-xs sm:text-sm text-center mb-6 sm:mb-8 leading-relaxed px-1"
                     dangerouslySetInnerHTML={{ __html: plan.description }}
                   />
 
-                  {/* Features */}
                   <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2 sm:gap-3">
@@ -479,7 +464,6 @@ const Pricing: React.FC = () => {
                     ))}
                   </ul>
 
-                  {/* CTA Button */}
                   <button
                     onClick={(e) => handlePlanClick(e, plan.name)}
                     className={`w-full font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 group/btn cursor-pointer text-sm sm:text-base
@@ -500,7 +484,6 @@ const Pricing: React.FC = () => {
           })}
         </div>
 
-        {/* Custom Services Section */}
         <div className="custom-section mb-16 sm:mb-20 relative px-2 sm:px-0">
           <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-transparent to-blue-500/5 rounded-2xl sm:rounded-3xl"></div>
           <div className="bg-slate-800/40 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 border border-slate-700/50 relative overflow-hidden">
@@ -544,7 +527,6 @@ const Pricing: React.FC = () => {
           </div>
         </div>
 
-        {/* FAQ Section */}
         <div className="max-w-4xl mx-auto px-2 sm:px-0 faq-section">
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">

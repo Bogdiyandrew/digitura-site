@@ -11,7 +11,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Interfețe TypeScript
 interface Position {
   x: number;
   y: number;
@@ -42,14 +41,13 @@ interface ServiceData {
 
 type ConnectionPair = [string, string];
 
-// --- MODIFICARE: Poziții ajustate pentru layout circular ---
 const servicesData: ServiceData[] = [
   { 
     id: 'ecommerce', 
     title: 'Magazin Online', 
     desc: 'Motorul tău de vânzări care funcționează 24/7. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență memorabilă.', 
     icon: ShoppingCart, 
-    position: { desktop: { x: 26, y: 32 }, mobile: { x: 22, y: 28 } }, // Stânga-sus
+    position: { desktop: { x: 26, y: 32 }, mobile: { x: 22, y: 28 } },
     image: '/services/MAGAZIN.webp',
     color: 'teal',
     benefits: [
@@ -62,7 +60,7 @@ const servicesData: ServiceData[] = [
     title: 'Website Prezentare', 
     desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism.', 
     icon: Globe, 
-    position: { desktop: { x: 50, y: 50 }, mobile: { x: 50, y: 48 } }, // Centru
+    position: { desktop: { x: 50, y: 50 }, mobile: { x: 50, y: 48 } },
     image: '/services/WEBSITEPREZENTARE.webp',
     color: 'blue',
     benefits: [
@@ -75,7 +73,7 @@ const servicesData: ServiceData[] = [
     title: 'Landing Page', 
     desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiune.', 
     icon: Target, 
-    position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } }, // Dreapta-sus
+    position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } },
     image: '/services/LGPAGE.webp',
     color: 'teal',
     benefits: [
@@ -88,7 +86,7 @@ const servicesData: ServiceData[] = [
     title: 'Automatizare', 
     desc: 'Îți redăm cel mai de preț activ: timpul. Implementăm sisteme inteligente care preiau sarcinile repetitive și elimină erorile umane.', 
     icon: Zap, 
-    position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } }, // Stânga-jos
+    position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } },
     image: '/services/AUTO.webp',
     color: 'blue',
     benefits: [
@@ -101,7 +99,7 @@ const servicesData: ServiceData[] = [
     title: 'Mentenanță', 
     desc: 'Liniștea ta, garantată. Ne asigurăm că afacerea ta online este mereu protejată, actualizată și funcționează la performanță maximă.', 
     icon: Wrench, 
-    position: { desktop: { x: 50, y: 88 }, mobile: { x: 50, y: 84 } }, // Jos
+    position: { desktop: { x: 50, y: 88 }, mobile: { x: 50, y: 84 } },
     image: '/services/MAINTENANCE.webp',
     color: 'teal',
      benefits: [
@@ -114,7 +112,7 @@ const servicesData: ServiceData[] = [
     title: 'Marketing Digital', 
     desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO și Ads, nu doar atragem trafic, ci construim audiențe care cumpără.', 
     icon: TrendingUp, 
-    position: { desktop: { x: 74, y: 70 }, mobile: { x: 78, y: 64 } }, // Dreapta-jos
+    position: { desktop: { x: 74, y: 70 }, mobile: { x: 78, y: 64 } },
     image: '/services/MARK.webp',
     color: 'teal',
     benefits: [
@@ -127,7 +125,7 @@ const servicesData: ServiceData[] = [
     title: 'Branding', 
     desc: 'Construim identități vizuale și mesaje coerente care te diferențiază și inspiră încredere. De la logo la tonul de comunicare, totul spune aceeași poveste.', 
     icon: Sparkles, 
-    position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } }, // Sus
+    position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } },
     image: '/services/BRAND.webp',
     color: 'blue',
     benefits: [
@@ -137,7 +135,6 @@ const servicesData: ServiceData[] = [
   }
 ];
 
-// --- MODIFICARE: Conexiuni actualizate pentru noul layout ---
 const connections: ConnectionPair[] = [
   ['branding', 'website'], ['ecommerce', 'website'], ['landing', 'website'], 
   ['marketing', 'website'], ['maintenance', 'website'], ['automation', 'website'],
@@ -153,8 +150,6 @@ const Services: React.FC = () => {
 
     useEffect(() => {
       if (typeof window === 'undefined') return;
-
-      // Oprire scroll Lenis când este activ un serviciu
       if (window.lenis) {
         if (activeServiceId) {
           window.lenis.stop();
@@ -162,12 +157,9 @@ const Services: React.FC = () => {
           window.lenis.start();
         }
       }
-
-      // Blocare suplimentară pentru siguranță (în caz că Lenis e distrus)
       const html = document.documentElement;
       const body = document.body;
       const preventTouch = (e: TouchEvent) => e.preventDefault();
-
       if (activeServiceId) {
         html.style.overflow = 'hidden';
         body.style.overflow = 'hidden';
@@ -177,12 +169,10 @@ const Services: React.FC = () => {
         body.style.overflow = '';
         document.removeEventListener('touchmove', preventTouch);
       }
-
       return () => {
         html.style.overflow = '';
         body.style.overflow = '';
         document.removeEventListener('touchmove', preventTouch);
-
         if (window.lenis) window.lenis.start();
       };
     }, [activeServiceId]);
@@ -248,7 +238,6 @@ const Services: React.FC = () => {
             
             <div className="text-center px-6 pointer-events-none relative z-10">
                  <div className="section-title">
-                    {/* --- MODIFICARE: Titlu și subtitlu responsive --- */}
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 opacity-0">
                       Servicii? Nu. <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Un Ecosistem de Creștere.</span>
                     </h2>
@@ -314,7 +303,6 @@ const Services: React.FC = () => {
                     style={{opacity: 0, pointerEvents: 'none'}} 
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* --- MODIFICARE: Aspect ratio nou pentru mobil --- */}
                     <div className="relative w-full aspect-[4/5] sm:aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50">
                         {activeService && (
                             <>
@@ -328,7 +316,6 @@ const Services: React.FC = () => {
 
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20"></div>
                                 
-                                {/* --- MODIFICARE: Dimensiuni și padding responsive pentru text --- */}
                                 <div className="details-content absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-10 text-left">
                                     <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-white drop-shadow-lg" style={{ fontFamily: 'Exo2, sans-serif' }}>
                                         {activeService.title}

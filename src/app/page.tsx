@@ -7,7 +7,6 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
-// O componentă simplă de încărcare pentru a fi afișată în timpul așteptării
 const ContactLoading = () => {
   return (
     <div className="w-full py-32 bg-slate-950 flex items-center justify-center min-h-[50vh]">
@@ -24,14 +23,10 @@ export default function Home() {
       <About />
       <Services />
       <Pricing />
-      {/* Am înfășurat componenta Contact în Suspense */}
-      {/* Acest lucru îi permite lui Next.js să randeze pagina pe server */}
-      {/* fără a aștepta componenta Contact, care depinde de browser. */}
       <Suspense fallback={<ContactLoading />}>
         <Contact />
       </Suspense>
       <Footer />
-      {/* Alte componente sau secțiuni pot fi adăugate aici */}
     </main>
   );
 }

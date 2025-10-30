@@ -8,11 +8,10 @@ import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
-// --- MODIFICARE 1: Am adăugat proprietatea 'isSpecial' la interfață ---
 interface MenuLink {
   href: string;
   label: string;
-  isSpecial?: boolean; // Proprietate opțională pentru a marca link-ul
+  isSpecial?: boolean;
 }
 
 interface MousePosition {
@@ -20,7 +19,6 @@ interface MousePosition {
   y: number;
 }
 
-// Lista de linkuri pentru meniu
 const menuLinks: MenuLink[] = [
   { href: '#despre', label: 'Despre' },
   { href: '#servicii', label: 'Servicii' },
@@ -38,7 +36,6 @@ const Header: React.FC = () => {
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const pathname = usePathname();
 
-  // Efect pentru ascundere/afișare la scroll
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -58,7 +55,6 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [mobileOpen]);
 
-  // Efect pentru parallax pe fundal
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -73,7 +69,6 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Blochează scroll-ul paginii când meniul mobil este deschis
   useEffect(() => {
     if (typeof document === 'undefined') return;
     document.body.style.overflow = mobileOpen ? 'hidden' : 'auto';
@@ -82,7 +77,6 @@ const Header: React.FC = () => {
     };
   }, [mobileOpen]);
 
-  // Funcție centralizată pentru navigare
   const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>, isMobile: boolean = false): void => {
     e.preventDefault();
 
@@ -153,7 +147,6 @@ const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* --- MODIFICARE 3: Am adăugat logica pentru stilul special în meniul Desktop --- */}
           <nav className={`hidden lg:flex items-center gap-6 mx-auto ${poppins.className}`}>
             {menuLinks.filter(link => !link.isSpecial).map((link: MenuLink) => (
               <a
@@ -212,7 +205,6 @@ const Header: React.FC = () => {
             </button>
           </div>
           
-          {/* --- MODIFICARE 4: Am adăugat logica pentru stilul special în meniul Mobil --- */}
           <div className="flex flex-col p-6 gap-2">
             {menuLinks.map((link: MenuLink, index: number) => (
               link.isSpecial ? (

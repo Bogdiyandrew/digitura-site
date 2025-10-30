@@ -1,4 +1,3 @@
-// src/components/ImageComparator.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -27,7 +26,6 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterIma
       onClick={toggleImage}
       className="relative w-full aspect-square cursor-pointer select-none overflow-hidden rounded-xl border border-slate-800 group bg-black/20"
     >
-      {/* Imaginea "Before" */}
       <Image
         src={beforeImage}
         alt={`Before - ${alt}`}
@@ -35,7 +33,6 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterIma
         objectFit="contain"
         className="transition-opacity duration-700 ease-in-out"
       />
-      {/* Imaginea "After" */}
       <Image
         src={afterImage}
         alt={`After - ${alt}`}
@@ -43,7 +40,6 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterIma
         objectFit="contain"
         className={`transition-opacity duration-700 ease-in-out ${isAfterVisible ? 'opacity-100' : 'opacity-0'}`}
       />
-      {/* Etichetele "Before" / "After" */}
       <div className={`absolute top-3 right-3 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-sm transition-opacity duration-300 ${isAfterVisible ? 'opacity-0' : 'opacity-100'}`}>
         Before
       </div>
@@ -51,11 +47,7 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ beforeImage, afterIma
         After
       </div>
 
-      {/* Sugestia de interacțiune */}
       {!hasInteracted && (
-        // --- MODIFICARE AICI ---
-        // Am înlocuit 'backdrop-blur-sm' cu 'backdrop-blur-xs' pentru un efect mai subtil.
-        // Dacă vrei să scoți complet blur-ul, șterge 'backdrop-blur-xs'.
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xs pointer-events-none transition-opacity duration-500">
           <div className="flex items-center gap-3 text-white bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700 animate-pulse">
             <MousePointerClick size={20} />

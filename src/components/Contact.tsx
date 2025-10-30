@@ -2,9 +2,8 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Layers } from 'lucide-react'; // MODIFICARE: Am adăugat icon-ul "Layers"
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Layers } from 'lucide-react';
 
-// --- Interfețe TypeScript pentru claritate ---
 interface ToastProps {
   message: string;
   type: 'success' | 'error';
@@ -17,13 +16,12 @@ interface PricingPackage {
   icon: React.ReactElement;
 }
 
-// Interfața a fost actualizată pentru a include culoarea
 interface ContactItem {
   icon: LucideIcon;
   label: string;
   value: string;
   href: string;
-  color: 'teal' | 'blue'; // Adăugăm proprietatea pentru culoare
+  color: 'teal' | 'blue';
 }
 
 interface ToastState {
@@ -32,7 +30,6 @@ interface ToastState {
   type: 'success' | 'error';
 }
 
-// --- Componenta pentru Notificări (Toast) ---
 const ToastNotification: React.FC<ToastProps> = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -58,7 +55,6 @@ const ToastNotification: React.FC<ToastProps> = ({ message, type, onClose }) => 
   );
 };
 
-// --- Componenta Principală de Contact ---
 const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -68,15 +64,13 @@ const Contact: React.FC = () => {
   
   const searchParams = useSearchParams();
 
-  // MODIFICARE: Am adăugat pachetul "Soluție Personalizată" aici
   const pricingPackages: PricingPackage[] = [
     { id: 'lansare-rapida', name: 'Lansare Rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'partener-digital', name: 'Partener Digital', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'motor-ecommerce', name: 'Motor E-Commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'solutie-personalizata', name: 'Soluție Personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> }, // Pachetul nou
+    { id: 'solutie-personalizata', name: 'Soluție Personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
   ];
 
-  // Lista de contact a fost actualizată cu proprietatea 'color'
   const contactItems: ContactItem[] = [
     { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro', color: 'teal' },
     { icon: Phone, label: 'WhatsApp & Telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
@@ -187,7 +181,6 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12 items-start">
-          {/* --- Formularul --- */}
           <form 
             onSubmit={handleSubmit} 
             ref={formRef}
@@ -195,14 +188,12 @@ const Contact: React.FC = () => {
           >
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">1. Alege Pachetul de Start</h3>
-              {/* MODIFICARE: Am ajustat grid-ul pentru 4 coloane pe ecrane medii și mari */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {pricingPackages.map((pkg) => (
                   <button 
                     key={pkg.id} 
                     type="button" 
                     onClick={() => setSelectedPackage(pkg.name)}
-                    // MODIFICARE: Am adăugat "cursor-pointer" pentru a fi explicit
                     className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${selectedPackage === pkg.name ? 'bg-teal-500/10 border-teal-400 scale-105' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
                   >
                     <div className={selectedPackage === pkg.name ? 'text-teal-300' : 'text-slate-400'}>{pkg.icon}</div>
@@ -236,7 +227,6 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* --- MODIFICARE: Butonul de trimitere actualizat --- */}
             <button 
               type="submit" 
               disabled={isSending} 
@@ -256,7 +246,6 @@ const Contact: React.FC = () => {
             </button>
           </form>
 
-          {/* --- MODIFICARE: Detalii de Contact Direct actualizate --- */}
           <div className={`lg:col-span-2 flex flex-col gap-8 transition-all duration-1000 ease-out delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h3 className="text-2xl font-bold text-white text-center lg:text-left">Sau contactează-ne direct</h3>
             {contactItems.map((item) => {
@@ -285,7 +274,6 @@ const Contact: React.FC = () => {
                 </a>
               );
             })}
-            {/* --- ADAUGARE: Secțiunea "Răspuns Rapid" --- */}
             <div className="mt-4 p-6 rounded-2xl bg-gradient-to-br from-slate-800/20 to-slate-900/20 backdrop-blur-sm border border-slate-700/30 text-center">
               <h4 className="text-xl font-bold mb-2 bg-gradient-to-r from-teal-300 to-blue-300 bg-clip-text text-transparent">
                 Răspuns Rapid

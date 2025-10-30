@@ -55,9 +55,7 @@ const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, video
             ))}
           </div>
           <div className="relative bg-slate-800 p-4 rounded-lg mt-auto">
-            {/* --- MODIFICARE AICI --- */}
             <p className="text-slate-300 text-sm leading-relaxed font-mono pr-10 truncate">
-              {/* Afișează 'task', dacă nu există, afișează 'goal', altfel titlul */}
               {jsonPrompt.task || jsonPrompt.goal || title}
             </p>
             <button

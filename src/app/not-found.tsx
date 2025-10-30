@@ -13,7 +13,6 @@ const NotFound = () => {
         className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white relative overflow-hidden"
         style={{ fontFamily: 'Exo2, sans-serif' }}
       >
-        {/* Efecte de fundal */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse animation-delay-4000"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] border-4 border-slate-700/50 rounded-full animate-spin-slow" />

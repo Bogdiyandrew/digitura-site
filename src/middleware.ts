@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Extrage IP-ul (Vercel folosește x-forwarded-for)
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     'unknown'
@@ -16,7 +15,6 @@ export function middleware(request: NextRequest) {
   return NextResponse.next()
 }
 
-// Rulează middleware pe toate rutele
 export const config = {
   matcher: '/:path*',
 }

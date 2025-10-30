@@ -1,5 +1,3 @@
-// src/lib/prompts.ts
-
 interface JsonPrompt {
   task?: string; 
   goal?: string;  
@@ -98,7 +96,6 @@ export const prompts: Prompt[] = [
     ]
   },
   
-  // --- NOU: Prompt pentru parfumul Tom Ford ---
   {
     id: 4,
     slug: 'tomford-perfume-enchanted-forest',
@@ -138,7 +135,7 @@ export const prompts: Prompt[] = [
         "format": "PNG"
       }
     },
-    imageUrl: '/photos/tomford-perfum.png', // Asigură-te că salvezi imaginea generată cu acest nume în /public
+    imageUrl: '/photos/tomford-perfum.png', 
     tags: ['Produs', 'TomFord', 'Cinematic', 'Pădure'],
     type: 'image',
     instructions: [

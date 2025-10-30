@@ -5,18 +5,15 @@ import { Zap, TrendingUp, Clock, EyeOff, BarChart2, Users } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Asigură-te că gsap este înregistrat corect
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Interfața pentru props-urile componentei RevealText
 interface RevealTextProps {
   children: ReactNode;
   className?: string;
 }
 
-// Componenta ajutătoare reutilizabilă pentru efectul de text-reveal
 const RevealText: React.FC<RevealTextProps> = ({ children, className }) => {
     const textRef = useRef<HTMLSpanElement>(null);
 
@@ -46,7 +43,6 @@ const RevealText: React.FC<RevealTextProps> = ({ children, className }) => {
     );
 };
 
-// Componenta pentru linia de grafic animată
 const PremiumGrowthLine: React.FC = () => (
   <svg
     viewBox="0 0 100 50"
@@ -86,7 +82,6 @@ const About: React.FC = () => {
         });
 
         if (standardColRef.current && premiumColRef.current) {
-          // Animație mai rapidă și mai ușoară
           tl.fromTo(standardColRef.current, 
             { opacity: 0, y: 40 }, 
             { opacity: 0.6, y: 0, duration: 0.6, ease: 'power3.out' }
@@ -97,8 +92,6 @@ const About: React.FC = () => {
             "-=0.4"
           );
         }
-          
-        // Animații pentru features - mai rapide
         gsap.fromTo('.premium-feature',
             { opacity: 0, y: 20 },
             {
@@ -127,7 +120,6 @@ const About: React.FC = () => {
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Header Section - Responsive text sizes */}
         <div className="mb-12 sm:mb-14 md:mb-16">
           <RevealText>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight px-2">
@@ -141,12 +133,9 @@ const About: React.FC = () => {
           </RevealText>
         </div>
 
-        {/* Grid Section - Responsive layout */}
         <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-8 xl:gap-10">
           
-          {/* Standard Column */}
           <div className="relative">
-            {/* "Vechi" badge - în afara cardului pentru z-index */}
             <div className="absolute -top-3 left-6 px-3 py-1 bg-slate-800 border border-slate-700 
                             rounded-full text-xs font-semibold text-slate-400 z-30">
               Abordare Tradițională
@@ -163,7 +152,6 @@ const About: React.FC = () => {
               Abordarea Standard: &quot;Doar un site&quot;
             </h3>
             <div className="space-y-5 sm:space-y-6">
-                {/* Feature 1 */}
                 <div className="flex items-start gap-3 sm:gap-4 opacity-70">
                   <div className="p-2 sm:p-2.5 bg-slate-800/50 rounded-lg mt-0.5 sm:mt-1 flex-shrink-0">
                     <EyeOff className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500" />
@@ -177,8 +165,6 @@ const About: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                
-                {/* Feature 2 */}
                 <div className="flex items-start gap-3 sm:gap-4 opacity-70">
                   <div className="p-2 sm:p-2.5 bg-slate-800/50 rounded-lg mt-0.5 sm:mt-1 flex-shrink-0">
                     <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500" />
@@ -192,8 +178,6 @@ const About: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                
-                {/* Feature 3 */}
                 <div className="flex items-start gap-3 sm:gap-4 opacity-70">
                   <div className="p-2 sm:p-2.5 bg-slate-800/50 rounded-lg mt-0.5 sm:mt-1 flex-shrink-0">
                     <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500" />
@@ -205,7 +189,6 @@ const About: React.FC = () => {
                     <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
                       Fără date clare, deciziile sunt bazate pe ghicitori. Rezultatul? Creștere lentă și imprevizibilă.
                     </p>
-                    {/* Chart visualization */}
                     <div className="h-16 sm:h-20 mt-3 sm:mt-4 bg-slate-800/30 rounded-lg p-2.5 sm:p-3 
                                     flex items-center justify-center border border-slate-700/30">
                       <svg viewBox="0 0 100 50" className="w-full h-full opacity-60" preserveAspectRatio="none">
@@ -225,7 +208,6 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Premium Column */}
           <div>
             <div 
               ref={premiumColRef} 
@@ -235,18 +217,15 @@ const About: React.FC = () => {
                          transition-all duration-500 hover:border-teal-400/60 hover:scale-[1.02]
                          overflow-visible group"
             >
-              {/* "Premium" badge - fără icon */}
               <div className="absolute -top-3 left-6 px-4 py-1.5 
                               bg-gradient-to-r from-teal-500 to-blue-500 
                               rounded-full text-xs font-bold text-white shadow-lg z-30">
                 Soluție Premium
               </div>
               
-              {/* Animated gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 
                               opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               
-              {/* Animated corner accents */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-teal-500/20 to-transparent 
                               rounded-bl-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-500/20 to-transparent 
@@ -262,7 +241,6 @@ const About: React.FC = () => {
                 </RevealText>
                 
                 <div className="space-y-5 sm:space-y-6">
-                  {/* Premium Feature 1 */}
                   <div className="premium-feature flex items-start gap-3 sm:gap-4 group/item">
                     <div className="p-2 sm:p-2.5 bg-gradient-to-br from-teal-500/25 to-teal-600/25 
                                     rounded-xl mt-0.5 sm:mt-1 flex-shrink-0 
@@ -281,8 +259,6 @@ const About: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
-                  {/* Premium Feature 2 */}
                   <div className="premium-feature flex items-start gap-3 sm:gap-4 group/item">
                     <div className="p-2 sm:p-2.5 bg-gradient-to-br from-blue-500/25 to-blue-600/25 
                                     rounded-xl mt-0.5 sm:mt-1 flex-shrink-0 
@@ -301,8 +277,6 @@ const About: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
-                  {/* Premium Feature 3 */}
                   <div className="premium-feature flex items-start gap-3 sm:gap-4 group/item">
                     <div className="p-2 sm:p-2.5 bg-gradient-to-br from-teal-500/25 to-teal-600/25 
                                     rounded-xl mt-0.5 sm:mt-1 flex-shrink-0 
@@ -319,7 +293,6 @@ const About: React.FC = () => {
                       <p className="text-slate-200 leading-relaxed text-sm sm:text-base">
                         Folosim date concrete pentru a optimiza constant strategia, asigurând o creștere continuă și predictibilă.
                       </p>
-                      {/* Chart visualization */}
                       <div className="h-16 sm:h-20 mt-3 sm:mt-4 bg-slate-900/80 rounded-xl p-2.5 sm:p-3 
                                       flex items-center justify-center backdrop-blur-sm 
                                       ring-2 ring-teal-400/30 shadow-inner">

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-// Interfețe TypeScript
 interface MousePosition {
   x: number;
   y: number;
@@ -21,7 +20,6 @@ const Footer: React.FC = () => {
   const isOnCookiesPage = pathname === '/politica-cookies';
   const isLegalPage = isOnTermsPage || isOnConfPage || isOnCookiesPage;
 
-  // Efect pentru a urmări poziția mouse-ului pentru fundalul animat
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -36,7 +34,6 @@ const Footer: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Funcție pentru scroll înapoi sus
   const scrollToTop = (): void => {
     if (typeof window === 'undefined') return;
     
@@ -68,7 +65,6 @@ const Footer: React.FC = () => {
       className="relative w-full bg-slate-950 border-t border-slate-800 text-slate-300 pt-16 pb-8 px-6 overflow-hidden" 
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
-      {/* Efect de lumină radială care urmărește cursorul */}
       <div
         className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
         style={{
@@ -77,10 +73,8 @@ const Footer: React.FC = () => {
       />
 
       <div className="relative max-w-7xl mx-auto z-10">
-        {/* Grila principală a footer-ului */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
-          {/* Coloana 1: Brand și Social Media */}
           <div className="flex flex-col gap-4">
             <Link 
               href={isOnTermsPage ? "/" : "#"} 
@@ -122,7 +116,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Coloana 2: Link-uri Utile */}
           <div>
             <h3 className="font-semibold text-white mb-4 tracking-wider">Link-uri Utile</h3>
             <nav className="flex flex-col gap-3">
@@ -157,7 +150,6 @@ const Footer: React.FC = () => {
             </nav>
           </div>
 
-          {/* Coloana 3: Legal & Info */}
           <div>
             <h3 className="font-semibold text-white mb-4 tracking-wider">Legal & Info</h3>
             <nav className="flex flex-col gap-3">
@@ -182,7 +174,6 @@ const Footer: React.FC = () => {
             </nav>
           </div>
 
-          {/* Coloana 4: Contact */}
           <div>
             <h3 className="font-semibold text-white mb-4 tracking-wider">Contact</h3>
             <div className="flex flex-col gap-4">
@@ -198,14 +189,11 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bara de jos a footer-ului */}
         <div className="border-t border-slate-800 pt-8 flex flex-col-reverse md:flex-row justify-between items-center gap-8">
-          {/* Copyright */}
           <p className="text-sm text-slate-500 text-center md:text-left">
             © {new Date().getFullYear()} Digitura. Toate drepturile rezervate.
           </p>
           
-          {/* Plachete ANPC & SOL - MODIFICAT */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <a 
               href="https://anpc.ro/ce-este-sal/" 
@@ -239,7 +227,6 @@ const Footer: React.FC = () => {
             </a>
           </div>
 
-          {/* Buton Înapoi sus */}
           <button 
             onClick={scrollToTop} 
             className="group hidden lg:flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"

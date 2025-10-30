@@ -5,7 +5,6 @@ import { ArrowRight, Star, Award } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Înregistrează plugin-ul ScrollTrigger
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -26,15 +25,12 @@ const Hero = () => {
   const [blackBgVisible, setBlackBgVisible] = useState(false);
 
   useEffect(() => {
-    // Context pentru cleanup
     const ctx = gsap.context(() => {
-      // Timeline master pentru animația inițială
       const masterTL = gsap.timeline({
         defaults: { ease: 'power4.out' }
       });
 
 
-      // 2. Animație Title - smooth reveal fără character split
       masterTL.fromTo(
         titleRef.current,
         { 
@@ -54,7 +50,6 @@ const Hero = () => {
         0.8
       );
 
-      // 3. Animație Code Symbol - rotație 3D dramatică
       masterTL.fromTo(
         codeSymbolRef.current,
         {
@@ -71,7 +66,6 @@ const Hero = () => {
           duration: 1.5,
           ease: 'back.out(2)',
           onComplete: () => {
-            // Rotație continuă subtilă
             gsap.to(codeSymbolRef.current, {
               rotationY: 360,
               duration: 20,
@@ -83,7 +77,6 @@ const Hero = () => {
         1.5
       );
 
-      // 4. Animație Separator - expand din centru
       masterTL.fromTo(
         separatorRef.current,
         {
@@ -99,7 +92,6 @@ const Hero = () => {
         1.8
       );
 
-      // 5. Animație Subtitle - wave effect
       masterTL.fromTo(
         subtitleRef.current,
         {
@@ -115,7 +107,6 @@ const Hero = () => {
         2
       );
 
-      // 6. Animație CTA - magnific entrance
       masterTL.fromTo(
         ctaRef.current,
         {
@@ -135,9 +126,6 @@ const Hero = () => {
         2.5
       );
 
-      // SCROLL TRIGGER ANIMATIONS
-      
-      // Parallax pentru video background
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -150,7 +138,6 @@ const Hero = () => {
         ease: 'none'
       });
 
-      // Gradient shift la scroll (subtil)
       gsap.to(gradientRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -189,7 +176,6 @@ const Hero = () => {
       className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
-      {/* Video de fundal - cropped from bottom */}
       <video
         ref={videoRef}
         autoPlay
@@ -198,20 +184,18 @@ const Hero = () => {
         className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
         style={{ 
           willChange: 'transform',
-          objectPosition: 'center 35%' // Taie mai mult de jos
+          objectPosition: 'center 35%'
         }}
       >
         <source src="/services/back.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay gradient */}
       <div 
         ref={overlayRef}
         className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70"
         style={{ willChange: 'opacity' }}
       />
       
-      {/* Fundal negru după terminarea videoclipului */}
       {showBlackBg && (
         <div
           className={`absolute inset-0 z-40 transition-opacity duration-2000 ease-in-out ${blackBgVisible ? 'opacity-100' : 'opacity-0'}`}
@@ -226,7 +210,6 @@ const Hero = () => {
         </div>
       )}
 
-      {/* Gradient animat */}
       <div 
         ref={gradientRef}
         className="pointer-events-none absolute inset-0 z-20"
@@ -237,10 +220,8 @@ const Hero = () => {
         }}
       />
 
-      {/* Container pentru conținutul central */}
       <div className="relative z-50 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
         
-        {/* Badge cu animație */}
         <div 
           ref={badgeRef}
           className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105"
@@ -253,7 +234,6 @@ const Hero = () => {
           </span>
         </div>
 
-        {/* Title cu animație - text mai mic */}
         <h1 
           ref={titleRef}
           className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-6 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
@@ -266,7 +246,6 @@ const Hero = () => {
           Vezi Cum Arată Viitorul Firmei Tale. Nu-l imagina — interacționează cu el.
         </h1>
 
-        {/* Code symbol cu rotație 3D - mai mic */}
         <div className="mb-6 flex justify-center" style={{ perspective: '1000px' }}>
           <span 
             ref={codeSymbolRef}
@@ -277,14 +256,12 @@ const Hero = () => {
           </span>
         </div>
 
-        {/* Separator animat */}
         <div 
           ref={separatorRef}
           className="mx-auto mb-8 h-1 w-32 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"
           style={{ transformOrigin: 'center' }}
         />
         
-        {/* Subtitle - mai mic */}
         <p 
           ref={subtitleRef}
           className="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
@@ -293,7 +270,6 @@ const Hero = () => {
           <span className="font-semibold text-teal-300">100% gratuit.</span>
         </p>
 
-        {/* CTA Button cu hover effects */}
         <div 
           ref={ctaRef}
           className="flex flex-col items-center justify-center gap-4 sm:flex-row"
