@@ -59,7 +59,7 @@ const mainPlans: PricingPlan[] = [
 },
   {
     name: 'Website + Branding',
-    price: '4499',
+    price: '3999',
     cents: '99',
     subtitle: 'Identitate vizuală completă și website profesionist.',
     description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
@@ -77,7 +77,7 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
     badge: { text: 'CEL MAI CĂUTAT' },
-    oldPrice: { lei: 5199, cents: 99 },
+    oldPrice: { lei: 4699, cents: 99 },
     savings: 'Economisești 700 lei',
   },
   {
@@ -180,7 +180,7 @@ const faqs = [
   },
   {
     question: 'Cât costă un site?',
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1499<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">4499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1499<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
