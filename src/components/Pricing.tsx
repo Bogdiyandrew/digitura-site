@@ -129,7 +129,7 @@ const mainPlans: PricingPlan[] = [
 const customServices = [
   {
     name: 'Mentenanță & Suport',
-    price: 'de la 150 lei/lună',
+    price: 'de la 200 lei/lună',
     desc: 'Ne ocupăm de actualizări, securitate și backup-uri, astfel încât site-ul tău să funcționeze perfect, fără întreruperi.',
     icon: <Wrench className="w-6 h-6" />,
     features: [
