@@ -180,7 +180,7 @@ const faqs = [
   },
   {
     question: 'Cât costă un site?',
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">2499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">4999<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1499<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">4499<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
