@@ -143,7 +143,7 @@ const customServices = [
   },
   {
     name: 'Automatizare Digitală',
-    price: 'de la 300 lei/lună',
+    price: 'La cerere',
     desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează date, trimite notificări și economisește timp prețios.',
     icon: <Zap className="w-6 h-6" />,
     features: [
@@ -157,13 +157,13 @@ const customServices = [
   },
   {
     name: 'Branding Vizual',
-    price: '400 lei (one-time)',
+    price: 'La cerere',
     desc: 'Logo, paletă de culori și ghid vizual profesionist pentru orice tip de afacere.',
     icon: <Sparkles className="w-6 h-6" />,
   },
   {
     name: 'Optimizare SEO',
-    price: '300 lei (one-time)',
+    price: 'La cerere',
     desc: 'Analiză, meta tag-uri și structură semantică pentru poziționare mai bună în Google.',
     icon: <Target className="w-6 h-6" />,
   }
