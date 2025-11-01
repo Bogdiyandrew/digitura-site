@@ -37,7 +37,7 @@ type PricingPlan = {
 const mainPlans: PricingPlan[] = [
     {
   name: 'Lansare Rapidă',
-  price: '999',
+  price: '1499',
   cents: '99',
   subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
   description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
@@ -54,12 +54,12 @@ const mainPlans: PricingPlan[] = [
   gradient: 'from-slate-600 via-slate-700 to-slate-800',
   iconGradient: 'from-teal-400 to-cyan-500',
   isPopular: false,
-  oldPrice: { lei: 1300 },
+  oldPrice: { lei: 1799, cents: 99 },
   savings: 'Economisești 300 lei',
 },
   {
     name: 'Website + Branding',
-    price: '2499',
+    price: '4499',
     cents: '99',
     subtitle: 'Identitate vizuală completă și website profesionist.',
     description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
@@ -77,12 +77,12 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
     badge: { text: 'CEL MAI CĂUTAT' },
-    oldPrice: { lei: 3199, cents: 99 },
+    oldPrice: { lei: 5199, cents: 99 },
     savings: 'Economisești 700 lei',
   },
   {
   name: 'Motor E-Commerce',
-  price: '4999',
+  price: '7499',
   cents: '99',
   subtitle: 'Magazin online complet, gata să vândă din prima zi.',
   description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
@@ -100,7 +100,7 @@ const mainPlans: PricingPlan[] = [
   iconGradient: 'from-emerald-400 to-lime-400',
   isPopular: false,
   badge: { text: 'PENTRU PROFIT MAXIM' },
-  oldPrice: { lei: 5999, cents: 99 },
+  oldPrice: { lei: 8499, cents: 99 },
   savings: 'Economisești 1.000 lei',
   },
   {
