@@ -54,7 +54,7 @@ const mainPlans: PricingPlan[] = [
   gradient: 'from-slate-600 via-slate-700 to-slate-800',
   iconGradient: 'from-teal-400 to-cyan-500',
   isPopular: false,
-  oldPrice: { lei: 1799, cents: 99 },
+  oldPrice: { lei: 1299, cents: 99 },
   savings: 'Economisești 300 lei',
 },
   {
