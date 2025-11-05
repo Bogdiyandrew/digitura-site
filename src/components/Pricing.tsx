@@ -37,7 +37,7 @@ type PricingPlan = {
 const mainPlans: PricingPlan[] = [
     {
   name: 'Lansare Rapidă',
-  price: '1499',
+  price: '999',
   cents: '99',
   subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
   description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
@@ -180,7 +180,7 @@ const faqs = [
   },
   {
     question: 'Cât costă un site?',
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1499<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
   question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
