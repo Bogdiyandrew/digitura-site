@@ -18,6 +18,14 @@ const projects = [
     Icon: ShoppingBag,
   },
   {
+    title : 'Clinia Dentara - Website pentru Servicii Dentare',
+    description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
+    image: '/photos/clinicarev2.png',
+    link: 'https://demo-clinicadentara.vercel.app/',
+    tags: ['Sănătate', 'Next.js', 'TypeScript', 'UI/UX'],
+    Icon: Layers,
+  },
+  {
     title: 'Quantum - Landing Page pentru SaaS',
     description: 'Landing page custom cu animații 3D și interactivitate avansată, destinat unei platforme SaaS inovatoare pentru managementul proiectelor.',
     image: '/photos/quantumrev.png',
