@@ -202,12 +202,12 @@ const Footer: React.FC = () => {
               className="transform hover:scale-105 transition-transform duration-300" 
               aria-label="Soluționarea Alternativă a Litigiilor (ANPC)"
             >
-              <Image 
-                src="https://res.cloudinary.com/dsqwnuyiw/image/upload/v1740828902/yrdfinal/assets/anpc/SAL_fsxaco.png" 
-                alt="Soluționarea Alternativă a Litigiilor" 
-                width={250}
-                height={50}
-                style={{height: '50px', width: '250px'}}
+              <img 
+                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg" 
+                alt="Soluționarea Alternativă a Litigiilor"
+                width="250"
+                height="50"
+                style={{ height: '50px', width: '250px' }}
               />
             </a>
             <a 
@@ -217,12 +217,12 @@ const Footer: React.FC = () => {
               className="transform hover:scale-105 transition-transform duration-300" 
               aria-label="Soluționarea Online a Litigiilor (UE)"
             >
-              <Image 
-                src="https://res.cloudinary.com/dsqwnuyiw/image/upload/v1740828902/yrdfinal/assets/anpc/anpc-sol_fpx7bw.png" 
-                alt="Soluționarea Online a Litigiilor" 
-                width={250}
-                height={50}
-                style={{height: '50px', width: '250px'}}
+              <img 
+                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg" 
+                alt="Soluționarea Online a Litigiilor"
+                width="250"
+                height="50"
+                style={{ height: '50px', width: '250px' }}
               />
             </a>
           </div>
