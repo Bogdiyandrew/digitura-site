@@ -66,7 +66,7 @@ const Contact: React.FC = () => {
 
   const pricingPackages: PricingPackage[] = [
     { id: 'lansare-rapida', name: 'Lansare Rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'partener-digital', name: 'Partener Digital', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'website+branding', name: 'Website + Branding', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'motor-ecommerce', name: 'Motor E-Commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
     { id: 'solutie-personalizata', name: 'Soluție Personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
   ];
