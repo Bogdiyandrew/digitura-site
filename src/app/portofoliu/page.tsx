@@ -5,10 +5,18 @@ import Head from "next/head";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React from 'react';
-import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database } from 'lucide-react';
+import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap } from 'lucide-react';
 import Image from 'next/image';
 
 const projects = [
+  {
+    title: 'Voltariss - Inginerie Electrică',
+    description: 'Platformă digitală High-Tech pentru servicii industriale. Design "Dark Mode" minimalist, animații fluide și optimizare SEO maximă pentru generarea de lead-uri locale.',
+    image: '/photos/voltariss.png',
+    link: 'https://voltariss.ro/',
+    tags: ['Corporate Website', 'Next.js', 'Industrial UI', 'Lead Generation'],
+    Icon: PlugZap,
+  },
   {
     title: 'Aura - Cafenea & Magazin Artizanal',
     description: 'Studiu de caz pentru un brand premium ce combină atmosfera unei cafenele cu un magazin artizanal online, oferind o experiență unică utilizatorilor.',
@@ -18,7 +26,7 @@ const projects = [
     Icon: ShoppingBag,
   },
   {
-    title : 'Clinia Dentara - Website pentru Servicii Dentare',
+    title: 'Clinia Dentara - Website pentru Servicii Dentare',
     description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
     image: '/photos/clinicarev2.png',
     link: 'https://demo-clinicadentara.vercel.app/',
