@@ -82,7 +82,7 @@ const mainPlans: PricingPlan[] = [
   },
   {
     name: 'Motor E-Commerce',
-    price: '7.500',
+    price: '8.000',
     cents: '',
     subtitle: 'Magazin online complet, gata să vândă din prima zi.',
     description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
@@ -100,7 +100,7 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-emerald-400 to-lime-400',
     isPopular: false,
     badge: { text: 'PENTRU PROFIT MAXIM' },
-    oldPrice: { lei: 8500, cents: 0 },
+    oldPrice: { lei: 9000, cents: 0 },
     savings: 'Economisești 1.000 lei',
   },
   {
@@ -180,8 +180,8 @@ const faqs = [
   },
   {
     question: 'Cât costă un site?',
-    // Updated FAQs with new prices
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.000 lei</strong>, Website de prezentare – <strong class="text-white font-bold">4.000 lei</strong>, Magazin online – <strong class="text-white font-bold">7.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.500 lei</strong>, Website de prezentare – <strong class="text-white font-bold">5.000 lei</strong>, Magazin online – <strong class="text-white font-bold">8.000 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
     question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
