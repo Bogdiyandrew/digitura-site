@@ -1,5 +1,5 @@
 'use client';
-
+import Link from 'next/link';
 import Head from "next/head";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -240,13 +240,13 @@ export default function PortofoliuPage() {
             <p className="text-lg text-slate-400 mb-10 max-w-2xl mx-auto">
               Hai să transformăm viziunea ta în realitate. Contactează-ne pentru o discuție gratuită despre proiectul tău.
             </p>
-            <a
-              href="/contact"
+            <Link
+              href="/#contact"
               className="inline-flex items-center gap-3 bg-teal-500 hover:bg-teal-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25 transform hover:-translate-y-1"
             >
               Începe un Proiect
               <ArrowRight className="w-5 h-5" />
-            </a>
+            </Link>
           </div>
         </section>
 
