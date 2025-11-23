@@ -8,7 +8,7 @@ import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap, ExternalL
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Project Data
+
 const projects = [
   {
     id: 1,
@@ -34,7 +34,7 @@ const projects = [
     id: 3,
     title: 'Clinia Dentara - Website pentru Servicii Dentare',
     description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
-    image: '/photos/clinicarev2.png',
+    image: '/photos/clinicadent5.png',
     link: 'https://demo-clinicadentara.vercel.app/',
     tags: ['Sănătate', 'Next.js', 'TypeScript', 'UI/UX'],
     category: 'Medical',
@@ -173,7 +173,7 @@ export default function PortofoliuPage() {
                         alt={project.title}
                         width={800}
                         height={600}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute top-4 right-4 z-20 bg-slate-950/80 backdrop-blur-sm p-2 rounded-lg border border-slate-800">
                         <IconComponent className="w-5 h-5 text-teal-400" />
