@@ -209,7 +209,7 @@ const faqs = [
   },
   {
     question: 'Ce suport primesc după livrare?',
-    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website + Branding</strong>, primești <strong>60 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>90 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
+    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website + Branding</strong> sau <strong>Motor E-commerce</strong> primești <strong>60 de zile de suport</strong> gratuit,fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
   }
 ];
 
