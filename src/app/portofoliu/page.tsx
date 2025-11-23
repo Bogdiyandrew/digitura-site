@@ -105,7 +105,6 @@ export default function PortofoliuPage() {
 
         {/* Hero Section */}
         <section className="relative w-full py-32 px-6 text-center overflow-hidden">
-          {/* Background Elements */}
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-900/20 via-slate-950 to-slate-950 pointer-events-none" />
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -165,7 +164,7 @@ export default function PortofoliuPage() {
                     transition={{ duration: 0.3 }}
                     className="group relative bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-teal-500/30 transition-colors duration-300 flex flex-col h-full"
                   >
-                    {/* Image Container */}
+                    {/* Image Container - AM SCOS ICONIȚA DE AICI */}
                     <div className="relative h-80 overflow-hidden">
                       <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
                       <Image
@@ -175,20 +174,29 @@ export default function PortofoliuPage() {
                         height={600}
                         className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 ease-out"
                       />
-                      <div className="absolute top-4 right-4 z-20 bg-slate-950/80 backdrop-blur-sm p-2 rounded-lg border border-slate-800">
-                        <IconComponent className="w-5 h-5 text-teal-400" />
-                      </div>
                     </div>
 
-                    {/* Content */}
+                    {/* Content Section */}
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="mb-4">
                         <span className="text-xs font-bold text-teal-500 uppercase tracking-wider mb-2 block">
                           {project.category}
                         </span>
-                        <h3 className="text-xl font-bold text-white group-hover:text-teal-400 transition-colors duration-300">
-                          {project.title}
-                        </h3>
+
+                        {/* --- MODIFICAREA PRINCIPALĂ ESTE AICI --- */}
+                        {/* Am creat un container flex pentru a alinia Titlul și Iconița */}
+                        <div className="flex justify-between items-start gap-4">
+                          <h3 className="text-xl font-bold text-white group-hover:text-teal-400 transition-colors duration-300">
+                            {project.title}
+                          </h3>
+
+                          {/* Aici am mutat iconița, într-un div separat */}
+                          <div className="shrink-0 bg-slate-800 p-2 rounded-lg border border-slate-700/50 text-teal-400 group-hover:border-teal-500/50 group-hover:text-teal-300 transition-all duration-300">
+                            <IconComponent className="w-5 h-5" />
+                          </div>
+                        </div>
+                        {/* ------------------------------------------ */}
+
                       </div>
 
                       <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
