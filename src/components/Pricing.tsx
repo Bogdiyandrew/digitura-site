@@ -35,37 +35,37 @@ type PricingPlan = {
 };
 
 const mainPlans: PricingPlan[] = [
-    {
-  name: 'Lansare Rapidă',
-  price: '999',
-  cents: '99',
-  subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
-  description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
-  icon: <Target className="w-8 h-8" />,
-  features: [
-    'Site complet funcțional, într-o singură pagină',
-    'Conținut clar și orientat pe conversie',
-    'Formular de contact eficient, conectat direct la e-mailul tău',
-    'Încărcare rapidă – sub 2 secunde',
-    'Design responsive (mobil, tabletă, desktop)',
-    '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
-  ],
-  ctaText: 'Pornește Acum',
-  gradient: 'from-slate-600 via-slate-700 to-slate-800',
-  iconGradient: 'from-teal-400 to-cyan-500',
-  isPopular: false,
-  oldPrice: { lei: 1299, cents: 99 },
-  savings: 'Economisești 300 lei',
-},
+  {
+    name: 'Lansare Rapidă',
+    price: '1.500', // Rotunjit
+    cents: '', // Fara centi
+    subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
+    description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
+    icon: <Target className="w-8 h-8" />,
+    features: [
+      'Site complet funcțional, într-o singură pagină',
+      'Conținut clar și orientat pe conversie',
+      'Formular de contact eficient, conectat direct la e-mailul tău',
+      'Încărcare rapidă – sub 2 secunde',
+      'Design responsive (mobil, tabletă, desktop)',
+      '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
+    ],
+    ctaText: 'Pornește Acum',
+    gradient: 'from-slate-600 via-slate-700 to-slate-800',
+    iconGradient: 'from-teal-400 to-cyan-500',
+    isPopular: false,
+    oldPrice: { lei: 1800, cents: 0 }, // Actualizat
+    savings: 'Economisești 300 lei',
+  },
   {
     name: 'Website + Branding',
-    price: '3999',
-    cents: '99',
+    price: '5.000', // Rotunjit
+    cents: '', // Fara centi
     subtitle: 'Identitate vizuală completă și website profesionist.',
     description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
     icon: <Globe className="w-8 h-8" />,
     features: [
-      'Website complet de prezentare, fără limită de pagini prestabilită',
+      'Website complet de prezentare, până la 10 pagini', // Modificat limita pagini
       'Design personalizat care reflectă brandul tău',
       'Branding complet – logo, culori și elemente vizuale coerente',
       'Optimizare SEO de bază pentru vizibilitate online',
@@ -77,31 +77,31 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
     badge: { text: 'CEL MAI CĂUTAT' },
-    oldPrice: { lei: 4699, cents: 99 },
+    oldPrice: { lei: 5700, cents: 0 }, // Actualizat
     savings: 'Economisești 700 lei',
   },
   {
-  name: 'Motor E-Commerce',
-  price: '7499',
-  cents: '99',
-  subtitle: 'Magazin online complet, gata să vândă din prima zi.',
-  description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
-  icon: <ShoppingCart className="w-8 h-8" />,
-  features: [
-  'Magazin online complet, pregătit de vânzare',
-  'Design personalizat adaptat identității brandului tău',
-  'Optimizare SEO tehnică de bază pentru produse și pagini',
-  'Integrare plăți online, curieri și facturare automată',
-  'Automatizări pentru comenzi, e-mailuri și stocuri',
-  '<strong>Bonus:</strong> 90 de zile de suport și optimizare post-lansare',
-  ],
-  ctaText: 'Începe să Vinzi',
-  gradient: 'from-emerald-600 via-green-600 to-lime-600',
-  iconGradient: 'from-emerald-400 to-lime-400',
-  isPopular: false,
-  badge: { text: 'PENTRU PROFIT MAXIM' },
-  oldPrice: { lei: 8499, cents: 99 },
-  savings: 'Economisești 1.000 lei',
+    name: 'Motor E-Commerce',
+    price: '7.500', // Rotunjit
+    cents: '', // Fara centi
+    subtitle: 'Magazin online complet, gata să vândă din prima zi.',
+    description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
+    icon: <ShoppingCart className="w-8 h-8" />,
+    features: [
+      'Magazin online complet, pregătit de vânzare', // Fara limita specificata
+      'Design personalizat adaptat identității brandului tău',
+      'Optimizare SEO tehnică de bază pentru produse și pagini',
+      'Integrare plăți online, curieri și facturare automată',
+      'Automatizări pentru comenzi, e-mailuri și stocuri',
+      '<strong>Bonus:</strong> 90 de zile de suport și optimizare post-lansare',
+    ],
+    ctaText: 'Începe să Vinzi',
+    gradient: 'from-emerald-600 via-green-600 to-lime-600',
+    iconGradient: 'from-emerald-400 to-lime-400',
+    isPopular: false,
+    badge: { text: 'PENTRU PROFIT MAXIM' },
+    oldPrice: { lei: 8500, cents: 0 }, // Actualizat
+    savings: 'Economisești 1.000 lei',
   },
   {
     name: 'Soluție Personalizată',
@@ -111,12 +111,12 @@ const mainPlans: PricingPlan[] = [
     description: 'Ai o viziune unică sau o nevoie complexă? Construim o soluție digitală exact pe măsura ideii tale.',
     icon: <Layers className="w-8 h-8" />,
     features: [
-        'Dezvoltare complet personalizată – fără limitări de funcționalitate',
-        'Design și structură adaptate obiectivelor tale de business',
-        'Scalabilitate reală – baza tehnică pregătită să crească oricât',
-        'Integrare cu platforme, API-uri și automatizări avansate',
-        'Comunicare directă cu dezvoltatorul pe tot parcursul proiectului',
-        '<strong>Bonus:</strong> Suport tehnic dedicat după lansare',
+      'Dezvoltare complet personalizată – fără limitări de funcționalitate',
+      'Design și structură adaptate obiectivelor tale de business',
+      'Scalabilitate reală – baza tehnică pregătită să crească oricât',
+      'Integrare cu platforme, API-uri și automatizări avansate',
+      'Comunicare directă cu dezvoltatorul pe tot parcursul proiectului',
+      '<strong>Bonus:</strong> Suport tehnic dedicat după lansare',
     ],
     ctaText: 'Hai să Discutăm',
     gradient: 'from-violet-600 via-purple-600 to-fuchsia-600',
@@ -180,15 +180,16 @@ const faqs = [
   },
   {
     question: 'Cât costă un site?',
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">999<sup class="font-light text-base">,99</sup> lei</strong>, Website de prezentare – <strong class="text-white font-bold">3999<sup class="font-light text-base">,99</sup> lei</strong>, Magazin online – <strong class="text-white font-bold">7499<sup class="font-light text-base">,99</sup> lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    // Updated FAQs with new prices
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.000 lei</strong>, Website de prezentare – <strong class="text-white font-bold">4.000 lei</strong>, Magazin online – <strong class="text-white font-bold">7.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
-  question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
-  answer: 'Pachetele standard acoperă nevoile celor mai multe proiecte. Dacă vrei funcții personalizate sau integrări speciale, pachetul "Soluție Personalizată" este perfect. Discutăm ideea și îți facem o ofertă clară.'
+    question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
+    answer: 'Pachetele standard acoperă nevoile celor mai multe proiecte. Dacă vrei funcții personalizate sau integrări speciale, pachetul "Soluție Personalizată" este perfect. Discutăm ideea și îți facem o ofertă clară.'
   },
   {
     question: 'Cât durează realizarea unui site?',
-answer: 'În general, un landing page se face în 3–6 zile, un website de prezentare în 1–2 săptămâni, iar un magazin online poate dura mai mult. Un proiect custom variază ca durată, în funcție de complexitate.'
+    answer: 'În general, un landing page se face în 3–6 zile, un website de prezentare în 1–2 săptămâni, iar un magazin online poate dura mai mult. Un proiect custom variază ca durată, în funcție de complexitate.'
   },
   {
     question: 'Ce se întâmplă dacă vreau modificări?',
@@ -196,15 +197,15 @@ answer: 'În general, un landing page se face în 3–6 zile, un website de prez
   },
   {
     question: 'Trebuie să am conținutul pregătit?',
-  answer: 'Ideal, da — dar nu e obligatoriu. Te putem ajuta cu structură, texte (copywriting), imagini și chiar materiale vizuale. Dacă ai nevoie, ne ocupăm și de logo sau identitate vizuală. Venim cu soluții, nu cu probleme.'
+    answer: 'Ideal, da — dar nu e obligatoriu. Te putem ajuta cu structură, texte (copywriting), imagini și chiar materiale vizuale. Dacă ai nevoie, ne ocupăm și de logo sau identitate vizuală. Venim cu soluții, nu cu probleme.'
   },
   {
     question: 'Site-ul e optimizat pentru mobil și viteză?',
     answer: 'Da. Orice livrăm e responsive și testat pentru performanță. Viteză, UX, mobile — sunt standard, nu opțiuni extra.'
   },
   {
-  question: 'Voi putea face modificări singur după lansare?',
-  answer: 'Modificările se fac prin noi, ca să fie totul rapid, curat și fără erori. De asta oferim și pachete de mentenanță — actualizăm texte, imagini, pagini sau funcționalități, fără stres pentru tine. Dacă vrei, îți oferim și tot proiectul codat, ca să ai libertate totală și să poți lucra cu oricine în viitor.'
+    question: 'Voi putea face modificări singur după lansare?',
+    answer: 'Modificările se fac prin noi, ca să fie totul rapid, curat și fără erori. De asta oferim și pachete de mentenanță — actualizăm texte, imagini, pagini sau funcționalități, fără stres pentru tine. Dacă vrei, îți oferim și tot proiectul codat, ca să ai libertate totală și să poți lucra cu oricine în viitor.'
   },
   {
     question: 'Ce suport primesc după livrare?',
@@ -231,15 +232,13 @@ const FaqItem: React.FC<FaqItemProps> = ({ faq, isOpen, onClick }) => (
         {faq.question}
       </h3>
       <ChevronDown
-        className={`transform transition-all duration-300 text-slate-400 group-hover:text-teal-400 flex-shrink-0 mt-1 w-4 h-4 sm:w-5 sm:h-5 ${
-          isOpen ? 'rotate-180 text-teal-400' : ''
-        }`}
+        className={`transform transition-all duration-300 text-slate-400 group-hover:text-teal-400 flex-shrink-0 mt-1 w-4 h-4 sm:w-5 sm:h-5 ${isOpen ? 'rotate-180 text-teal-400' : ''
+          }`}
       />
     </button>
     <div
-      className={`overflow-hidden transition-all duration-500 ease-in-out ${
-        isOpen ? 'max-h-[500px] pb-4 sm:pb-6' : 'max-h-0'
-      }`}
+      className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] pb-4 sm:pb-6' : 'max-h-0'
+        }`}
     >
       <p
         className="text-slate-300 leading-relaxed text-sm sm:text-base px-2 sm:px-0"
@@ -269,14 +268,14 @@ const Pricing: React.FC = () => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const ctx = gsap.context(() => {
-        gsap.fromTo('.pricing-title', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true } });
-        gsap.fromTo('.pricing-subtitle', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }, delay: 0.2 });
-        gsap.fromTo('.pricing-card',
-          { opacity: 0, x: -80 }, 
-          { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.15, scrollTrigger: { trigger: '.pricing-grid', start: 'top 70%', once: true }, delay: 0.4 }
-        );
-        gsap.fromTo('.custom-service', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out', stagger: 0.1, scrollTrigger: { trigger: '.custom-section', start: 'top 75%', once: true } });
-        gsap.fromTo('.faq-item', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: '.faq-section', start: 'top 80%', once: true } });
+      gsap.fromTo('.pricing-title', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true } });
+      gsap.fromTo('.pricing-subtitle', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }, delay: 0.2 });
+      gsap.fromTo('.pricing-card',
+        { opacity: 0, x: -80 },
+        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.15, scrollTrigger: { trigger: '.pricing-grid', start: 'top 70%', once: true }, delay: 0.4 }
+      );
+      gsap.fromTo('.custom-service', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out', stagger: 0.1, scrollTrigger: { trigger: '.custom-section', start: 'top 75%', once: true } });
+      gsap.fromTo('.faq-item', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: '.faq-section', start: 'top 80%', once: true } });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -360,126 +359,137 @@ const Pricing: React.FC = () => {
                 : plan.savings;
 
             return (
-            <div
-              key={plan.name}
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-              className={`pricing-card relative group ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} opacity-0`}
-            >
-              {plan.badge && (
-                <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
-                  <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
-                    ${plan.isPopular ? 'bg-gradient-to-r from-teal-500 to-blue-500' :
-                    plan.name.includes('Personalizat') ? 'bg-gradient-to-r from-violet-500 to-purple-500' :
-                    'bg-gradient-to-r from-emerald-500 to-teal-500'}`}>
-                    {plan.badge.text}
-                  </div>
-                </div>
-              )}
-
-              <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden
-                ${plan.isPopular ? 'bg-slate-800/50 border-2 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
-                'bg-slate-800/30 border-2 border-slate-700/50 hover:border-slate-600/80'}
-                ${hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''}`}
-                style={{
-                  backdropFilter: 'blur(20px)',
-                }}
+              <div
+                key={plan.name}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className={`pricing-card relative group ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} opacity-0`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none`}></div>
-
-                <div className={`absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
-                  style={{
-                    background: `linear-gradient(135deg, transparent 0%, ${plan.isPopular ? 'rgba(20, 184, 166, 0.1)' : 'rgba(71, 85, 105, 0.1)'} 50%, transparent 100%)`,
-                    animation: 'shimmer 2s infinite'
-                  }}
-                ></div>
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex justify-center mb-4 sm:mb-6">
-                    <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
-                      <div className="text-white">
-                        {plan.icon}
-                      </div>
+                {plan.badge && (
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
+                    <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
+                    ${plan.isPopular ? 'bg-gradient-to-r from-teal-500 to-blue-500' :
+                        plan.name.includes('Personalizat') ? 'bg-gradient-to-r from-violet-500 to-purple-500' :
+                          'bg-gradient-to-r from-emerald-500 to-teal-500'}`}>
+                      {plan.badge.text}
                     </div>
                   </div>
+                )}
 
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
-                    {plan.name}
-                  </h3>
+                <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden
+                ${plan.isPopular ? 'bg-slate-800/50 border-2 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
+                    'bg-slate-800/30 border-2 border-slate-700/50 hover:border-slate-600/80'}
+                ${hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''}`}
+                  style={{
+                    backdropFilter: 'blur(20px)',
+                  }}
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none`}></div>
 
-                  <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2">
-                    {plan.subtitle}
-                  </p>
-
-                  <div className="text-center mb-4 sm:mb-6">
-                    {plan.price !== 'La cerere' ? (
-                      <div>
-                        {plan.oldPrice && (
-                          <div className="flex justify-center mb-1 sm:mb-2">
-                            <span className="text-slate-500/80 text-xs sm:text-sm font-semibold line-through decoration-2 decoration-rose-400/70">
-                              {formatOldPrice(plan.oldPrice)} lei
-                            </span>
-                          </div>
-                        )}
-                        <div className="flex items-end justify-center gap-1">
-                          <span className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">de la</span>
-                          <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">
-                            {plan.price}
-                          </span>
-                          <div className="flex flex-col items-start">
-                            <span className="text-xl sm:text-2xl font-bold text-white">,{plan.cents}</span>
-                            <span className="text-slate-400 text-[10px] sm:text-xs">lei</span>
-                          </div>
+                  <div className={`absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
+                    style={{
+                      background: `linear-gradient(135deg, transparent 0%, ${plan.isPopular ? 'rgba(20, 184, 166, 0.1)' : 'rgba(71, 85, 105, 0.1)'} 50%, transparent 100%)`,
+                      animation: 'shimmer 2s infinite'
+                    }}
+                  ></div>
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-center mb-4 sm:mb-6">
+                      <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                        <div className="text-white">
+                          {plan.icon}
                         </div>
-                        {(computedSavingsLabel || plan.savings) && (
-                          <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 bg-teal-500/10 border border-teal-500/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1">
-                            <span className="text-[10px] sm:text-xs text-teal-400 font-semibold">
-                              {computedSavingsLabel || plan.savings}
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
+                      {plan.name}
+                    </h3>
+
+                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2">
+                      {plan.subtitle}
+                    </p>
+
+                    <div className="text-center mb-4 sm:mb-6">
+                      {plan.price !== 'La cerere' ? (
+                        <div>
+                          {plan.oldPrice && (
+                            <div className="flex justify-center mb-1 sm:mb-2">
+                              {/* Container relativ pentru a poziționa linia peste text */}
+                              <div className="relative inline-block">
+
+                                {/* Textul prețului vechi */}
+                                <span className="text-slate-500/80 text-xs sm:text-sm font-semibold">
+                                  {formatOldPrice(plan.oldPrice)} lei
+                                </span>
+
+                                {/* Linia Roșie pe Diagonală */}
+                                <div className="absolute top-1/2 left-[-5%] w-[110%] h-[1.5px] bg-rose-500/80 rotate-[-12deg] transform origin-center rounded-full pointer-events-none" />
+
+                              </div>
+                            </div>
+                          )}
+                          <div className="flex items-end justify-center gap-1">
+                            <span className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">de la</span>
+                            <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">
+                              {plan.price}
                             </span>
+                            <div className="flex flex-col items-start">
+                              {plan.cents && (
+                                <span className="text-xl sm:text-2xl font-bold text-white">,{plan.cents}</span>
+                              )}
+                              <span className="text-slate-400 text-[10px] sm:text-xs">lei</span>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="text-3xl sm:text-4xl font-bold text-white py-3 sm:py-4">
-                        {plan.price}
-                      </div>
-                    )}
-                  </div>
-
-                  <p
-                    className="text-slate-300 text-xs sm:text-sm text-center mb-6 sm:mb-8 leading-relaxed px-1"
-                    dangerouslySetInnerHTML={{ __html: plan.description }}
-                  />
-
-                  <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2 sm:gap-3">
-                        <div className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}>
-                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
+                          {(computedSavingsLabel || plan.savings) && (
+                            <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 bg-teal-500/10 border border-teal-500/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1">
+                              <span className="text-[10px] sm:text-xs text-teal-400 font-semibold">
+                                {computedSavingsLabel || plan.savings}
+                              </span>
+                            </div>
+                          )}
                         </div>
-                        <span
-                          className="text-slate-200 text-xs sm:text-sm leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: feature }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
+                      ) : (
+                        <div className="text-3xl sm:text-4xl font-bold text-white py-3 sm:py-4">
+                          {plan.price}
+                        </div>
+                      )}
+                    </div>
 
-                  <button
-                    onClick={(e) => handlePlanClick(e, plan.name)}
-                    className={`w-full font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 group/btn cursor-pointer text-sm sm:text-base
+                    <p
+                      className="text-slate-300 text-xs sm:text-sm text-center mb-6 sm:mb-8 leading-relaxed px-1"
+                      dangerouslySetInnerHTML={{ __html: plan.description }}
+                    />
+
+                    <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-2 sm:gap-3">
+                          <div className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}>
+                            <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
+                          </div>
+                          <span
+                            className="text-slate-200 text-xs sm:text-sm leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: feature }}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+
+                    <button
+                      onClick={(e) => handlePlanClick(e, plan.name)}
+                      className={`w-full font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 group/btn cursor-pointer text-sm sm:text-base
                       ${plan.isPopular
-                        ? `bg-gradient-to-r ${plan.gradient} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] sm:hover:scale-105`
-                        : 'bg-slate-700 text-white hover:bg-slate-600'
-                      }`}
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      {plan.ctaText}
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </span>
-                  </button>
+                          ? `bg-gradient-to-r ${plan.gradient} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] sm:hover:scale-105`
+                          : 'bg-slate-700 text-white hover:bg-slate-600'
+                        }`}
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        {plan.ctaText}
+                        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover/btn:translate-x-1" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
             );
           })}
         </div>
@@ -493,7 +503,7 @@ const Pricing: React.FC = () => {
               <div className="text-center sm:text-left mb-8 sm:mb-12">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
                   Construiește <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
-                  pachetul perfect</span> pentru tine
+                    pachetul perfect</span> pentru tine
                 </h3>
                 <p className="text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto sm:mx-0">
                   Adaugă servicii extra — branding, SEO, mentenanță sau automatizări — ca să-ți transformi website-ul într-un instrument complet de business.
