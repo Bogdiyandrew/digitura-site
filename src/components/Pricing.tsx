@@ -37,8 +37,8 @@ type PricingPlan = {
 const mainPlans: PricingPlan[] = [
   {
     name: 'Lansare Rapidă',
-    price: '1.500', // Rotunjit
-    cents: '', // Fara centi
+    price: '1.500',
+    cents: '',
     subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
     description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
     icon: <Target className="w-8 h-8" />,
@@ -54,18 +54,18 @@ const mainPlans: PricingPlan[] = [
     gradient: 'from-slate-600 via-slate-700 to-slate-800',
     iconGradient: 'from-teal-400 to-cyan-500',
     isPopular: false,
-    oldPrice: { lei: 1800, cents: 0 }, // Actualizat
+    oldPrice: { lei: 1800, cents: 0 },
     savings: 'Economisești 300 lei',
   },
   {
     name: 'Website + Branding',
-    price: '5.000', // Rotunjit
-    cents: '', // Fara centi
+    price: '5.000',
+    cents: '',
     subtitle: 'Identitate vizuală completă și website profesionist.',
     description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
     icon: <Globe className="w-8 h-8" />,
     features: [
-      'Website complet de prezentare, până la 10 pagini', // Modificat limita pagini
+      'Website complet de prezentare, până la 10 pagini',
       'Design personalizat care reflectă brandul tău',
       'Branding complet – logo, culori și elemente vizuale coerente',
       'Optimizare SEO de bază pentru vizibilitate online',
@@ -77,18 +77,18 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
     badge: { text: 'CEL MAI CĂUTAT' },
-    oldPrice: { lei: 5700, cents: 0 }, // Actualizat
+    oldPrice: { lei: 5700, cents: 0 },
     savings: 'Economisești 700 lei',
   },
   {
     name: 'Motor E-Commerce',
-    price: '7.500', // Rotunjit
-    cents: '', // Fara centi
+    price: '7.500',
+    cents: '',
     subtitle: 'Magazin online complet, gata să vândă din prima zi.',
     description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
     icon: <ShoppingCart className="w-8 h-8" />,
     features: [
-      'Magazin online complet, pregătit de vânzare', // Fara limita specificata
+      'Magazin online complet, pregătit de vânzare',
       'Design personalizat adaptat identității brandului tău',
       'Optimizare SEO tehnică de bază pentru produse și pagini',
       'Integrare plăți online, curieri și facturare automată',
@@ -100,7 +100,7 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-emerald-400 to-lime-400',
     isPopular: false,
     badge: { text: 'PENTRU PROFIT MAXIM' },
-    oldPrice: { lei: 8500, cents: 0 }, // Actualizat
+    oldPrice: { lei: 8500, cents: 0 },
     savings: 'Economisești 1.000 lei',
   },
   {
@@ -414,15 +414,10 @@ const Pricing: React.FC = () => {
                         <div>
                           {plan.oldPrice && (
                             <div className="flex justify-center mb-1 sm:mb-2">
-                              {/* Container relativ pentru a poziționa linia peste text */}
                               <div className="relative inline-block">
-
-                                {/* Textul prețului vechi */}
                                 <span className="text-slate-500/80 text-xs sm:text-sm font-semibold">
                                   {formatOldPrice(plan.oldPrice)} lei
                                 </span>
-
-                                {/* Linia Roșie pe Diagonală */}
                                 <div className="absolute top-1/2 left-[-5%] w-[110%] h-[1.5px] bg-rose-500/80 rotate-[-12deg] transform origin-center rounded-full pointer-events-none" />
 
                               </div>
