@@ -10,9 +10,24 @@ import { Poppins } from 'next/font/google';
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
 // --- FIX START: Extend the Window interface ---
+interface LenisScrollToOptions {
+  offset?: number;
+  duration?: number;
+  easing?: (t: number) => number;
+  immediate?: boolean;
+  lock?: boolean;
+  force?: boolean;
+}
+
+interface LenisInstance {
+  scrollTo(target: HTMLElement | string | number, options?: LenisScrollToOptions): void;
+  stop(): void;
+  start(): void;
+}
+
 declare global {
   interface Window {
-    lenis: any;
+    lenis: LenisInstance;
   }
 }
 // --- FIX END ---
