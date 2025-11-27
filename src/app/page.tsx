@@ -23,11 +23,9 @@ export default function Home() {
       <About />
       <Services />
       <Pricing />
-      <div id="contact">
-        <Suspense fallback={<ContactLoading />}>
-          <Contact />
-        </Suspense>
-      </div>
+      <Suspense fallback={<ContactLoading />}>
+        <Contact />
+      </Suspense>
       <Footer />
     </main>
   );

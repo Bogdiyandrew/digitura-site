@@ -164,8 +164,9 @@ const Contact: React.FC = () => {
 
   return (
     <section
+      id="contact"
       ref={sectionRef}
-      className="w-full py-24 md:py-32 bg-slate-950 text-white relative flex items-center justify-center overflow-hidden"
+      className="w-full py-24 md:py-32 bg-slate-950 text-white relative flex items-center justify-center overflow-hidden scroll-mt-28"
     >
       {toast.show && <ToastNotification message={toast.message} type={toast.type} onClose={() => setToast({ ...toast, show: false })} />}
 
