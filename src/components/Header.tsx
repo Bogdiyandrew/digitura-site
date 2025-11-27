@@ -9,7 +9,7 @@ import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
-// --- FIX START: Extend the Window interface ---
+
 interface LenisScrollToOptions {
   offset?: number;
   duration?: number;
@@ -30,7 +30,6 @@ declare global {
     lenis: LenisInstance;
   }
 }
-// --- FIX END ---
 
 interface MenuLink {
   href: string;
@@ -62,18 +61,17 @@ const Header: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Handle hash scrolling on mount/update
     const handleHashScroll = () => {
       if (window.location.hash) {
         const id = window.location.hash.substring(1);
         let attempts = 0;
-        const maxAttempts = 50; // 5 seconds max
+        const maxAttempts = 50;
 
         const tryScroll = () => {
           const element = document.getElementById(id);
           if (element) {
             if (window.lenis) {
-              window.lenis.scrollTo(element, { offset: -20 }); // Slight offset for header
+              window.lenis.scrollTo(element, { offset: -20 });
             } else {
               element.scrollIntoView({ behavior: 'smooth' });
             }
@@ -83,13 +81,12 @@ const Header: React.FC = () => {
           }
         };
 
-        // Small delay to ensure initial render
         setTimeout(tryScroll, 100);
       }
     };
 
     handleHashScroll();
-  }, [pathname]); // Re-run on pathname change
+  }, [pathname]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
