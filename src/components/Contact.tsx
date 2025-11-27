@@ -61,34 +61,34 @@ const Contact: React.FC = () => {
   const [selectedPackage, setSelectedPackage] = useState<string>('');
   const [isSending, setIsSending] = useState<boolean>(false);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
-  
+
   const searchParams = useSearchParams();
 
   const pricingPackages: PricingPackage[] = [
-    { id: 'lansare-rapida', name: 'Lansare Rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'website+branding', name: 'Website + Branding', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'motor-ecommerce', name: 'Motor E-Commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'solutie-personalizata', name: 'Soluție Personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'lansare-rapida', name: 'Lansare rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'website-prezentare', name: 'Website prezentare', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'motor-ecommerce', name: 'Motor e-commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'solutie-personalizata', name: 'Soluție personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
   ];
 
   const contactItems: ContactItem[] = [
     { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro', color: 'teal' },
-    { icon: Phone, label: 'WhatsApp & Telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
+    { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
   ];
-  
+
   useEffect(() => {
     const sectionElement = document.getElementById('contact');
     if (!sectionElement) return;
 
     const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      }, { threshold: 0.1 });
-    
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.1 });
+
     observer.observe(sectionElement);
-    
+
     return () => observer.unobserve(sectionElement);
   }, []);
 
@@ -105,7 +105,7 @@ const Contact: React.FC = () => {
       setToast({ show: true, message: 'Te rugăm să selectezi un pachet.', type: 'error' });
       return;
     }
-    
+
     setIsSending(true);
 
     if (!formRef.current) {
@@ -150,9 +150,9 @@ const Contact: React.FC = () => {
       <div className="relative">
         <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
         <input
-          type={type} 
-          name={name} 
-          placeholder={placeholder} 
+          type={type}
+          name={name}
+          placeholder={placeholder}
           required={required}
           className="w-full bg-slate-900/60 border border-slate-700/50 rounded-xl py-4 pl-12 pr-6 text-white placeholder-slate-400 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 transition-all duration-300"
         />
@@ -161,19 +161,19 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section 
-      id="contact" 
+    <section
+      id="contact"
       className="w-full py-24 md:py-32 bg-slate-950 text-white relative flex items-center justify-center overflow-hidden"
     >
       {toast.show && <ToastNotification message={toast.message} type={toast.type} onClose={() => setToast({ ...toast, show: false })} />}
-      
+
       <div className="absolute inset-0 bg-grid-slate-800/[0.2]"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"></div>
 
       <div className="relative max-w-6xl mx-auto px-6 w-full z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
-            Transformă Ideea în Realitate
+            Transformă ideea în realitate
           </h2>
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
             Alege pachetul, completează formularul sau contactează-ne direct. Suntem gata să construim împreună.
@@ -181,18 +181,18 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12 items-start">
-          <form 
-            onSubmit={handleSubmit} 
+          <form
+            onSubmit={handleSubmit}
             ref={formRef}
             className={`lg:col-span-3 bg-slate-900/50 backdrop-blur-lg rounded-2xl p-8 flex flex-col gap-6 shadow-2xl border border-slate-800 transition-all duration-1000 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
           >
             <div>
-              <h3 className="text-slate-200 font-semibold mb-4 text-lg">1. Alege Pachetul de Start</h3>
+              <h3 className="text-slate-200 font-semibold mb-4 text-lg">1. Alege pachetul de start</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {pricingPackages.map((pkg) => (
-                  <button 
-                    key={pkg.id} 
-                    type="button" 
+                  <button
+                    key={pkg.id}
+                    type="button"
                     onClick={() => setSelectedPackage(pkg.name)}
                     className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${selectedPackage === pkg.name ? 'bg-teal-500/10 border-teal-400 scale-105' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
                   >
@@ -202,7 +202,7 @@ const Contact: React.FC = () => {
                 ))}
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">2. Completează Detaliile</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -217,19 +217,19 @@ const Contact: React.FC = () => {
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">3. Spune-ne mai multe</h3>
               <div className="flex flex-col gap-4">
                 {renderInputField('activity_field', 'Domeniul de activitate', 'text', true, Briefcase)}
-                <textarea 
-                  name="project_details" 
-                  placeholder="Descrie pe scurt proiectul tău..." 
-                  rows={4} 
+                <textarea
+                  name="project_details"
+                  placeholder="Descrie pe scurt proiectul tău..."
+                  rows={4}
                   required
                   className="w-full bg-slate-900/60 border border-slate-700/50 rounded-xl px-6 py-4 text-white placeholder-slate-400 focus:outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/50 transition-all duration-300 resize-none"
                 />
               </div>
             </div>
 
-            <button 
-              type="submit" 
-              disabled={isSending} 
+            <button
+              type="submit"
+              disabled={isSending}
               className="w-full bg-gradient-to-r from-teal-500 via-blue-500 to-cyan-500 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all duration-300 text-lg hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSending ? (
@@ -240,7 +240,7 @@ const Contact: React.FC = () => {
               ) : (
                 <>
                   <Send size={20} />
-                  <span>Trimite Solicitarea</span>
+                  <span>Trimite solicitarea</span>
                 </>
               )}
             </button>
@@ -250,21 +250,20 @@ const Contact: React.FC = () => {
             <h3 className="text-2xl font-bold text-white text-center lg:text-left">Sau contactează-ne direct</h3>
             {contactItems.map((item) => {
               const Icon = item.icon;
-              const isWhatsApp = item.label === 'WhatsApp & Telefon';
+              const isWhatsApp = item.label === 'WhatsApp & telefon';
               return (
-                <a 
-                  key={item.label} 
-                  href={item.href} 
-                  target="_blank" 
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className={`group flex items-center gap-6 p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer ${
-                    isWhatsApp 
-                      ? 'bg-gradient-to-br from-blue-600/20 to-slate-800/30 border-2 border-blue-500/50 shadow-lg shadow-blue-500/10 hover:border-blue-400' 
-                      : 'bg-slate-800/30 border border-slate-700/30 hover:border-slate-500/50'
-                  }`}
+                  className={`group flex items-center gap-6 p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer ${isWhatsApp
+                    ? 'bg-gradient-to-br from-blue-600/20 to-slate-800/30 border-2 border-blue-500/50 shadow-lg shadow-blue-500/10 hover:border-blue-400'
+                    : 'bg-slate-800/30 border border-slate-700/30 hover:border-slate-500/50'
+                    }`}
                 >
                   <div className={`p-3 rounded-full bg-${item.color}-500/10`}>
-                     <Icon className={`text-${item.color}-400 group-hover:scale-110 transition-transform duration-300`} size={28} />
+                    <Icon className={`text-${item.color}-400 group-hover:scale-110 transition-transform duration-300`} size={28} />
                   </div>
                   <div className="flex-1">
                     <div className="text-slate-400 text-sm font-medium">{item.label}</div>
@@ -276,9 +275,18 @@ const Contact: React.FC = () => {
             })}
             <div className="mt-4 p-6 rounded-2xl bg-gradient-to-br from-slate-800/20 to-slate-900/20 backdrop-blur-sm border border-slate-700/30 text-center">
               <h4 className="text-xl font-bold mb-2 bg-gradient-to-r from-teal-300 to-blue-300 bg-clip-text text-transparent">
-                Răspuns Rapid
+                Răspuns   rapid
               </h4>
-              <p className="text-slate-300 leading-relaxed">Timpul tău este prețios. Pentru un răspuns instant și o discuție eficientă, <span className="text-blue-400 font-semibold">scrie-ne direct pe WhatsApp.</span></p>
+              <p className="text-slate-300 leading-relaxed">Timpul tău este prețios. Pentru un răspuns instant și o discuție eficientă,
+                <a
+                  href="https://api.whatsapp.com/send/?phone=40750488329&text&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 font-semibold"
+                >
+                  <u>scrie-ne direct pe WhatsApp.</u>
+                </a>
+              </p>
             </div>
           </div>
         </div>

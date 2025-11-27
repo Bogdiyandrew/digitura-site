@@ -46,11 +46,12 @@ const mainPlans: PricingPlan[] = [
       'Site complet funcțional, într-o singură pagină',
       'Conținut clar și orientat pe conversie',
       'Formular de contact eficient, conectat direct la e-mailul tău',
-      'Încărcare rapidă – sub 2 secunde',
+      'Încărcare rapidă – sub 3 secunde',
       'Design responsive (mobil, tabletă, desktop)',
+      'E-mail personalizat',
       '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
     ],
-    ctaText: 'Pornește Acum',
+    ctaText: 'Pornește acum',
     gradient: 'from-slate-600 via-slate-700 to-slate-800',
     iconGradient: 'from-teal-400 to-cyan-500',
     isPopular: false,
@@ -58,21 +59,22 @@ const mainPlans: PricingPlan[] = [
     savings: 'Economisești 300 lei',
   },
   {
-    name: 'Website + Branding',
+    name: 'Website Prezentare',
     price: '5.000',
     cents: '',
-    subtitle: 'Identitate vizuală completă și website profesionist.',
-    description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong>, <strong>identitate coerentă</strong> și un <strong>website modern</strong> care inspiră încredere.',
+    subtitle: 'Identitate vizuală modernă și website profesionist.',
+    description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong> și un <strong>website modern</strong> care inspiră încredere.',
     icon: <Globe className="w-8 h-8" />,
     features: [
       'Website complet de prezentare, până la 10 pagini',
       'Design personalizat care reflectă brandul tău',
-      'Branding complet – logo, culori și elemente vizuale coerente',
-      'Optimizare SEO de bază pentru vizibilitate online',
-      'Consultanță și ghidaj pe tot parcursul proiectului',
-      '<strong>Bonus:</strong> 60 de zile de mentenanță și suport dedicate',
+      'Optimizare SEO pentru vizibilitate online',
+      'Asistență strategică și suport dedicat',
+      'Integrare API și instrumente de conversie',
+      'Monitorizare performanță:(Google Analytics și Google Search Console)',
+      '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
     ],
-    ctaText: 'Construiește-ți Brandul',
+    ctaText: 'Vreau website',
     gradient: 'from-blue-600 via-cyan-600 to-teal-600',
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
@@ -82,26 +84,25 @@ const mainPlans: PricingPlan[] = [
   },
   {
     name: 'Motor E-Commerce',
-    price: '8.000',
+    price: '12.500',
     cents: '',
     subtitle: 'Magazin online complet, gata să vândă din prima zi.',
     description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
     icon: <ShoppingCart className="w-8 h-8" />,
     features: [
-      'Magazin online complet, pregătit de vânzare',
-      'Design personalizat adaptat identității brandului tău',
-      'Optimizare SEO tehnică de bază pentru produse și pagini',
-      'Integrare plăți online, curieri și facturare automată',
-      'Automatizări pentru comenzi, e-mailuri și stocuri',
-      '<strong>Bonus:</strong> 90 de zile de suport și optimizare post-lansare',
+      'Magazin online complet, optimizat și gata de vânzare.',
+      'Optimizare SEO tehnica pentru produse și pagini.',
+      'Integrare API (plăți, curieri, facturare automată).',
+      'Automatizarea fluxurilor de lucru (comenzi, e-mailuri, stocuri).',
+      '<strong>Bonus:</strong> 60 de zile de suport tehnic și ajustări de optimizare.',
     ],
-    ctaText: 'Începe să Vinzi',
+    ctaText: 'Începe să vinzi',
     gradient: 'from-emerald-600 via-green-600 to-lime-600',
     iconGradient: 'from-emerald-400 to-lime-400',
     isPopular: false,
     badge: { text: 'PENTRU PROFIT MAXIM' },
-    oldPrice: { lei: 9000, cents: 0 },
-    savings: 'Economisești 1.000 lei',
+    oldPrice: { lei: 14000, cents: 0 },
+    savings: 'Economisești 1.500 lei',
   },
   {
     name: 'Soluție Personalizată',
@@ -118,7 +119,7 @@ const mainPlans: PricingPlan[] = [
       'Comunicare directă cu dezvoltatorul pe tot parcursul proiectului',
       '<strong>Bonus:</strong> Suport tehnic dedicat după lansare',
     ],
-    ctaText: 'Hai să Discutăm',
+    ctaText: 'Hai să discutăm',
     gradient: 'from-violet-600 via-purple-600 to-fuchsia-600',
     iconGradient: 'from-violet-400 to-purple-400',
     isPopular: false,
@@ -181,7 +182,7 @@ const faqs = [
   {
     question: 'Cât costă un site?',
 
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.500 lei</strong>, Website de prezentare – <strong class="text-white font-bold">5.000 lei</strong>, Magazin online – <strong class="text-white font-bold">8.000 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.500 lei</strong>, Website de prezentare – <strong class="text-white font-bold">5.000 lei</strong>, Magazin online – <strong class="text-white font-bold">12.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
     question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
@@ -193,11 +194,11 @@ const faqs = [
   },
   {
     question: 'Ce se întâmplă dacă vreau modificări?',
-    answer: 'Discutăm, ajustăm și livrăm ce trebuie. Dacă vrei modificări majore după livrare, se facturează separat. Nu lăsăm lucrurile în aer, ne asigurăm că ești mulțumit.'
+    answer: 'Discutăm, ajustăm și livrăm ce trebuie. Pachetele includ 2 runde de revizii. Dacă vrei modificări majore după livrare, se facturează separat. Nu lăsăm lucrurile în aer, ne asigurăm că ești mulțumit.'
   },
   {
     question: 'Trebuie să am conținutul pregătit?',
-    answer: 'Ideal, da — dar nu e obligatoriu. Te putem ajuta cu structură, texte (copywriting), imagini și chiar materiale vizuale. Dacă ai nevoie, ne ocupăm și de logo sau identitate vizuală. Venim cu soluții, nu cu probleme.'
+    answer: 'Da, conținutul (texte, imagini) este oferit de client. Dacă nu ai conținut, te putem ajuta contra cost cu servicii de copywriting și creare de conținut vizual.'
   },
   {
     question: 'Site-ul e optimizat pentru mobil și viteză?',
@@ -209,7 +210,7 @@ const faqs = [
   },
   {
     question: 'Ce suport primesc după livrare?',
-    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website + Branding</strong>, primești <strong>60 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>90 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
+    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website Prezentare</strong>, primești <strong>30 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>60 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
   }
 ];
 
@@ -333,8 +334,8 @@ const Pricing: React.FC = () => {
 
           <h2 className="pricing-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight opacity-0 px-4 sm:px-0">
             O <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-gradient">
-              Investiție
-            </span>,<br className="hidden sm:block" /> Nu o Cheltuială
+              investiție
+            </span>,<br className="hidden sm:block" /> nu o cheltuială
           </h2>
 
           <p className="pricing-subtitle text-base sm:text-lg md:text-xl text-slate-400 leading-relaxed opacity-0 px-4 sm:px-0">
@@ -536,14 +537,14 @@ const Pricing: React.FC = () => {
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
               <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
-              <span className="text-blue-400 text-xs sm:text-sm font-semibold">Răspunsuri Clare</span>
+              <span className="text-blue-400 text-xs sm:text-sm font-semibold">Răspunsuri clare</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
                 Întrebări
               </span>{' '}
-              Frecvente
+              frecvente
             </h2>
             <p className="text-slate-400 text-base sm:text-lg px-4 sm:px-0">
               Tot ce trebuie să știi despre serviciile noastre

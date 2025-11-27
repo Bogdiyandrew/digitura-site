@@ -33,8 +33,8 @@ const Hero = () => {
 
       masterTL.fromTo(
         titleRef.current,
-        { 
-          opacity: 0, 
+        {
+          opacity: 0,
           y: 100,
           scale: 0.8,
           rotationX: -45
@@ -171,7 +171,7 @@ const Hero = () => {
   }, [showBlackBg]);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
       style={{ fontFamily: 'Exo2, sans-serif' }}
@@ -182,7 +182,7 @@ const Hero = () => {
         muted
         playsInline
         className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
-        style={{ 
+        style={{
           willChange: 'transform',
           objectPosition: 'center 35%'
         }}
@@ -190,12 +190,12 @@ const Hero = () => {
         <source src="/services/back.mp4" type="video/mp4" />
       </video>
 
-      <div 
+      <div
         ref={overlayRef}
         className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70"
         style={{ willChange: 'opacity' }}
       />
-      
+
       {showBlackBg && (
         <div
           className={`absolute inset-0 z-40 transition-opacity duration-2000 ease-in-out ${blackBgVisible ? 'opacity-100' : 'opacity-0'}`}
@@ -204,13 +204,13 @@ const Hero = () => {
           }}
         >
           <div className="pointer-events-none">
-            <div className="absolute top-0 left-0 h-32 w-32 rounded-full bg-teal-400/15 blur-2xl" style={{zIndex:41}} />
-            <div className="absolute bottom-0 right-0 h-32 w-32 rounded-full bg-blue-400/15 blur-2xl" style={{zIndex:41}} />
+            <div className="absolute top-0 left-0 h-32 w-32 rounded-full bg-teal-400/15 blur-2xl" style={{ zIndex: 41 }} />
+            <div className="absolute bottom-0 right-0 h-32 w-32 rounded-full bg-blue-400/15 blur-2xl" style={{ zIndex: 41 }} />
           </div>
         </div>
       )}
 
-      <div 
+      <div
         ref={gradientRef}
         className="pointer-events-none absolute inset-0 z-20"
         style={{
@@ -221,8 +221,8 @@ const Hero = () => {
       />
 
       <div className="relative z-50 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
-        
-        <div 
+
+        <div
           ref={badgeRef}
           className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105"
           style={{ perspective: '1000px' }}
@@ -234,20 +234,20 @@ const Hero = () => {
           </span>
         </div>
 
-        <h1 
+        <h1
           ref={titleRef}
           className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-6 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
-          style={{ 
-            fontFamily: 'Exo2, sans-serif', 
+          style={{
+            fontFamily: 'Exo2, sans-serif',
             letterSpacing: 1,
             perspective: '1000px'
           }}
         >
-          Vezi Cum Arată Viitorul Firmei Tale. Nu-l imagina — interacționează cu el.
+          Vezi cum arată viitorul firmei tale. Nu-l imagina — interacționează cu el.
         </h1>
 
         <div className="mb-6 flex justify-center" style={{ perspective: '1000px' }}>
-          <span 
+          <span
             ref={codeSymbolRef}
             className="select-none font-mono text-2xl font-bold text-teal-400 md:text-3xl cursor-pointer"
             style={{ transformStyle: 'preserve-3d' }}
@@ -256,13 +256,13 @@ const Hero = () => {
           </span>
         </div>
 
-        <div 
+        <div
           ref={separatorRef}
           className="mx-auto mb-8 h-1 w-32 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"
           style={{ transformOrigin: 'center' }}
         />
-        
-        <p 
+
+        <p
           ref={subtitleRef}
           className="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
         >
@@ -270,7 +270,7 @@ const Hero = () => {
           <span className="font-semibold text-teal-300">100% gratuit.</span>
         </p>
 
-        <div 
+        <div
           ref={ctaRef}
           className="flex flex-col items-center justify-center gap-4 sm:flex-row"
           style={{ perspective: '1000px' }}
@@ -303,7 +303,7 @@ const Hero = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" />
             </svg>
-            <span className="relative z-10">Vreau Prototipul meu Gratuit</span>
+            <span className="relative z-10">Vreau prototipul meu gratuit</span>
             <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
           </button>
         </div>

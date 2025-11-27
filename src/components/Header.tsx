@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
-import {Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
     if (isMobile) {
       setMobileOpen(false);
     }
-    
+
     if (href.startsWith('#')) {
       if (pathname !== '/') {
         window.location.href = `/${href}`;
@@ -95,11 +95,11 @@ const Header: React.FC = () => {
         }
       }
     } else if (href === '/') {
-        if (pathname === '/') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            window.location.href = '/';
-        }
+      if (pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.location.href = '/';
+      }
     } else {
       window.location.href = href;
     }
@@ -109,11 +109,10 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full transition-all duration-500 z-50 ${visible ? 'translate-y-0' : '-translate-y-full'} ${
-          scrolled
+        className={`fixed top-0 left-0 w-full transition-all duration-500 z-[60] ${visible ? 'translate-y-0' : '-translate-y-full'} ${scrolled
             ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-700/80 shadow-2xl shadow-teal-400/10'
             : 'bg-slate-950/60 backdrop-blur-sm border-b border-slate-800/40'
-        }`}
+          }`}
         style={{
           background: scrolled
             ? `radial-gradient(ellipse at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.1) 0%, rgba(15,23,42,0.95) 50%)`
@@ -122,25 +121,25 @@ const Header: React.FC = () => {
         }}
       >
         <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
             className="group flex-shrink-0 flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
           >
-            <Image 
-              src="/favicon.ico" 
-              alt="Digitura Logo" 
+            <Image
+              src="/favicon.ico"
+              alt="Digitura Logo"
               width={48}
               height={48}
-              className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-lg bg-slate-900 border-2 border-slate-800" 
-              style={{ boxShadow: '0 2px 16px 0 rgba(20,184,166,0.10)' }} 
+              className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-lg bg-slate-900 border-2 border-slate-800"
+              style={{ boxShadow: '0 2px 16px 0 rgba(20,184,166,0.10)' }}
             />
-            <span 
-              className="text-lg md:text-xl font-bold select-none text-white tracking-widest" 
-              style={{ 
-                fontFamily: 'Ethnocentric, sans-serif', 
-                letterSpacing: '0.12em', 
-                textShadow: '0 2px 12px rgba(0,0,0,0.18)' 
+            <span
+              className="text-lg md:text-xl font-bold select-none text-white tracking-widest"
+              style={{
+                fontFamily: 'Ethnocentric, sans-serif',
+                letterSpacing: '0.12em',
+                textShadow: '0 2px 12px rgba(0,0,0,0.18)'
               }}
             >
               DIGITURA
@@ -152,14 +151,13 @@ const Header: React.FC = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${
-                  link.label === 'Contact'
+                className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${link.label === 'Contact'
                     ? 'text-teal-300 hover:text-white'
                     : 'text-slate-200 hover:text-white'
-                }`}
+                  }`}
                 onClick={(e) => handleLinkClick(link.href, e)}
               >
-                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }}/>
+                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }} />
                 <span className="relative z-10">{link.label}</span>
               </a>
             ))}
@@ -176,9 +174,9 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          <button 
-            className="lg:hidden flex-shrink-0 p-2 text-teal-300" 
-            onClick={() => setMobileOpen(true)} 
+          <button
+            className="lg:hidden flex-shrink-0 p-2 text-teal-300"
+            onClick={() => setMobileOpen(true)}
             aria-label="Deschide meniul"
           >
             <Menu size={28} />
@@ -186,25 +184,25 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      <div className={`fixed inset-0 z-[60] transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`fixed inset-0 z-[70] transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-slate-950 animated-gradient" onClick={() => setMobileOpen(false)} />
         <nav className={`absolute top-0 right-0 h-full w-full max-w-sm bg-slate-900/80 backdrop-blur-2xl border-l border-slate-700/50 shadow-2xl flex flex-col transition-transform duration-500 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex justify-between items-center p-6 border-b border-slate-800">
-            <span 
-              className="text-xl font-bold text-white" 
+            <span
+              className="text-xl font-bold text-white"
               style={{ fontFamily: 'Ethnocentric, sans-serif' }}
             >
               MENIU
             </span>
-            <button 
-              onClick={() => setMobileOpen(false)} 
+            <button
+              onClick={() => setMobileOpen(false)}
               className="p-2 text-slate-400 hover:text-white transition-colors"
               aria-label="Închide meniul"
             >
               <X size={28} />
             </button>
           </div>
-          
+
           <div className="flex flex-col p-6 gap-2">
             {menuLinks.map((link: MenuLink, index: number) => (
               link.isSpecial ? (
@@ -219,7 +217,7 @@ const Header: React.FC = () => {
                   }}
                   onClick={(e) => handleLinkClick(link.href, e, true)}
                 >
-                   {link.label}
+                  {link.label}
                 </a>
               ) : (
                 <a

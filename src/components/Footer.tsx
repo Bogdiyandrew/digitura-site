@@ -14,7 +14,7 @@ interface MousePosition {
 const Footer: React.FC = () => {
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const pathname = usePathname();
-  
+
   const isOnTermsPage = pathname === '/termeni-si-conditii';
   const isOnConfPage = pathname === '/politica-de-confidentialitate';
   const isOnCookiesPage = pathname === '/politica-cookies';
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
 
   const scrollToTop = (): void => {
     if (typeof window === 'undefined') return;
-    
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -61,8 +61,8 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer 
-      className="relative w-full bg-slate-950 border-t border-slate-800 text-slate-300 pt-16 pb-8 px-6 overflow-hidden" 
+    <footer
+      className="relative w-full bg-slate-950 border-t border-slate-800 text-slate-300 pt-16 pb-8 px-6 overflow-hidden"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
       <div
@@ -74,20 +74,20 @@ const Footer: React.FC = () => {
 
       <div className="relative max-w-7xl mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          
+
           <div className="flex flex-col gap-4">
-            <Link 
-              href={isOnTermsPage ? "/" : "#"} 
-              onClick={handleLogoClick} 
-              className="flex items-center gap-3 text-2xl font-bold text-white mb-2" 
+            <Link
+              href={isOnTermsPage ? "/" : "#"}
+              onClick={handleLogoClick}
+              className="flex items-center gap-3 text-2xl font-bold text-white mb-2"
               style={{ fontFamily: 'Ethnocentric, sans-serif' }}
             >
-              <Image 
-                src="/favicon.ico" 
-                alt="Digitura Logo" 
+              <Image
+                src="/favicon.ico"
+                alt="Digitura Logo"
                 width={40}
                 height={40}
-                className="rounded-full" 
+                className="rounded-full"
               />
               DIGITURA
             </Link>
@@ -95,18 +95,18 @@ const Footer: React.FC = () => {
               Transformăm idei în experiențe digitale de impact. Construim viitorul web, un proiect odată.
             </p>
             <div className="flex gap-4 mt-4">
-              <a 
-                href="https://www.facebook.com/profile.php?id=61575720485744" 
-                aria-label="Facebook" 
+              <a
+                href="https://www.facebook.com/profile.php?id=61575720485744"
+                aria-label="Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-110"
               >
                 <Facebook size={22} />
               </a>
-              <a 
-                href="https://www.instagram.com/digituraro/" 
-                aria-label="Instagram" 
+              <a
+                href="https://www.instagram.com/digituraro/"
+                aria-label="Instagram"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-110"
@@ -117,32 +117,32 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wider">Link-uri Utile</h3>
+            <h3 className="font-semibold text-white mb-4 tracking-wider">Link-uri utile</h3>
             <nav className="flex flex-col gap-3">
-              <Link 
-                href={isLegalPage ? "/#despre" : "#despre"} 
-                onClick={handleSectionLinkClick('#despre')} 
+              <Link
+                href={isLegalPage ? "/#despre" : "#despre"}
+                onClick={handleSectionLinkClick('#despre')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Despre Noi
+                Despre noi
               </Link>
-              <Link 
-                href={isLegalPage ? "/#servicii" : "#servicii"} 
-                onClick={handleSectionLinkClick('#servicii')} 
+              <Link
+                href={isLegalPage ? "/#servicii" : "#servicii"}
+                onClick={handleSectionLinkClick('#servicii')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Servicii
               </Link>
-              <Link 
-                href={isLegalPage ? "/#portofoliu" : "#portofoliu"} 
-                onClick={handleSectionLinkClick('#portofoliu')} 
+              <Link
+                href={isLegalPage ? "/#portofoliu" : "#portofoliu"}
+                onClick={handleSectionLinkClick('#portofoliu')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Portofoliu
               </Link>
-              <Link 
-                href={isLegalPage ? "/#preturi" : "#preturi"} 
-                onClick={handleSectionLinkClick('#preturi')} 
+              <Link
+                href={isLegalPage ? "/#preturi" : "#preturi"}
+                onClick={handleSectionLinkClick('#preturi')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Prețuri
@@ -151,25 +151,25 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wider">Legal & Info</h3>
+            <h3 className="font-semibold text-white mb-4 tracking-wider">Legal & info</h3>
             <nav className="flex flex-col gap-3">
-              <Link 
-                href="/termeni" 
+              <Link
+                href="/termeni"
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Termeni și Condiții
+                Termeni și condiții
               </Link>
-              <Link 
-                href="/politica-de-confidentialitate" 
+              <Link
+                href="/politica-de-confidentialitate"
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Politica de Confidențialitate
+                Politica de confidențialitate
               </Link>
-              <Link 
-                href="/politica-cookies" 
+              <Link
+                href="/politica-cookies"
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Politica Cookies
+                Politica cookies
               </Link>
             </nav>
           </div>
@@ -193,32 +193,32 @@ const Footer: React.FC = () => {
           <p className="text-sm text-slate-500 text-center md:text-left">
             © {new Date().getFullYear()} Digitura. Toate drepturile rezervate.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <a 
-              href="https://anpc.ro/ce-este-sal/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="transform hover:scale-105 transition-transform duration-300" 
+            <a
+              href="https://anpc.ro/ce-este-sal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transform hover:scale-105 transition-transform duration-300"
               aria-label="Soluționarea Alternativă a Litigiilor (ANPC)"
             >
-              <img 
-                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg" 
+              <img
+                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg"
                 alt="Soluționarea Alternativă a Litigiilor"
                 width="250"
                 height="50"
                 style={{ height: '50px', width: '250px' }}
               />
             </a>
-            <a 
-              href="https://ec.europa.eu/consumers/odr" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="transform hover:scale-105 transition-transform duration-300" 
+            <a
+              href="https://ec.europa.eu/consumers/odr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transform hover:scale-105 transition-transform duration-300"
               aria-label="Soluționarea Online a Litigiilor (UE)"
             >
-              <img 
-                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg" 
+              <img
+                src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg"
                 alt="Soluționarea Online a Litigiilor"
                 width="250"
                 height="50"
@@ -227,8 +227,8 @@ const Footer: React.FC = () => {
             </a>
           </div>
 
-          <button 
-            onClick={scrollToTop} 
+          <button
+            onClick={scrollToTop}
             className="group hidden lg:flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"
             aria-label="Înapoi sus"
           >

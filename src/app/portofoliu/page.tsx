@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const projects = [
   {
     id: 1,
-    title: 'Voltariss - Inginerie Electrică',
+    title: 'Voltariss - Inginerie electricǎ',
     description: 'Platformă digitală High-Tech pentru servicii industriale. Design "Dark Mode" minimalist, animații fluide și optimizare SEO maximă pentru generarea de lead-uri locale.',
     image: '/photos/voltariss.png',
     link: 'https://voltariss.ro/',
@@ -22,7 +22,7 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Aura - Cafenea & Magazin Artizanal',
+    title: 'Aura - Cafenea & magazin artizanal',
     description: 'Studiu de caz pentru un brand premium ce combină atmosfera unei cafenele cu un magazin artizanal online, oferind o experiență unică utilizatorilor.',
     image: '/photos/aurarev.png',
     link: 'https://aura-cafea-demo.vercel.app/',
@@ -32,7 +32,7 @@ const projects = [
   },
   {
     id: 3,
-    title: 'Clinia Dentara - Website pentru Servicii Dentare',
+    title: 'Clinia dentarǎ - Website pentru servicii dentare',
     description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
     image: '/photos/clinicadent5.png',
     link: 'https://demo-clinicadentara.vercel.app/',
@@ -42,7 +42,7 @@ const projects = [
   },
   {
     id: 4,
-    title: 'Quantum - Landing Page pentru SaaS',
+    title: 'Quantum - Landing page pentru SaaS',
     description: 'Landing page custom cu animații 3D și interactivitate avansată, destinat unei platforme SaaS inovatoare pentru managementul proiectelor.',
     image: '/photos/quantumrev.png',
     link: 'https://quantum-demo-gamma.vercel.app/',
@@ -52,7 +52,7 @@ const projects = [
   },
   {
     id: 5,
-    title: 'Precision Auto - Service Auto & Programări Online',
+    title: 'Precision Auto - Service auto & programări online',
     description: 'Website modern pentru un service auto, construit în Next.js, cu sistem de programări online, prezentare detaliată a serviciilor și design profesional.',
     image: '/photos/precrev.png',
     link: 'https://precision-auto-demo.vercel.app/',
@@ -62,7 +62,7 @@ const projects = [
   },
   {
     id: 6,
-    title: 'Pas cu Pas - Asistent AI pentru Români',
+    title: 'Pas cu Pas - Asistent AI pentru români',
     description: 'Un site integrat cu AI care oferă conversații empatice și suport pentru probleme precum depresia, singurătatea sau anxietatea. O inițiativă dedicată să aducă inteligența artificială mai aproape de oameni, în sprijinul comunității.',
     image: '/photos/pascupas3.png',
     link: 'https://www.pascupas.online/',
@@ -72,7 +72,7 @@ const projects = [
   },
   {
     id: 7,
-    title: 'ShopFlow Dashboard - Panou de Control pentru E-commerce',
+    title: 'ShopFlow Dashboard - Panou de control pentru e-commerce',
     description: 'Dashboard interactiv pentru gestionarea magazinelor online, oferind analize detaliate, managementul comenzilor și optimizarea vânzărilor.',
     image: '/photos/dashboard-demo.png',
     link: 'https://dashboard-demo-eight.vercel.app/',
@@ -103,7 +103,6 @@ export default function PortofoliuPage() {
       <Header />
       <main className="bg-slate-950 text-white font-exo2 min-h-screen">
 
-        {/* Hero Section */}
         <section className="relative w-full py-32 px-6 text-center overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-900/20 via-slate-950 to-slate-950 pointer-events-none" />
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
@@ -118,8 +117,8 @@ export default function PortofoliuPage() {
             <span className="inline-block py-1 px-3 rounded-full bg-teal-500/10 text-teal-400 text-sm font-semibold mb-6 border border-teal-500/20">
               Showcase 2025
             </span>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
-              Portofoliul Nostru
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400" style={{ fontFamily: 'Ethnocentric, sans-serif', letterSpacing: 1 }}>
+              Portofoliul nostru
             </h1>
             <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-2xl mx-auto">
               Explorăm limitele designului și tehnologiei pentru a crea experiențe digitale memorabile.
@@ -127,7 +126,6 @@ export default function PortofoliuPage() {
           </motion.div>
         </section>
 
-        {/* Filter Section */}
         <section className="max-w-7xl mx-auto px-6 mb-12">
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
@@ -145,7 +143,6 @@ export default function PortofoliuPage() {
           </div>
         </section>
 
-        {/* Projects Grid */}
         <section className="max-w-7xl mx-auto px-6 pb-32">
           <motion.div
             layout
@@ -164,7 +161,6 @@ export default function PortofoliuPage() {
                     transition={{ duration: 0.3 }}
                     className="group relative bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-teal-500/30 transition-colors duration-300 flex flex-col h-full"
                   >
-                    {/* Image Container - AM SCOS ICONIȚA DE AICI */}
                     <div className="relative h-80 overflow-hidden">
                       <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
                       <Image
@@ -176,26 +172,21 @@ export default function PortofoliuPage() {
                       />
                     </div>
 
-                    {/* Content Section */}
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="mb-4">
                         <span className="text-xs font-bold text-teal-500 uppercase tracking-wider mb-2 block">
                           {project.category}
                         </span>
 
-                        {/* --- MODIFICAREA PRINCIPALĂ ESTE AICI --- */}
-                        {/* Am creat un container flex pentru a alinia Titlul și Iconița */}
                         <div className="flex justify-between items-start gap-4">
                           <h3 className="text-xl font-bold text-white group-hover:text-teal-400 transition-colors duration-300">
                             {project.title}
                           </h3>
 
-                          {/* Aici am mutat iconița, într-un div separat */}
                           <div className="shrink-0 bg-slate-800 p-2 rounded-lg border border-slate-700/50 text-teal-400 group-hover:border-teal-500/50 group-hover:text-teal-300 transition-all duration-300">
                             <IconComponent className="w-5 h-5" />
                           </div>
                         </div>
-                        {/* ------------------------------------------ */}
 
                       </div>
 
@@ -231,7 +222,6 @@ export default function PortofoliuPage() {
           </motion.div>
         </section>
 
-        {/* CTA Section */}
         <section className="w-full py-24 bg-gradient-to-b from-slate-950 to-slate-900 border-t border-slate-800">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
