@@ -1,4 +1,3 @@
-// src/components/PromptCard.tsx
 'use client';
 
 import React, { useState, MouseEvent } from 'react';
@@ -11,13 +10,13 @@ const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, video
   const [copied, setCopied] = useState(false);
 
   const handleCopy = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); 
+    e.preventDefault();
     e.stopPropagation();
     navigator.clipboard.writeText(JSON.stringify(jsonPrompt, null, 2));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-  
+
   const handleVideoLink = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -38,8 +37,8 @@ const PromptCard: React.FC<Prompt> = ({ slug, title, jsonPrompt, imageUrl, video
             className="w-full h-auto object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
           />
           {videoUrl && (
-            <div 
-              onClick={handleVideoLink} 
+            <div
+              onClick={handleVideoLink}
               className="absolute top-3 right-3 bg-black/50 backdrop-blur-md text-white px-3 py-1.5 rounded-full flex items-center gap-2 text-sm hover:bg-teal-500 transition-colors z-10 cursor-pointer"
             >
               <Video size={16} />

@@ -15,7 +15,7 @@ interface LenisSmoothScrollProps {
 export default function LenisSmoothScroll({ children }: LenisSmoothScrollProps) {
 
   useEffect(() => {
-    console.log("[Lenis Setup] Lenis este DEZACTIVAT temporar (Native Scroll Only).");
+    console.log("Lenis Setup] Lenis este dezactivat temporar.");
 
   }, []);
 
