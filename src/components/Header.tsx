@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
@@ -35,6 +35,37 @@ const Header: React.FC = () => {
   const lastScrollY = useRef<number>(0);
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Handle hash scrolling on mount/update
+    const handleHashScroll = () => {
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1);
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds max
+
+        const tryScroll = () => {
+          const element = document.getElementById(id);
+          if (element) {
+            if (window.lenis) {
+              window.lenis.scrollTo(element, { offset: -20 }); // Slight offset for header
+            } else {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          } else if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(tryScroll, 100);
+          }
+        };
+
+        // Small delay to ensure initial render
+        setTimeout(tryScroll, 100);
+      }
+    };
+
+    handleHashScroll();
+  }, [pathname]); // Re-run on pathname change
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -86,22 +117,30 @@ const Header: React.FC = () => {
 
     if (href.startsWith('#')) {
       if (pathname !== '/') {
-        window.location.href = `/${href}`;
+        router.push(`/${href}`);
       } else {
         const id = href.substring(1);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          if (window.lenis) {
+            window.lenis.scrollTo(element, { offset: -20 });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
     } else if (href === '/') {
       if (pathname === '/') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.lenis) {
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       } else {
-        window.location.href = '/';
+        router.push('/');
       }
     } else {
-      window.location.href = href;
+      router.push(href);
     }
   };
 
@@ -110,8 +149,8 @@ const Header: React.FC = () => {
     <>
       <header
         className={`fixed top-0 left-0 w-full transition-all duration-500 z-[60] ${visible ? 'translate-y-0' : '-translate-y-full'} ${scrolled
-            ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-700/80 shadow-2xl shadow-teal-400/10'
-            : 'bg-slate-950/60 backdrop-blur-sm border-b border-slate-800/40'
+          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-700/80 shadow-2xl shadow-teal-400/10'
+          : 'bg-slate-950/60 backdrop-blur-sm border-b border-slate-800/40'
           }`}
         style={{
           background: scrolled
@@ -152,8 +191,8 @@ const Header: React.FC = () => {
                 key={link.href}
                 href={link.href}
                 className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${link.label === 'Contact'
-                    ? 'text-teal-300 hover:text-white'
-                    : 'text-slate-200 hover:text-white'
+                  ? 'text-teal-300 hover:text-white'
+                  : 'text-slate-200 hover:text-white'
                   }`}
                 onClick={(e) => handleLinkClick(link.href, e)}
               >

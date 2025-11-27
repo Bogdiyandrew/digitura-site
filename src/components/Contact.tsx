@@ -76,8 +76,10 @@ const Contact: React.FC = () => {
     { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
   ];
 
+  const sectionRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
-    const sectionElement = document.getElementById('contact');
+    const sectionElement = sectionRef.current;
     if (!sectionElement) return;
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -162,7 +164,7 @@ const Contact: React.FC = () => {
 
   return (
     <section
-      id="contact"
+      ref={sectionRef}
       className="w-full py-24 md:py-32 bg-slate-950 text-white relative flex items-center justify-center overflow-hidden"
     >
       {toast.show && <ToastNotification message={toast.message} type={toast.type} onClose={() => setToast({ ...toast, show: false })} />}
