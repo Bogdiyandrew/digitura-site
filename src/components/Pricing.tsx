@@ -36,45 +36,44 @@ type PricingPlan = {
 
 const mainPlans: PricingPlan[] = [
   {
-    name: 'Lansare Rapidă',
-    price: '1.500',
+    name: 'ESSENTIAL',
+    price: '2.000',
     cents: '',
     subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
     description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
     icon: <Target className="w-8 h-8" />,
     features: [
-      'Site complet funcțional, într-o singură pagină',
-      'Conținut clar și orientat pe conversie',
-      'Formular de contact eficient, conectat direct la e-mailul tău',
+      'Site single-page cu design modern',
+      'Design custom si responsive',
+      'Formular contact + notificări pe email',
       'Încărcare rapidă – sub 3 secunde',
-      'Design responsive (mobil, tabletă, desktop)',
-      'E-mail personalizat',
-      '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
+      'E-mail personalizat (ex: nume@domeniul-tau.ro)',
+      '<strong>Bonus:</strong> Listare Google My Business + 30 de zile suport',
     ],
     ctaText: 'Pornește acum',
     gradient: 'from-slate-600 via-slate-700 to-slate-800',
     iconGradient: 'from-teal-400 to-cyan-500',
     isPopular: false,
-    oldPrice: { lei: 1800, cents: 0 },
+    oldPrice: { lei: 2300, cents: 0 },
     savings: 'Economisești 300 lei',
   },
   {
-    name: 'Website Prezentare',
+    name: 'PROFESSIONAL',
     price: '5.000',
     cents: '',
-    subtitle: 'Identitate vizuală modernă și website profesionist.',
-    description: 'Perfect pentru afaceri care vor o <strong>imagine clară</strong> și un <strong>website modern</strong> care inspiră încredere.',
+    subtitle: 'Website profesionist optimizat pentru conversii și încredere.',
+    description: 'Perfect pentru afaceri care vor un <strong>website modern</strong> care să convertească vizitatori în clienți și să inspire încredere.',
     icon: <Globe className="w-8 h-8" />,
     features: [
-      'Website complet de prezentare, până la 10 pagini',
-      'Design personalizat care reflectă brandul tău',
-      'Optimizare SEO pentru vizibilitate online',
-      'Asistență strategică și suport dedicat',
-      'Integrare API și instrumente de conversie',
-      'Monitorizare performanță:(Google Analytics și Google Search Console)',
-      '<strong>Bonus:</strong> 30 de zile de mentenanță și suport',
+      '<strong>Include tot ce este în ESSENTIAL, plus:</strong>',
+      'Website complet cu numar de pagini potrivite',
+      'SEO avansat + Listare Google Business Profile',
+      'Google Analytics 4 + Search Console configurate',
+      'Securitate avansată pentru protejarea datelor',
+      'Copywriting inclus: Structură de text orientată pe vânzare',
+      '<strong>Bonus:</strong> 45 de zile suport + analiza datelor pentru a obține cele mai bune rezultate',
     ],
-    ctaText: 'Vreau website',
+    ctaText: 'Vreau website profesionist',
     gradient: 'from-blue-600 via-cyan-600 to-teal-600',
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
@@ -83,18 +82,22 @@ const mainPlans: PricingPlan[] = [
     savings: 'Economisești 700 lei',
   },
   {
-    name: 'Motor E-Commerce',
+    name: 'E-COMMERCE',
     price: '12.500',
     cents: '',
-    subtitle: 'Magazin online complet, gata să vândă din prima zi.',
-    description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong>, care <strong>lucrează pentru tine</strong> zi și noapte.',
+    subtitle: 'Magazin online complet, gata să vândă 24/7.',
+    description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong> cu integrări care economisesc timp și bani.',
     icon: <ShoppingCart className="w-8 h-8" />,
     features: [
-      'Magazin online complet, optimizat și gata de vânzare.',
-      'Optimizare SEO tehnica pentru produse și pagini.',
-      'Integrare API (plăți, curieri, facturare automată).',
-      'Automatizarea fluxurilor de lucru (comenzi, e-mailuri, stocuri).',
-      '<strong>Bonus:</strong> 60 de zile de suport tehnic și ajustări de optimizare.',
+      '<strong>Include tot ce este în PROFESSIONAL, plus:</strong>',
+      'Magazin Online Custom (Coș, Filtre, Conturi clienți)',
+      'Integrări API (Plăți, Curieri, Facturare SmartBill)',
+      'Automatizări fluxuri email & notificări',
+      'Dashboard de management stocuri și comenzi',
+      'Integrare WhatsApp Business pentru asistență',
+      'SEO tehnic pentru produse și categorii',
+      'Securitate Bancară & Conformitate GDPR',
+      '<strong>Bonus:</strong> 60 de zile suport',
     ],
     ctaText: 'Începe să vinzi',
     gradient: 'from-emerald-600 via-green-600 to-lime-600',
@@ -105,25 +108,23 @@ const mainPlans: PricingPlan[] = [
     savings: 'Economisești 1.500 lei',
   },
   {
-    name: 'Soluție Personalizată',
+    name: 'SOLUȚIE-PERSONALIZATĂ',
     price: 'La cerere',
     cents: '',
-    subtitle: 'Pentru idei care nu încap în cutii.',
-    description: 'Ai o viziune unică sau o nevoie complexă? Construim o soluție digitală exact pe măsura ideii tale.',
+    subtitle: 'Proiecte complexe sau idei unice?',
+    description: 'Nu toate proiectele se încadrează în tipare. Hai să discutăm despre viziunea ta și să găsim soluția tehnică perfectă.',
     icon: <Layers className="w-8 h-8" />,
     features: [
-      'Dezvoltare complet personalizată – fără limitări de funcționalitate',
-      'Design și structură adaptate obiectivelor tale de business',
-      'Scalabilitate reală – baza tehnică pregătită să crească oricât',
-      'Integrare cu platforme, API-uri și automatizări avansate',
-      'Comunicare directă cu dezvoltatorul pe tot parcursul proiectului',
-      '<strong>Bonus:</strong> Suport tehnic dedicat după lansare',
+      'Discuție inițială pentru înțelegerea nevoilor',
+      'Analiză tehnică a cerințelor proiectului',
+      'Propunere personalizată de arhitectură și design',
+      'Estimare transparentă de costuri și timp',
     ],
-    ctaText: 'Hai să discutăm',
+    ctaText: 'Programează o discuție',
     gradient: 'from-violet-600 via-purple-600 to-fuchsia-600',
     iconGradient: 'from-violet-400 to-purple-400',
     isPopular: false,
-    badge: { text: '100% CUSTOM' }
+    badge: { text: 'CUSTOM' }
   },
 ];
 
@@ -177,12 +178,12 @@ const faqs = [
   },
   {
     question: 'Cum iau legătura cu voi și cum se face plata?',
-    answer: 'Pentru a lua legătura cu noi, poți merge la secțiunea <strong>Contact</strong> de pe site — acolo poți completa formularul sau ne poți suna direct. După ce discutăm detaliile proiectului, stabilim împreună modul de plată. În general, lucrăm cu un avans pentru pornirea proiectului, iar restul se achită la final, după livrare.'
+    answer: 'Pentru a lua legătura cu noi, poți merge la secțiunea <strong>Contact</strong> de pe site — acolo poți completa formularul, de asemenea, ne poți contacta si pe Whatsapp sau ne poți suna direct. După ce discutăm detaliile proiectului, stabilim împreună modul de plată. În general, lucrăm cu un avans pentru pornirea proiectului, iar restul se achită la final, după livrare.'
   },
   {
     question: 'Cât costă un site?',
 
-    answer: 'Avem prețuri fixe pentru pachete standard: Landing Page – <strong class="text-white font-bold">1.500 lei</strong>, Website de prezentare – <strong class="text-white font-bold">5.000 lei</strong>, Magazin online – <strong class="text-white font-bold">12.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
+    answer: 'Avem prețuri fixe pentru pachete standard: ESSENTIAL – <strong class="text-white font-bold">2.000 lei</strong>, PROFESSIONAL – <strong class="text-white font-bold">5.000 lei</strong>, E-COMMERCE – <strong class="text-white font-bold">12.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
   },
   {
     question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
@@ -194,7 +195,7 @@ const faqs = [
   },
   {
     question: 'Ce se întâmplă dacă vreau modificări?',
-    answer: 'Discutăm, ajustăm și livrăm ce trebuie. Pachetele includ 2 runde de revizii. Dacă vrei modificări majore după livrare, se facturează separat. Nu lăsăm lucrurile în aer, ne asigurăm că ești mulțumit.'
+    answer: 'Dacǎ deții pachetul de mentenanțǎ lunarǎ,rezolvarea se face gratuit,dacǎ nu,se va calcula modificarea si se va factura separat.'
   },
   {
     question: 'Trebuie să am conținutul pregătit?',
@@ -210,7 +211,7 @@ const faqs = [
   },
   {
     question: 'Ce suport primesc după livrare?',
-    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website Prezentare</strong>, primești <strong>30 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>60 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar sau suport la cerere, în funcție de nevoile tale.'
+    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website Prezentare</strong>, primești <strong>45 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>60 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar.'
   }
 ];
 

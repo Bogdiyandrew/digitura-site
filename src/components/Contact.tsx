@@ -65,10 +65,10 @@ const Contact: React.FC = () => {
   const searchParams = useSearchParams();
 
   const pricingPackages: PricingPackage[] = [
-    { id: 'lansare-rapida', name: 'Lansare rapidă', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'website-prezentare', name: 'Website prezentare', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'motor-ecommerce', name: 'Motor e-commerce', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'solutie-personalizata', name: 'Soluție personalizată', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'essential', name: 'ESSENTIAL', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'professional', name: 'PROFESSIONAL', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'e-commerce', name: 'E-COMMERCE', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
+    { id: 'SOLUȚIE-PERSONALIZATĂ', name: 'SOLUȚIE PERSONALIZATǍ', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
   ];
 
   const contactItems: ContactItem[] = [
@@ -97,7 +97,14 @@ const Contact: React.FC = () => {
   useEffect(() => {
     const packageParam = searchParams.get('package');
     if (packageParam) {
-      setSelectedPackage(decodeURIComponent(packageParam));
+      const decodedParam = decodeURIComponent(packageParam);
+      const matchedPackage = pricingPackages.find(pkg =>
+        pkg.id === decodedParam || pkg.name === decodedParam
+      );
+
+      if (matchedPackage) {
+        setSelectedPackage(matchedPackage.name);
+      }
     }
   }, [searchParams]);
 
