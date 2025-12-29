@@ -226,7 +226,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ faq, isOpen, onClick }) => (
   <div className="border-b border-slate-700/50 last:border-0">
     <button
       onClick={onClick}
-      className="w-full flex justify-between items-start text-left group py-4 sm:py-6 cursor-pointer hover:bg-slate-800/30 transition-colors duration-200 rounded-lg px-2 sm:px-0"
+      className="w-full flex justify-between items-start text-left group py-4 sm:py-6 cursor-pointer hover:bg-slate-800/30 transition-colors duration-200 rounded-lg px-2 sm:px-2"
     >
       <h3 className="text-base sm:text-lg font-semibold text-slate-100 group-hover:text-white transition-colors pr-3 sm:pr-4 leading-relaxed">
         {faq.question}
@@ -372,10 +372,24 @@ const Pricing: React.FC = () => {
           </div>
         </div>
 
-        {/* --- GRID MODIFICAT LA 3 COLOANE --- */}
+        {/* --- GRID CARDURI --- */}
         <div ref={cardsRef} className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-8 mb-20 px-2 sm:px-0 max-w-6xl mx-auto">
           {mainPlans.map((plan, index: number) => {
             const activeData = plan[billingCycle];
+
+            // CONFIGURARE STILURI PER CARD (ID)
+            let cardStyle = 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
+            let shimmerColor = 'rgba(71, 85, 105, 0.1)';
+
+            if (plan.id === 'professional') {
+                // Stil albastru/teal
+                cardStyle = 'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
+                shimmerColor = 'rgba(20, 184, 166, 0.1)';
+            } else if (plan.id === 'ecommerce') {
+                // Stil verde/emerald (ACTIV PERMANENT)
+                cardStyle = 'bg-slate-800/50 border-emerald-500/50 shadow-2xl shadow-emerald-500/20';
+                shimmerColor = 'rgba(16, 185, 129, 0.1)';
+            }
 
             return (
               <div
@@ -387,15 +401,14 @@ const Pricing: React.FC = () => {
                 {plan.badge && (
                   <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
                     <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
-                    ${plan.isPopular ? 'bg-gradient-to-r from-teal-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-teal-500'}`}>
+                    ${plan.id === 'professional' ? 'bg-gradient-to-r from-teal-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-lime-500'}`}>
                       {plan.badge.text}
                     </div>
                   </div>
                 )}
 
                 <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden border-2
-                ${plan.isPopular ? 'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
-                    'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80'}
+                ${cardStyle}
                 ${hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''}`}
                   style={{
                     backdropFilter: 'blur(20px)',
@@ -405,7 +418,7 @@ const Pricing: React.FC = () => {
 
                   <div className={`absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
                     style={{
-                      background: `linear-gradient(135deg, transparent 0%, ${plan.isPopular ? 'rgba(20, 184, 166, 0.1)' : 'rgba(71, 85, 105, 0.1)'} 50%, transparent 100%)`,
+                      background: `linear-gradient(135deg, transparent 0%, ${shimmerColor} 50%, transparent 100%)`,
                       animation: 'shimmer 2s infinite'
                     }}
                   ></div>
@@ -486,7 +499,7 @@ const Pricing: React.FC = () => {
                     <button
                       onClick={(e) => handlePlanClick(e, plan.name)}
                       className={`w-full font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 group/btn cursor-pointer text-sm sm:text-base
-                      ${plan.isPopular
+                      ${plan.id === 'professional' || plan.id === 'ecommerce'
                           ? `bg-gradient-to-r ${plan.gradient} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] sm:hover:scale-105`
                           : 'bg-slate-700 text-white hover:bg-slate-600'
                         }`}
