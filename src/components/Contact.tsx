@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Layers } from 'lucide-react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon } from 'lucide-react';
 
 interface ToastProps {
   message: string;
@@ -10,10 +10,13 @@ interface ToastProps {
   onClose: () => void;
 }
 
+// Am adăugat proprietăți pentru stilizarea dinamică (activeClass, textClass)
 interface PricingPackage {
   id: string;
   name: string;
   icon: React.ReactElement;
+  activeClass: string;
+  textClass: string;
 }
 
 interface ContactItem {
@@ -59,16 +62,37 @@ const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<string>('');
+  const [billingCycle, setBillingCycle] = useState<string>(''); 
   const [isSending, setIsSending] = useState<boolean>(false);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
   const searchParams = useSearchParams();
+  const router = useRouter();      
+  const pathname = usePathname();  
 
+  // Aici am definit culorile specifice pentru fiecare pachet
   const pricingPackages: PricingPackage[] = [
-    { id: 'essential', name: 'ESSENTIAL', icon: <Target className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'professional', name: 'PROFESSIONAL', icon: <Globe className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'e-commerce', name: 'E-COMMERCE', icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" /> },
-    { id: 'SOLUȚIE-PERSONALIZATĂ', name: 'SOLUȚIE PERSONALIZATǍ', icon: <Layers className="w-6 h-6 mx-auto mb-2" /> },
+    { 
+      id: 'esential', 
+      name: 'ESENTIAL', 
+      icon: <Target className="w-6 h-6 mx-auto mb-2" />,
+      activeClass: 'bg-slate-700/40 border-slate-400 shadow-[0_0_15px_rgba(148,163,184,0.15)]', // Gri
+      textClass: 'text-slate-200'
+    },
+    { 
+      id: 'profesional', 
+      name: 'PROFESIONAL', 
+      icon: <Globe className="w-6 h-6 mx-auto mb-2" />,
+      activeClass: 'bg-blue-500/15 border-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.2)]', // Albastru
+      textClass: 'text-blue-300'
+    },
+    { 
+      id: 'e-commerce', 
+      name: 'E-COMMERCE', 
+      icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" />,
+      activeClass: 'bg-emerald-500/15 border-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]', // Verde
+      textClass: 'text-emerald-300'
+    },
   ];
 
   const contactItems: ContactItem[] = [
@@ -96,6 +120,8 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     const packageParam = searchParams.get('package');
+    const billingParam = searchParams.get('billing');
+
     if (packageParam) {
       const decodedParam = decodeURIComponent(packageParam);
       const matchedPackage = pricingPackages.find(pkg =>
@@ -105,6 +131,10 @@ const Contact: React.FC = () => {
       if (matchedPackage) {
         setSelectedPackage(matchedPackage.name);
       }
+    }
+
+    if (billingParam) {
+      setBillingCycle(billingParam === 'monthly' ? 'Lunar (Abonament)' : 'Plată Unică');
     }
   }, [searchParams]);
 
@@ -123,8 +153,10 @@ const Contact: React.FC = () => {
     }
 
     const formData = new FormData(formRef.current);
-    const data = Object.fromEntries(formData.entries());
+    const data: Record<string, any> = Object.fromEntries(formData.entries());
+    
     data.package = selectedPackage;
+    data.billing = billingCycle; 
 
     try {
       const response = await fetch('/api/send-email', {
@@ -143,6 +175,8 @@ const Contact: React.FC = () => {
       setToast({ show: true, message: 'Solicitare trimisă cu succes! Te vom contacta în curând.', type: 'success' });
       if (formRef.current) formRef.current.reset();
       setSelectedPackage('');
+      setBillingCycle('');
+      router.replace(pathname, { scroll: false });
 
     } catch (error) {
       console.error('Eroare la trimiterea formularului:', error);
@@ -169,6 +203,16 @@ const Contact: React.FC = () => {
     );
   };
 
+  const togglePackage = (pkgName: string) => {
+    if (selectedPackage === pkgName) {
+      setSelectedPackage('');
+      setBillingCycle('');
+      router.replace(pathname, { scroll: false }); 
+    } else {
+      setSelectedPackage(pkgName);
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -183,10 +227,10 @@ const Contact: React.FC = () => {
       <div className="relative max-w-6xl mx-auto px-6 w-full z-10">
         <div className={`text-center mb-16 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-teal-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
-            Transformă ideea în realitate
+            Contacteazǎ-ne
           </h2>
           <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
-            Alege pachetul, completează formularul sau contactează-ne direct. Suntem gata să construim împreună.
+            Alege pachetul, completează formularul sau contactează-ne direct.
           </p>
         </div>
 
@@ -197,17 +241,26 @@ const Contact: React.FC = () => {
             className={`lg:col-span-3 bg-slate-900/50 backdrop-blur-lg rounded-2xl p-8 flex flex-col gap-6 shadow-2xl border border-slate-800 transition-all duration-1000 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
           >
             <div>
-              <h3 className="text-slate-200 font-semibold mb-4 text-lg">1. Alege pachetul de start</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <h3 className="text-slate-200 font-semibold mb-4 text-lg">
+                1. Alege pachetul de start
+                {selectedPackage && billingCycle && <span className="text-teal-400 ml-2 text-sm font-normal">({billingCycle})</span>}
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {pricingPackages.map((pkg) => (
                   <button
                     key={pkg.id}
                     type="button"
-                    onClick={() => setSelectedPackage(pkg.name)}
-                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${selectedPackage === pkg.name ? 'bg-teal-500/10 border-teal-400 scale-105' : 'bg-slate-800 border-slate-700 hover:border-slate-500'}`}
+                    onClick={() => togglePackage(pkg.name)}
+                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${
+                      selectedPackage === pkg.name 
+                        ? `${pkg.activeClass} scale-105` 
+                        : 'bg-slate-800 border-slate-700 hover:border-slate-500'
+                    }`}
                   >
-                    <div className={selectedPackage === pkg.name ? 'text-teal-300' : 'text-slate-400'}>{pkg.icon}</div>
-                    <span className="font-bold block text-sm mt-1">{pkg.name}</span>
+                    <div className={selectedPackage === pkg.name ? pkg.textClass : 'text-slate-400'}>{pkg.icon}</div>
+                    <span className={`font-bold block text-sm mt-1 ${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-300'}`}>
+                        {pkg.name}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -219,7 +272,7 @@ const Contact: React.FC = () => {
                 {renderInputField('nume', 'Nume complet', 'text', true, User)}
                 {renderInputField('company_name', 'Numele firmei', 'text', true, Building)}
                 {renderInputField('email', 'Email de contact', 'email', true, Mail)}
-                {renderInputField('phone', 'Telefon (Opțional)', 'tel', false, Phone)}
+                {renderInputField('phone', 'Telefon (opțional)', 'tel', false, Phone)}
               </div>
             </div>
 

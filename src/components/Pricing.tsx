@@ -41,8 +41,8 @@ type PricingPlan = {
 
 const mainPlans: PricingPlan[] = [
   {
-    id: 'essential',
-    name: 'ESSENTIAL',
+    id: 'esential',
+    name: 'ESENTIAL',
     icon: <Target className="w-8 h-8" />,
     gradient: 'from-slate-600 via-slate-700 to-slate-800',
     iconGradient: 'from-teal-400 to-cyan-500',
@@ -81,8 +81,8 @@ const mainPlans: PricingPlan[] = [
     }
   },
   {
-    id: 'professional',
-    name: 'PROFESSIONAL',
+    id: 'profesional',
+    name: 'PROFESIONAL',
     icon: <Globe className="w-8 h-8" />,
     gradient: 'from-blue-600 via-cyan-600 to-teal-600',
     iconGradient: 'from-blue-400 to-cyan-400',
@@ -94,7 +94,7 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Website complex, gestionat complet de noi.',
       description: '',
       features: [
-        '<strong>Tot ce e în Essential, plus:</strong>',
+        '<strong>Tot ce e în Esential, plus:</strong>',
         'Website cu pagini multiple',
         'SEO avansat + Google Business Profile',
         'Google Analytics 4 + Search Console',
@@ -110,7 +110,7 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Pentru firme care vor trafic, conversii și date reale despre clienți.',
       description: '',
       features: [
-        '<strong>Include tot ce este în ESSENTIAL, plus:</strong>',
+        '<strong>Include tot ce este în ESENTIAL, plus:</strong>',
         'Website cu pagini multiple',
         'SEO avansat + Google Business Profile',
         'Google Analytics 4 + Search Console',
@@ -136,7 +136,7 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Magazin online la cheie, fără griji tehnice.',
       description: '',
       features: [
-        '<strong>Tot ce e în Professional, plus:</strong>',
+        '<strong>Tot ce e în Profesional, plus:</strong>',
         'Magazin online (coș, filtre, conturi)',
         'Integrare curieri și facturare automată',
         'Administrare stocuri din dashboard',
@@ -152,7 +152,7 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Magazin online propriu, automatizat complet.',
       description: '',
       features: [
-        '<strong>Include tot ce este în PROFESSIONAL, plus:</strong>',
+        '<strong>Include tot ce este în PROFESIONAL, plus:</strong>',
         'Magazin online (coș, filtre, conturi)',
         'Integrare curieri și facturare automată',
         'Administrare stocuri din dashboard',
@@ -381,7 +381,7 @@ const Pricing: React.FC = () => {
             let cardStyle = 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
             let shimmerColor = 'rgba(71, 85, 105, 0.1)';
 
-            if (plan.id === 'professional') {
+            if (plan.id === 'profesional') {
                 // Stil albastru/teal
                 cardStyle = 'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
                 shimmerColor = 'rgba(20, 184, 166, 0.1)';
@@ -401,7 +401,7 @@ const Pricing: React.FC = () => {
                 {plan.badge && (
                   <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
                     <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
-                    ${plan.id === 'professional' ? 'bg-gradient-to-r from-teal-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-lime-500'}`}>
+                    ${plan.id === 'profesional' ? 'bg-gradient-to-r from-teal-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-lime-500'}`}>
                       {plan.badge.text}
                     </div>
                   </div>
@@ -499,7 +499,7 @@ const Pricing: React.FC = () => {
                     <button
                       onClick={(e) => handlePlanClick(e, plan.name)}
                       className={`w-full font-bold px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-300 group/btn cursor-pointer text-sm sm:text-base
-                      ${plan.id === 'professional' || plan.id === 'ecommerce'
+                      ${plan.id === 'profesional' || plan.id === 'ecommerce'
                           ? `bg-gradient-to-r ${plan.gradient} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] sm:hover:scale-105`
                           : 'bg-slate-700 text-white hover:bg-slate-600'
                         }`}
