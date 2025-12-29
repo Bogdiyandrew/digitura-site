@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon } from 'lucide-react';
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Calendar, CreditCard } from 'lucide-react'; // Am adaugat Calendar si CreditCard
 
 interface ToastProps {
   message: string;
@@ -10,7 +10,6 @@ interface ToastProps {
   onClose: () => void;
 }
 
-// Am adăugat proprietăți pentru stilizarea dinamică (activeClass, textClass)
 interface PricingPackage {
   id: string;
   name: string;
@@ -70,27 +69,26 @@ const Contact: React.FC = () => {
   const router = useRouter();      
   const pathname = usePathname();  
 
-  // Aici am definit culorile specifice pentru fiecare pachet
   const pricingPackages: PricingPackage[] = [
     { 
-      id: 'esential', 
-      name: 'ESENTIAL', 
+      id: 'essential', 
+      name: 'ESSENTIAL', 
       icon: <Target className="w-6 h-6 mx-auto mb-2" />,
-      activeClass: 'bg-slate-700/40 border-slate-400 shadow-[0_0_15px_rgba(148,163,184,0.15)]', // Gri
+      activeClass: 'bg-slate-700/60 border-slate-400 shadow-[0_0_20px_rgba(148,163,184,0.2)]', 
       textClass: 'text-slate-200'
     },
     { 
-      id: 'profesional', 
-      name: 'PROFESIONAL', 
+      id: 'professional', 
+      name: 'PROFESSIONAL', 
       icon: <Globe className="w-6 h-6 mx-auto mb-2" />,
-      activeClass: 'bg-blue-500/15 border-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.2)]', // Albastru
+      activeClass: 'bg-blue-600/20 border-blue-400 shadow-[0_0_20px_rgba(96,165,250,0.25)]',
       textClass: 'text-blue-300'
     },
     { 
       id: 'e-commerce', 
       name: 'E-COMMERCE', 
       icon: <ShoppingCart className="w-6 h-6 mx-auto mb-2" />,
-      activeClass: 'bg-emerald-500/15 border-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]', // Verde
+      activeClass: 'bg-emerald-600/20 border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.25)]',
       textClass: 'text-emerald-300'
     },
   ];
@@ -143,6 +141,11 @@ const Contact: React.FC = () => {
     if (!selectedPackage) {
       setToast({ show: true, message: 'Te rugăm să selectezi un pachet.', type: 'error' });
       return;
+    }
+    // Facem validare și pentru billing cycle dacă se dorește, dar momentan e opțional
+    if (!billingCycle) {
+       setToast({ show: true, message: 'Te rugăm să selectezi tipul de plată (Abonament sau Unic).', type: 'error' });
+       return;
     }
 
     setIsSending(true);
@@ -210,7 +213,18 @@ const Contact: React.FC = () => {
       router.replace(pathname, { scroll: false }); 
     } else {
       setSelectedPackage(pkgName);
+      // Daca nu e selectat niciun billing, selectam automat 'Lunar' cand alege un pachet (optional)
+      if (!billingCycle) {
+          setBillingCycle('Plată Unică'); // Default
+      }
     }
+  };
+
+  // Functie pentru a schimba doar billing-ul
+  const toggleBilling = (type: string) => {
+      // Daca apasa pe cel deja selectat, il deselectam? Sau il lasam activ? De obicei radio buttons raman active.
+      // Il setam direct.
+      setBillingCycle(type);
   };
 
   return (
@@ -240,32 +254,65 @@ const Contact: React.FC = () => {
             ref={formRef}
             className={`lg:col-span-3 bg-slate-900/50 backdrop-blur-lg rounded-2xl p-8 flex flex-col gap-6 shadow-2xl border border-slate-800 transition-all duration-1000 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
           >
+            {/* --- SECTIUNEA 1: PACHET + FACTURARE --- */}
             <div>
-              <h3 className="text-slate-200 font-semibold mb-4 text-lg">
-                1. Alege pachetul de start
-                {selectedPackage && billingCycle && <span className="text-teal-400 ml-2 text-sm font-normal">({billingCycle})</span>}
+              <h3 className="text-slate-200 font-semibold mb-4 text-lg flex items-center justify-between">
+                1. Configurare Pachet
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              
+              {/* Selectie Pachet */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                 {pricingPackages.map((pkg) => (
                   <button
                     key={pkg.id}
                     type="button"
                     onClick={() => togglePackage(pkg.name)}
-                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer ${
+                    className={`text-center p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[100px] ${
                       selectedPackage === pkg.name 
-                        ? `${pkg.activeClass} scale-105` 
-                        : 'bg-slate-800 border-slate-700 hover:border-slate-500'
+                        ? `${pkg.activeClass} scale-105 z-10` 
+                        : 'bg-slate-800/80 border-slate-700/60 hover:border-slate-500 hover:bg-slate-800'
                     }`}
                   >
-                    <div className={selectedPackage === pkg.name ? pkg.textClass : 'text-slate-400'}>{pkg.icon}</div>
-                    <span className={`font-bold block text-sm mt-1 ${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-300'}`}>
+                    <div className={`${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-400'} mb-2`}>
+                        {pkg.icon}
+                    </div>
+                    <span className={`font-bold text-xs sm:text-sm ${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-300'}`}>
                         {pkg.name}
                     </span>
                   </button>
                 ))}
               </div>
+
+              {/* Selectie Billing (Apare doar butoanele active, sau tot timpul dar dezactivate daca nu e pachet?) 
+                  Le lasam active tot timpul pentru libertate */}
+              <div className="grid grid-cols-2 gap-3">
+                 <button
+                    type="button"
+                    onClick={() => toggleBilling('Lunar (Abonament)')}
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-sm cursor-pointer
+                    ${billingCycle === 'Lunar (Abonament)' 
+                        ? 'bg-teal-500/10 border-teal-500 text-teal-300 shadow-[0_0_15px_rgba(20,184,166,0.15)]' 
+                        : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'}`}
+                 >
+                    <Calendar className="w-4 h-4" />
+                    Abonament Lunar
+                 </button>
+
+                 <button
+                    type="button"
+                    onClick={() => toggleBilling('Plată Unică')}
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-sm cursor-pointer
+                    ${billingCycle === 'Plată Unică' 
+                        ? 'bg-blue-500/10 border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]' 
+                        : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'}`}
+                 >
+                    <CreditCard className="w-4 h-4" />
+                    Plată Unică
+                 </button>
+              </div>
             </div>
 
+            {/* --- SECTIUNEA 2: FORMULAR --- */}
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">2. Completează Detaliile</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -276,6 +323,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
+            {/* --- SECTIUNEA 3: MESAJ --- */}
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg">3. Spune-ne mai multe</h3>
               <div className="flex flex-col gap-4">
