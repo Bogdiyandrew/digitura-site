@@ -230,7 +230,7 @@ const Hero = () => {
           <Award size={16} />
           <span className="flex items-center gap-2">
             <Star size={14} className="fill-current text-yellow-400" />
-            4.9/5 din 40+ clienți mulțumiți
+            4.8/5 din 40+ clienți mulțumiți
           </span>
         </div>
 
@@ -266,7 +266,7 @@ const Hero = () => {
           ref={subtitleRef}
           className="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
         >
-          Primește un prototip interactiv al noului tău site în mai puțin de 24 de ore.{' '}
+          Primește un prototip al noului tău site în mai puțin de 48 de ore.{' '}
           <span className="font-semibold text-teal-300">100% gratuit.</span>
         </p>
 

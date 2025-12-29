@@ -44,7 +44,7 @@ type ConnectionPair = [string, string];
 const servicesData: ServiceData[] = [
   {
     id: 'ecommerce',
-    title: 'Magazin Online',
+    title: 'Magazin online',
     desc: 'Motorul tău de vânzări care funcționează 24/7. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență memorabilă.',
     icon: ShoppingCart,
     position: { desktop: { x: 26, y: 32 }, mobile: { x: 22, y: 28 } },
@@ -57,7 +57,7 @@ const servicesData: ServiceData[] = [
   },
   {
     id: 'website',
-    title: 'Website Prezentare',
+    title: 'Website prezentare',
     desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism.',
     icon: Globe,
     position: { desktop: { x: 50, y: 50 }, mobile: { x: 50, y: 48 } },
@@ -70,7 +70,7 @@ const servicesData: ServiceData[] = [
   },
   {
     id: 'landing',
-    title: 'Landing Page',
+    title: 'Landing page',
     desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiune.',
     icon: Target,
     position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } },
@@ -109,7 +109,7 @@ const servicesData: ServiceData[] = [
   },
   {
     id: 'marketing',
-    title: 'Marketing Digital',
+    title: 'Marketing digital',
     desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO și Ads, nu doar atragem trafic, ci construim audiențe care cumpără.',
     icon: TrendingUp,
     position: { desktop: { x: 74, y: 70 }, mobile: { x: 78, y: 64 } },

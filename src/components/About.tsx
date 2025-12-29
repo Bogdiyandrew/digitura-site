@@ -128,7 +128,7 @@ const About: React.FC = () => {
           </RevealText>
           <RevealText className="delay-200">
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto px-4 leading-relaxed">
-              Poți alege un simplu site sau poți alege un partener strategic. Decizia ta va dicta rezultatele.
+              Poți alege un simplu site sau poți alege un partener strategic.
             </p>
           </RevealText>
         </div>
@@ -138,7 +138,7 @@ const About: React.FC = () => {
           <div className="relative">
             <div className="absolute -top-3 left-6 px-3 py-1 bg-slate-800 border border-slate-700 
                             rounded-full text-xs font-semibold text-slate-400 z-30">
-              Abordare Tradițională
+              Abordare tradițională
             </div>
 
             <div
@@ -220,7 +220,7 @@ const About: React.FC = () => {
               <div className="absolute -top-3 left-6 px-4 py-1.5 
                               bg-gradient-to-r from-teal-500 to-blue-500 
                               rounded-full text-xs font-bold text-white shadow-lg z-30">
-                Soluție Premium
+                Soluția noastrǎ
               </div>
 
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-blue-500/10 

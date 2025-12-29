@@ -6,211 +6,210 @@ import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { Check, ArrowRight, ChevronDown, Target, Globe, ShoppingCart, Wrench, Layers, Sparkles, Zap, Shield } from 'lucide-react';
+import { Check, ArrowRight, ChevronDown, Target, Globe, ShoppingCart, Wrench, Calendar, CreditCard, Lightbulb } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
-type OldPrice = {
-  lei: number;
-  cents?: number;
-};
+// --- TIPURI DE DATE ---
 
-type PricingPlan = {
-  name: string;
+type PricingMode = {
   price: string;
   cents: string;
   subtitle: string;
   description: string;
-  icon: ReactNode;
   features: string[];
   ctaText: string;
+  savings?: string;
+  oldPrice?: { lei: number; cents?: number };
+};
+
+type PricingPlan = {
+  id: string;
+  name: string;
+  icon: ReactNode;
   gradient: string;
   iconGradient: string;
   isPopular: boolean;
-  oldPrice?: OldPrice;
-  savings?: string;
   badge?: { text: string };
+  monthly: PricingMode;
+  onetime: PricingMode;
 };
+
+// --- CONFIGURARE DATE ---
 
 const mainPlans: PricingPlan[] = [
   {
+    id: 'essential',
     name: 'ESSENTIAL',
-    price: '2.000',
-    cents: '',
-    subtitle: 'Intră online în 7 zile — fără bătăi de cap.',
-    description: 'Ideal pentru <strong>freelanceri</strong> sau <strong>afaceri la început</strong>. Obții rapid o prezență online clară, gata să atragă clienți.',
     icon: <Target className="w-8 h-8" />,
-    features: [
-      'Site de prezentare (o singurǎ paginǎ lungǎ)',
-      'Design custom si responsive (optimizat perfect pentru mobil)',
-      'Formular contact + notificări pe email',
-      'Încărcare rapidă – sub 3 secunde',
-      'E-mail personalizat (ex: nume@domeniul-tau.ro)',
-      '<strong>Bonus:</strong> Listare Google My Business + 30 de zile suport',
-    ],
-    ctaText: 'Pornește acum',
     gradient: 'from-slate-600 via-slate-700 to-slate-800',
     iconGradient: 'from-teal-400 to-cyan-500',
     isPopular: false,
-    oldPrice: { lei: 2300, cents: 0 },
-    savings: 'Economisești 300 lei',
+    monthly: {
+      price: '200',
+      cents: '00',
+      subtitle: 'Start rapid, cost minim lunar.',
+      description: '', 
+      features: [
+        'O pagină lungă, structurată pentru claritate',
+        'Design unic si optimizat',
+        'Încărcare rapidă',
+        'Email personalizat (nume@firma.ro)',
+        'Listare Google My Business'
+      ],
+      ctaText: 'Abonează-te acum',
+      oldPrice: { lei: 250, cents: 0 }
+    },
+    onetime: {
+      price: '2.000',
+      cents: '',
+      subtitle: 'Un website simplu care îți face firma vizibilă și credibilă online.',
+      description: '',
+      features: [
+        'O pagină lungă, structurată pentru claritate',
+        'Design unic si optimizat',
+        'Încărcare rapidă',
+        'Email personalizat (nume@firma.ro)',
+        'Listare Google My Business',
+        '<strong>Bonus:</strong> 30 de zile suport gratuit',
+      ],
+      ctaText: 'Pornește acum',
+      oldPrice: { lei: 2300, cents: 0 },
+      savings: 'Economisești 300 lei'
+    }
   },
   {
+    id: 'professional',
     name: 'PROFESSIONAL',
-    price: '5.000',
-    cents: '',
-    subtitle: 'Website profesionist optimizat pentru conversii și încredere.',
-    description: 'Perfect pentru afaceri care vor un <strong>website modern</strong> care să convertească vizitatori în clienți și să inspire încredere.',
     icon: <Globe className="w-8 h-8" />,
-    features: [
-      '<strong>Include tot ce este în ESSENTIAL, plus:</strong>',
-      'Website complet cu numar de pagini potrivite',
-      'SEO avansat + Listare Google Business Profile',
-      'Google Analytics 4 + Search Console configurate',
-      'Securitate avansată pentru protejarea datelor',
-      'Copywriting inclus: Structură de text orientată pe vânzare',
-      '<strong>Bonus:</strong> 45 de zile suport',
-    ],
-    ctaText: 'Vreau website profesionist',
     gradient: 'from-blue-600 via-cyan-600 to-teal-600',
     iconGradient: 'from-blue-400 to-cyan-400',
     isPopular: true,
-    badge: { text: 'CEL MAI CĂUTAT' },
-    oldPrice: { lei: 5700, cents: 0 },
-    savings: 'Economisești 700 lei',
+    badge: { text: 'BEST SELLER' },
+    monthly: {
+      price: '400',
+      cents: '00',
+      subtitle: 'Website complex, gestionat complet de noi.',
+      description: '',
+      features: [
+        '<strong>Tot ce e în Essential, plus:</strong>',
+        'Website cu pagini multiple',
+        'SEO avansat + Google Business Profile',
+        'Google Analytics 4 + Search Console',
+        'Structurǎ ganditǎ pentru conversie',
+        'Raport lunar de performanță'
+      ],
+      ctaText: 'Vreau abonament Pro',
+      oldPrice: { lei: 490, cents: 0 }
+    },
+    onetime: {
+      price: '5.000',
+      cents: '',
+      subtitle: 'Pentru firme care vor trafic, conversii și date reale despre clienți.',
+      description: '',
+      features: [
+        '<strong>Include tot ce este în ESSENTIAL, plus:</strong>',
+        'Website cu pagini multiple',
+        'SEO avansat + Google Business Profile',
+        'Google Analytics 4 + Search Console',
+        'Structurǎ ganditǎ pentru conversie.',
+        '<strong>Bonus:</strong> 45 de zile suport',
+      ],
+      ctaText: 'Vreau website profesionist',
+      oldPrice: { lei: 5700, cents: 0 },
+      savings: 'Economisești 700 lei'
+    }
   },
   {
+    id: 'ecommerce',
     name: 'E-COMMERCE',
-    price: '12.500',
-    cents: '',
-    subtitle: 'Magazin online complet, gata să vândă 24/7.',
-    description: 'Transformă-ți afacerea într-un <strong>motor de vânzări automat</strong> cu integrări care economisesc timp și bani.',
     icon: <ShoppingCart className="w-8 h-8" />,
-    features: [
-      '<strong>Include tot ce este în PROFESSIONAL, plus:</strong>',
-      'Magazin online (coș, filtre, conturi clienți)',
-      'Conectare automatǎ cu curieri,facturi,etc.',
-      'Dashboard de management stocuri și comenzi',
-      'Integrare WhatsApp Business pentru asistență',
-      'SEO tehnic pentru produse și categorii',
-      'Securitate bancară & Conformitate GDPR',
-      '<strong>Bonus:</strong> 60 de zile suport',
-    ],
-    ctaText: 'Începe să vinzi',
     gradient: 'from-emerald-600 via-green-600 to-lime-600',
     iconGradient: 'from-emerald-400 to-lime-400',
     isPopular: false,
-    badge: { text: 'PENTRU PROFIT MAXIM' },
-    oldPrice: { lei: 14000, cents: 0 },
-    savings: 'Economisești 1.500 lei',
-  },
-  {
-    name: 'SOLUȚIE-PERSONALIZATĂ',
-    price: 'La cerere',
-    cents: '',
-    subtitle: 'Proiecte complexe sau idei unice?',
-    description: 'Nu toate proiectele se încadrează în tipare. Hai să discutăm despre viziunea ta și să găsim soluția tehnică perfectă.',
-    icon: <Layers className="w-8 h-8" />,
-    features: [
-      'Discuție inițială pentru înțelegerea nevoilor',
-      'Analiză tehnică a cerințelor proiectului',
-      'Propunere personalizată de arhitectură și design',
-      'Estimare transparentă de costuri și timp',
-    ],
-    ctaText: 'Programează o discuție',
-    gradient: 'from-violet-600 via-purple-600 to-fuchsia-600',
-    iconGradient: 'from-violet-400 to-purple-400',
-    isPopular: false,
-    badge: { text: 'CUSTOM' }
-  },
+    badge: { text: 'PENTRU VÂNZĂRI' },
+    monthly: {
+      price: '850',
+      cents: '00',
+      subtitle: 'Magazin online la cheie, fără griji tehnice.',
+      description: '',
+      features: [
+        '<strong>Tot ce e în Professional, plus:</strong>',
+        'Magazin online (coș, filtre, conturi)',
+        'Integrare curieri și facturare automată',
+        'Administrare stocuri din dashboard',
+        'WhatsApp Business integrat',
+        'SEO tehnic pentru produse'
+      ],
+      ctaText: 'Start vânzări',
+      oldPrice: { lei: 1000, cents: 0 },
+    },
+    onetime: {
+      price: '12.500',
+      cents: '',
+      subtitle: 'Magazin online propriu, automatizat complet.',
+      description: '',
+      features: [
+        '<strong>Include tot ce este în PROFESSIONAL, plus:</strong>',
+        'Magazin online (coș, filtre, conturi)',
+        'Integrare curieri și facturare automată',
+        'Administrare stocuri din dashboard',
+        'WhatsApp Business integrat',
+        'SEO tehnic pentru produse',
+        '<strong>Bonus:</strong> 60 de zile suport'
+      ],
+      ctaText: 'Începe să vinzi',
+      oldPrice: { lei: 14000, cents: 0 },
+      savings: 'Economisești 1.500 lei'
+    }
+  }
 ];
 
 const customServices = [
   {
-    name: 'Mentenanță & Suport',
+    name: 'Mentenanță și suport',
     price: 'de la 200 lei/lună',
-    desc: 'Ne ocupăm de actualizări, securitate și backup-uri, astfel încât site-ul tău să funcționeze perfect, fără întreruperi.',
+    desc: 'Pentru clienții care aleg plata unică, asigurǎm mentenanța pentru afacerea ta',
     icon: <Wrench className="w-6 h-6" />,
-    features: [
-      'Update-uri regulate pentru WordPress și pluginuri',
-      'Backup automat zilnic și restaurare rapidă',
-      'Monitorizare uptime și performanță 24/7',
-      'Verificare lunară a securității și integrității datelor',
-      'Suport tehnic pentru erori și optimizări minore',
-      'Raport lunar cu statusul site-ului și recomandări'
-    ]
   },
   {
-    name: 'Automatizare Digitală',
+    name: 'Soluții Custom & Optimizare',
     price: 'La cerere',
-    desc: 'Transformă-ți site-ul într-un sistem care lucrează singur: colectează date, trimite notificări și economisește timp prețios.',
-    icon: <Zap className="w-6 h-6" />,
-    features: [
-      'Automatizări pentru formulare – trimit leadurile direct în e-mail, Google Sheets sau CRM',
-      'Notificări automate pe WhatsApp, Slack sau e-mail',
-      'E-mailuri automate pentru cereri primite, coșuri abandonate sau confirmări',
-      'Integrare cu platforme externe – Mailerlite, Airtable, Notion etc.',
-      'Automatizări personalizate pentru procesele interne ale afacerii',
-      'Setup, testare și documentație completă la livrare'
-    ]
-  },
-  {
-    name: 'Branding Vizual',
-    price: 'La cerere',
-    desc: 'Logo, paletă de culori și ghid vizual profesionist pentru orice tip de afacere.',
-    icon: <Sparkles className="w-6 h-6" />,
-  },
-  {
-    name: 'Optimizare SEO',
-    price: 'La cerere',
-    desc: 'Analiză, meta tag-uri și structură semantică pentru poziționare mai bună în Google.',
-    icon: <Target className="w-6 h-6" />,
+    desc: 'Ai nevoie de funcționalități extra? Doar spune-ne şi vom gǎsi soluția.',
+    icon: <Lightbulb className="w-6 h-6" />,
   }
 ];
 
 const faqs = [
   {
+    question: 'Care este diferența dintre abonament și plată unică?',
+    answer: 'La <strong>plata unică</strong> achiți site-ul complet de la bun început și proiectul îți aparține. <strong>Abonamentul</strong> este pentru cei care preferă să plătească o taxă lunară pentru serviciu, fără o investiție inițială mare.'
+  },
+  {
     question: 'Dacă nu am toți banii acum, putem începe totuși?',
-    answer: 'Da, desigur. Înțelegem că fiecare afacere are ritmul ei, așa că putem împărți plata în mai multe etape – de exemplu, un avans pentru începerea proiectului și restul la final. Important e să pornim și să construim ceva bun împreună, nu să te blochezi din cauza bugetului.'
+    answer: 'Da, desigur. Poți alege varianta de <strong>abonament</strong> pentru a începe cu un cost minim, sau putem împărți <strong>plata unică</strong> în etape.'
   },
   {
-    question: 'Cum iau legătura cu voi și cum se face plata?',
-    answer: 'Pentru a lua legătura cu noi, poți merge la secțiunea <strong>Contact</strong> de pe site — acolo poți completa formularul, de asemenea, ne poți contacta si pe Whatsapp sau ne poți suna direct. După ce discutăm detaliile proiectului, stabilim împreună modul de plată. În general, lucrăm cu un avans pentru pornirea proiectului, iar restul se achită la final, după livrare.'
-  },
-  {
-    question: 'Cât costă un site?',
-
-    answer: 'Avem prețuri fixe pentru pachete standard: ESSENTIAL – <strong class="text-white font-bold">2.000 lei</strong>, PROFESSIONAL – <strong class="text-white font-bold">5.000 lei</strong>, E-COMMERCE – <strong class="text-white font-bold">12.500 lei</strong>. Pentru proiecte complet personalizate, prețul se stabilește în funcție de complexitate.'
-  },
-  {
-    question: 'Ce se întâmplă dacă vreau mai multe funcționalități?',
-    answer: 'Pachetele standard acoperă nevoile celor mai multe proiecte. Dacă vrei funcții personalizate sau integrări speciale, pachetul "Soluție Personalizată" este perfect. Discutăm ideea și îți facem o ofertă clară.'
-  },
-  {
-    question: 'Cât durează realizarea unui site?',
-    answer: 'În general, un landing page se face în 3–6 zile, un website de prezentare în 1–2 săptămâni, iar un magazin online poate dura mai mult. Un proiect custom variază ca durată, în funcție de complexitate.'
+    question: 'Există o perioadă contractuală minimă pentru abonament?',
+    answer: 'Da, pentru varianta de abonament, perioada contractuală minimă este de <strong>3 luni</strong>.'
   },
   {
     question: 'Ce se întâmplă dacă vreau modificări?',
-    answer: 'Dacǎ deții pachetul de mentenanțǎ lunarǎ,rezolvarea se face gratuit,dacǎ nu,se va calcula modificarea si se va factura separat.'
+    answer: 'Dacǎ ai abonament sau pachet de mentenanțǎ, modificările minore sunt incluse. Pentru modificări majore sau funcționalități noi, se va face o estimare separată.'
   },
   {
-    question: 'Trebuie să am conținutul pregătit?',
-    answer: 'Da, conținutul (texte, imagini) este oferit de client. Dacă nu ai conținut, te putem ajuta contra cost cu servicii de copywriting și creare de conținut vizual.'
+    question: 'Pot trece de la abonament la platǎ unică ulterior?',
+    answer: 'Sigur! Dacă la un moment dat dorești să achiziționezi site-ul integral și să oprești abonamentul, se poate calcula o sumă de "buy-out" (achiziție) în funcție de vechimea contractului.'
   },
   {
     question: 'Site-ul e optimizat pentru mobil și viteză?',
     answer: 'Da. Orice livrăm e responsive și testat pentru performanță. Viteză, UX, mobile — sunt standard, nu opțiuni extra.'
   },
   {
-    question: 'Voi putea face modificări singur după lansare?',
-    answer: 'Modificările se fac prin noi, ca să fie totul rapid, curat și fără erori. De asta oferim și pachete de mentenanță — actualizăm texte, imagini, pagini sau funcționalități, fără stres pentru tine. Dacă vrei, îți oferim și tot proiectul codat, ca să ai libertate totală și să poți lucra cu oricine în viitor.'
-  },
-  {
     question: 'Ce suport primesc după livrare?',
-    answer: 'Ai <strong>30 de zile de suport gratuit</strong> pentru orice problemă tehnică sau întrebări. Dacă ai ales pachetul <strong>Website Prezentare</strong>, primești <strong>45 de zile de suport</strong> gratuit, iar pentru pachetul <strong>Motor E-Commerce</strong> oferim <strong>60 de zile de suport</strong> fără costuri suplimentare. După această perioadă, poți continua cu un plan de mentenanță lunar.'
+    answer: 'La abonament ai <strong>suport continuu</strong>. La plata unică, ai <strong>30-60 de zile suport gratuit</strong>, după care poți opta pentru mentenanță la cerere.'
   }
 ];
 
@@ -251,13 +250,16 @@ const FaqItem: React.FC<FaqItemProps> = ({ faq, isOpen, onClick }) => (
 
 const Pricing: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'onetime'>('onetime');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  
   const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handlePlanClick = (e: React.MouseEvent<HTMLButtonElement>, planName: string) => {
     e.preventDefault();
-    const newUrl = `?package=${encodeURIComponent(planName)}#contact`;
+    const newUrl = `?package=${encodeURIComponent(planName)}&billing=${billingCycle}#contact`;
     router.push(newUrl, { scroll: false });
     gsap.to(window, {
       duration: 1.2,
@@ -266,16 +268,44 @@ const Pricing: React.FC = () => {
     });
   };
 
+  const toggleBilling = (cycle: 'monthly' | 'onetime') => {
+    if (billingCycle === cycle) return;
+    
+    const cards = document.querySelectorAll('.pricing-card-content');
+    gsap.to(cards, {
+      opacity: 0,
+      y: 10,
+      duration: 0.2,
+      onComplete: () => {
+        setBillingCycle(cycle);
+        gsap.to(cards, { opacity: 1, y: 0, duration: 0.3, delay: 0.1 });
+      }
+    });
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const ctx = gsap.context(() => {
+      // Titlu si subtitlu
       gsap.fromTo('.pricing-title', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true } });
       gsap.fromTo('.pricing-subtitle', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true }, delay: 0.2 });
-      gsap.fromTo('.pricing-card',
-        { opacity: 0, x: -80 },
-        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.15, scrollTrigger: { trigger: '.pricing-grid', start: 'top 70%', once: true }, delay: 0.4 }
+      
+      // Toggle Switch Animation
+      gsap.fromTo('.pricing-toggle',
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)', scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', once: true }, delay: 0.3 }
       );
+
+      // Carduri
+      gsap.fromTo('.pricing-card',
+        { opacity: 0, x: -50 },
+        { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', stagger: 0.15, scrollTrigger: { trigger: cardsRef.current, start: 'top 70%', once: true }, delay: 0.4 }
+      );
+
+      // Servicii extra
       gsap.fromTo('.custom-service', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out', stagger: 0.1, scrollTrigger: { trigger: '.custom-section', start: 'top 75%', once: true } });
+      
+      // FAQ
       gsap.fromTo('.faq-item', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: '.faq-section', start: 'top 80%', once: true } });
     }, sectionRef);
     return () => ctx.revert();
@@ -283,39 +313,6 @@ const Pricing: React.FC = () => {
 
   const handleFaqToggle = (index: number): void => {
     setOpenFaq(openFaq === index ? null : index);
-  };
-
-  const parsePlanPrice = (price: string, cents?: string): number | null => {
-    const integerPart = price.replace(/[^\d]/g, '');
-    if (!integerPart) {
-      return null;
-    }
-
-    const base = Number(integerPart);
-    if (Number.isNaN(base)) {
-      return null;
-    }
-
-    const centsValue = cents
-      ? Number(cents.replace(/[^\d]/g, '').padEnd(2, '0').slice(0, 2))
-      : 0;
-
-    return base + centsValue / 100;
-  };
-
-  const formatOldPrice = (oldPrice?: { lei: number; cents?: number }): string => {
-    if (!oldPrice) {
-      return '';
-    }
-
-    const centsValue = typeof oldPrice.cents === 'number' ? oldPrice.cents : 0;
-    const decimals = centsValue > 0 ? 2 : 0;
-    const value = oldPrice.lei + centsValue / 100;
-
-    return value.toLocaleString('ro-RO', {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    });
   };
 
   return (
@@ -326,42 +323,63 @@ const Pricing: React.FC = () => {
       <div className="absolute top-1/3 right-0 w-0.5 sm:w-1 h-48 sm:h-64 bg-gradient-to-b from-transparent via-blue-500/30 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
-            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
-            <span className="text-teal-400 text-xs sm:text-sm font-semibold">Prețuri Transparente</span>
-          </div>
-
+        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
+          
           <h2 className="pricing-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight opacity-0 px-4 sm:px-0">
-            O <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-gradient">
-              investiție
-            </span>,<br className="hidden sm:block" /> nu o cheltuială
+            Alege planul care ți se <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-gradient">
+              potrivește perfect
+            </span>
           </h2>
 
-          <p className="pricing-subtitle text-base sm:text-lg md:text-xl text-slate-400 leading-relaxed opacity-0 px-4 sm:px-0">
-            Credem în parteneriate pe termen lung. De aceea, oferim pachete de o valoare excepțională
-            la început, pentru a crește <strong className="text-white">împreună</strong> cu afacerea ta.
+          <p className="pricing-subtitle text-base sm:text-lg md:text-xl text-slate-400 leading-relaxed opacity-0 px-4 sm:px-0 max-w-2xl mx-auto">
+            Fie că preferi un <strong className="text-slate-200">abonament lunar</strong> cu totul inclus sau o <strong className="text-slate-200">plată unică</strong>, avem soluția ideală pentru stadiul afacerii tale.
           </p>
         </div>
 
-        <div className="pricing-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-5 lg:gap-6 mb-20 px-2 sm:px-0">
+        {/* TOGGLE SWITCH - LUNAR / ONE-TIME */}
+        <div className="pricing-toggle flex justify-center mb-14 sm:mb-16 opacity-0 relative z-20">
+          <div className="bg-slate-800/80 backdrop-blur-md p-1.5 rounded-full border border-slate-700 shadow-xl inline-flex relative">
+             <div className={`absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 transition-all duration-300 ease-out shadow-lg ${
+               billingCycle === 'monthly' ? 'left-1.5 w-[calc(50%-6px)]' : 'left-[50%] w-[calc(50%-6px)]'
+             }`}></div>
+
+             <button 
+                onClick={() => toggleBilling('monthly')}
+                className={`relative z-10 px-6 sm:px-8 py-2.5 rounded-full text-sm sm:text-base font-bold transition-colors duration-300 flex items-center gap-2 cursor-pointer ${
+                  billingCycle === 'monthly' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+                }`}
+             >
+                <Calendar className="w-4 h-4" />
+                Abonament
+             </button>
+
+             <button 
+                onClick={() => toggleBilling('onetime')}
+                className={`relative z-10 px-6 sm:px-8 py-2.5 rounded-full text-sm sm:text-base font-bold transition-colors duration-300 flex items-center gap-2 cursor-pointer ${
+                  billingCycle === 'onetime' ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+                }`}
+             >
+                <CreditCard className="w-4 h-4" />
+                Plată unicǎ
+             </button>
+          </div>
+          
+          <div className={`absolute -top-3 left-[calc(50%-130px)] sm:left-[calc(50%-150px)] transition-opacity duration-300 ${billingCycle === 'monthly' ? 'opacity-100' : 'opacity-0'}`}>
+             <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg transform -rotate-6 block">
+               Mentenanță Inclusă
+             </span>
+          </div>
+        </div>
+
+        {/* --- GRID MODIFICAT LA 3 COLOANE --- */}
+        <div ref={cardsRef} className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-8 mb-20 px-2 sm:px-0 max-w-6xl mx-auto">
           {mainPlans.map((plan, index: number) => {
-            const priceValue = parsePlanPrice(plan.price, plan.cents);
-            const oldPriceValue = plan.oldPrice
-              ? plan.oldPrice.lei + ((plan.oldPrice.cents ?? 0) / 100)
-              : null;
-            const savingsAmount =
-              oldPriceValue !== null && priceValue !== null
-                ? Math.max(oldPriceValue - priceValue, 0)
-                : null;
-            const computedSavingsLabel =
-              savingsAmount && savingsAmount >= 0.5
-                ? `Economisești ${Math.round(savingsAmount).toLocaleString('ro-RO')} lei`
-                : plan.savings;
+            const activeData = plan[billingCycle];
 
             return (
               <div
-                key={plan.name}
+                key={plan.id}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
                 className={`pricing-card relative group ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} opacity-0`}
@@ -369,17 +387,15 @@ const Pricing: React.FC = () => {
                 {plan.badge && (
                   <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 z-20">
                     <div className={`text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full whitespace-nowrap shadow-lg
-                    ${plan.isPopular ? 'bg-gradient-to-r from-teal-500 to-blue-500' :
-                        plan.name.includes('Personalizat') ? 'bg-gradient-to-r from-violet-500 to-purple-500' :
-                          'bg-gradient-to-r from-emerald-500 to-teal-500'}`}>
+                    ${plan.isPopular ? 'bg-gradient-to-r from-teal-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-teal-500'}`}>
                       {plan.badge.text}
                     </div>
                   </div>
                 )}
 
-                <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden
-                ${plan.isPopular ? 'bg-slate-800/50 border-2 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
-                    'bg-slate-800/30 border-2 border-slate-700/50 hover:border-slate-600/80'}
+                <div className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden border-2
+                ${plan.isPopular ? 'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20' :
+                    'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80'}
                 ${hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''}`}
                   style={{
                     backdropFilter: 'blur(20px)',
@@ -393,7 +409,8 @@ const Pricing: React.FC = () => {
                       animation: 'shimmer 2s infinite'
                     }}
                   ></div>
-                  <div className="relative z-10 flex flex-col h-full">
+                  
+                  <div className="pricing-card-content relative z-10 flex flex-col h-full">
                     <div className="flex justify-center mb-4 sm:mb-6">
                       <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
                         <div className="text-white">
@@ -406,58 +423,54 @@ const Pricing: React.FC = () => {
                       {plan.name}
                     </h3>
 
-                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2">
-                      {plan.subtitle}
+                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2 min-h-[40px] flex items-center justify-center">
+                      {activeData.subtitle}
                     </p>
 
-                    <div className="text-center mb-4 sm:mb-6">
-                      {plan.price !== 'La cerere' ? (
+                    <div className="text-center mb-6 sm:mb-8 min-h-[100px] flex flex-col justify-end">
+                      {activeData.price !== 'La cerere' ? (
                         <div>
-                          {plan.oldPrice && (
+                          {activeData.oldPrice && (
                             <div className="flex justify-center mb-1 sm:mb-2">
                               <div className="relative inline-block">
                                 <span className="text-slate-500/80 text-xs sm:text-sm font-semibold">
-                                  {formatOldPrice(plan.oldPrice)} lei
+                                  {activeData.oldPrice.lei.toLocaleString('ro-RO')} lei
                                 </span>
                                 <div className="absolute top-1/2 left-[-5%] w-[110%] h-[1.5px] bg-rose-500/80 rotate-[-12deg] transform origin-center rounded-full pointer-events-none" />
-
                               </div>
                             </div>
                           )}
                           <div className="flex items-end justify-center gap-1">
-                            <span className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">de la</span>
+                            {billingCycle === 'onetime' && <span className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2">de la</span>}
                             <span className="text-4xl sm:text-5xl lg:text-6xl font-black text-white">
-                              {plan.price}
+                              {activeData.price}
                             </span>
-                            <div className="flex flex-col items-start">
-                              {plan.cents && (
-                                <span className="text-xl sm:text-2xl font-bold text-white">,{plan.cents}</span>
+                            <div className="flex flex-col items-start pb-1">
+                              {activeData.cents && (
+                                <span className="text-xl sm:text-2xl font-bold text-white opacity-90">,{activeData.cents}</span>
                               )}
-                              <span className="text-slate-400 text-[10px] sm:text-xs">lei</span>
+                              <span className="text-slate-400 text-[10px] sm:text-xs uppercase font-bold tracking-wider">
+                                {billingCycle === 'monthly' ? 'Lei / Lună' : 'Lei'}
+                              </span>
                             </div>
                           </div>
-                          {(computedSavingsLabel || plan.savings) && (
+                          {activeData.savings && (
                             <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 bg-teal-500/10 border border-teal-500/20 rounded-full px-2.5 sm:px-3 py-0.5 sm:py-1">
                               <span className="text-[10px] sm:text-xs text-teal-400 font-semibold">
-                                {computedSavingsLabel || plan.savings}
+                                {activeData.savings}
                               </span>
                             </div>
                           )}
                         </div>
                       ) : (
                         <div className="text-3xl sm:text-4xl font-bold text-white py-3 sm:py-4">
-                          {plan.price}
+                          {activeData.price}
                         </div>
                       )}
                     </div>
 
-                    <p
-                      className="text-slate-300 text-xs sm:text-sm text-center mb-6 sm:mb-8 leading-relaxed px-1"
-                      dangerouslySetInnerHTML={{ __html: plan.description }}
-                    />
-
                     <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
-                      {plan.features.map((feature, i) => (
+                      {activeData.features.map((feature, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
                           <div className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}>
                             <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
@@ -479,7 +492,7 @@ const Pricing: React.FC = () => {
                         }`}
                     >
                       <span className="flex items-center justify-center gap-2">
-                        {plan.ctaText}
+                        {activeData.ctaText}
                         <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover/btn:translate-x-1" />
                       </span>
                     </button>
@@ -490,42 +503,37 @@ const Pricing: React.FC = () => {
           })}
         </div>
 
+        {/* --- SECTIUNE CUSTOM SERVICES --- */}
         <div className="custom-section mb-16 sm:mb-20 relative px-2 sm:px-0">
           <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 via-transparent to-blue-500/5 rounded-2xl sm:rounded-3xl"></div>
           <div className="bg-slate-800/40 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 border border-slate-700/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
 
             <div className="relative z-10">
-              <div className="text-center sm:text-left mb-8 sm:mb-12">
+              <div className="text-center mb-8 sm:mb-12">
                 <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
                   Construiește <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
                     pachetul perfect</span> pentru tine
                 </h3>
-                <p className="text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto sm:mx-0">
-                  Adaugă servicii extra — branding, SEO, mentenanță sau automatizări — ca să-ți transformi website-ul într-un instrument complet de business.
-                </p>
               </div>
 
-              <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+              <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
                 {customServices.map((service) => (
                   <div
                     key={service.name}
-                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105 group opacity-0"
+                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-xl sm:rounded-2xl p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] group opacity-0 flex flex-col h-full"
                   >
-                    <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-3 sm:gap-4">
-                      <div className="p-2.5 sm:p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg sm:rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
                         <div className="text-white">{service.icon}</div>
                       </div>
-                      <div className="flex-1 w-full">
-                        <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-between mb-2 gap-1 sm:gap-2">
-                          <h4 className="font-bold text-lg sm:text-xl text-white">{service.name}</h4>
-                          <span className="text-teal-400 font-bold text-base sm:text-lg whitespace-nowrap">
-                            {service.price}
-                          </span>
-                        </div>
-                        <p className="text-slate-300 leading-relaxed text-sm sm:text-base">{service.desc}</p>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-xl text-white mb-1">{service.name}</h4>
+                        <span className="text-teal-400 font-bold text-lg">{service.price}</span>
                       </div>
                     </div>
+                    
+                    <p className="text-slate-300 leading-relaxed text-base">{service.desc}</p>
                   </div>
                 ))}
               </div>
@@ -535,20 +543,12 @@ const Pricing: React.FC = () => {
 
         <div className="max-w-4xl mx-auto px-2 sm:px-0 faq-section">
           <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
-              <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
-              <span className="text-blue-400 text-xs sm:text-sm font-semibold">Răspunsuri clare</span>
-            </div>
-
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
                 Întrebări
               </span>{' '}
               frecvente
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg px-4 sm:px-0">
-              Tot ce trebuie să știi despre serviciile noastre
-            </p>
           </div>
 
           <div className="bg-slate-800/40 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-slate-700/50">
@@ -577,10 +577,6 @@ const Pricing: React.FC = () => {
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 0.8; }
         }
       `}</style>
     </section>
