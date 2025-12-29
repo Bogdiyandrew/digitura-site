@@ -101,7 +101,7 @@ const mainPlans: PricingPlan[] = [
         'Structurǎ ganditǎ pentru conversie',
         'Raport lunar de performanță'
       ],
-      ctaText: 'Vreau abonament Pro',
+      ctaText: 'Vreau abonament pro',
       oldPrice: { lei: 490, cents: 0 }
     },
     onetime: {

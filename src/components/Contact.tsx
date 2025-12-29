@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Calendar, CreditCard } from 'lucide-react'; // Am adaugat Calendar si CreditCard
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Calendar, CreditCard } from 'lucide-react';
 
 interface ToastProps {
   message: string;
@@ -60,8 +60,12 @@ const ToastNotification: React.FC<ToastProps> = ({ message, type, onClose }) => 
 const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  
+  // State-uri pentru formular
   const [selectedPackage, setSelectedPackage] = useState<string>('');
+  // Folosim valori simple ('monthly' | 'onetime') pentru logică internă, ca să se potrivească cu URL-ul
   const [billingCycle, setBillingCycle] = useState<string>(''); 
+  
   const [isSending, setIsSending] = useState<boolean>(false);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
@@ -71,15 +75,15 @@ const Contact: React.FC = () => {
 
   const pricingPackages: PricingPackage[] = [
     { 
-      id: 'essential', 
-      name: 'ESSENTIAL', 
+      id: 'esential', 
+      name: 'ESENTIAL', 
       icon: <Target className="w-6 h-6 mx-auto mb-2" />,
       activeClass: 'bg-slate-700/60 border-slate-400 shadow-[0_0_20px_rgba(148,163,184,0.2)]', 
       textClass: 'text-slate-200'
     },
     { 
-      id: 'professional', 
-      name: 'PROFESSIONAL', 
+      id: 'profesional', 
+      name: 'PROFESIONAL', 
       icon: <Globe className="w-6 h-6 mx-auto mb-2" />,
       activeClass: 'bg-blue-600/20 border-blue-400 shadow-[0_0_20px_rgba(96,165,250,0.25)]',
       textClass: 'text-blue-300'
@@ -116,14 +120,17 @@ const Contact: React.FC = () => {
     return () => observer.unobserve(sectionElement);
   }, []);
 
+  // --- LOGICA CRITICĂ PENTRU URL PARAMS ---
   useEffect(() => {
     const packageParam = searchParams.get('package');
     const billingParam = searchParams.get('billing');
 
     if (packageParam) {
       const decodedParam = decodeURIComponent(packageParam);
+      // Găsim pachetul indiferent de case sau mici diferențe, căutând după ID sau Name
       const matchedPackage = pricingPackages.find(pkg =>
-        pkg.id === decodedParam || pkg.name === decodedParam
+        pkg.id.toLowerCase() === decodedParam.toLowerCase() || 
+        pkg.name.toLowerCase() === decodedParam.toLowerCase()
       );
 
       if (matchedPackage) {
@@ -131,8 +138,9 @@ const Contact: React.FC = () => {
       }
     }
 
+    // Setăm billingCycle exact cum vine din URL ('monthly' sau 'onetime')
     if (billingParam) {
-      setBillingCycle(billingParam === 'monthly' ? 'Lunar (Abonament)' : 'Plată Unică');
+      setBillingCycle(billingParam);
     }
   }, [searchParams]);
 
@@ -142,7 +150,8 @@ const Contact: React.FC = () => {
       setToast({ show: true, message: 'Te rugăm să selectezi un pachet.', type: 'error' });
       return;
     }
-    // Facem validare și pentru billing cycle dacă se dorește, dar momentan e opțional
+    
+    // Validare opțională pentru billing
     if (!billingCycle) {
        setToast({ show: true, message: 'Te rugăm să selectezi tipul de plată (Abonament sau Unic).', type: 'error' });
        return;
@@ -159,7 +168,9 @@ const Contact: React.FC = () => {
     const data: Record<string, any> = Object.fromEntries(formData.entries());
     
     data.package = selectedPackage;
-    data.billing = billingCycle; 
+    
+    // Transformăm codul intern ('monthly'/'onetime') în text lizibil pentru email
+    data.billing = billingCycle === 'monthly' ? 'Lunar (Abonament)' : 'Plată Unică';
 
     try {
       const response = await fetch('/api/send-email', {
@@ -213,18 +224,22 @@ const Contact: React.FC = () => {
       router.replace(pathname, { scroll: false }); 
     } else {
       setSelectedPackage(pkgName);
-      // Daca nu e selectat niciun billing, selectam automat 'Lunar' cand alege un pachet (optional)
+      // Dacă nu e selectat niciun billing, punem default pe 'onetime' când userul alege manual un pachet
       if (!billingCycle) {
-          setBillingCycle('Plată Unică'); // Default
+          setBillingCycle('onetime'); 
       }
     }
   };
 
-  // Functie pentru a schimba doar billing-ul
-  const toggleBilling = (type: string) => {
-      // Daca apasa pe cel deja selectat, il deselectam? Sau il lasam activ? De obicei radio buttons raman active.
-      // Il setam direct.
+  const toggleBilling = (type: 'monthly' | 'onetime') => {
       setBillingCycle(type);
+  };
+
+  // Helper pentru afisarea textului frumos in UI
+  const getBillingLabel = () => {
+      if (billingCycle === 'monthly') return '(Abonament lunar)';
+      if (billingCycle === 'onetime') return '(Plată unicǎ)';
+      return '';
   };
 
   return (
@@ -256,8 +271,9 @@ const Contact: React.FC = () => {
           >
             {/* --- SECTIUNEA 1: PACHET + FACTURARE --- */}
             <div>
-              <h3 className="text-slate-200 font-semibold mb-4 text-lg flex items-center justify-between">
+              <h3 className="text-slate-200 font-semibold mb-4 text-lg flex items-center flex-wrap gap-2">
                 1. Configurare Pachet
+                {selectedPackage && billingCycle && <span className="text-teal-400 text-sm font-normal">{getBillingLabel()}</span>}
               </h3>
               
               {/* Selectie Pachet */}
@@ -283,31 +299,30 @@ const Contact: React.FC = () => {
                 ))}
               </div>
 
-              {/* Selectie Billing (Apare doar butoanele active, sau tot timpul dar dezactivate daca nu e pachet?) 
-                  Le lasam active tot timpul pentru libertate */}
+              {/* Selectie Billing */}
               <div className="grid grid-cols-2 gap-3">
                  <button
                     type="button"
-                    onClick={() => toggleBilling('Lunar (Abonament)')}
+                    onClick={() => toggleBilling('monthly')}
                     className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-sm cursor-pointer
-                    ${billingCycle === 'Lunar (Abonament)' 
+                    ${billingCycle === 'monthly' 
                         ? 'bg-teal-500/10 border-teal-500 text-teal-300 shadow-[0_0_15px_rgba(20,184,166,0.15)]' 
                         : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'}`}
                  >
                     <Calendar className="w-4 h-4" />
-                    Abonament Lunar
+                    Abonament lunar
                  </button>
 
                  <button
                     type="button"
-                    onClick={() => toggleBilling('Plată Unică')}
+                    onClick={() => toggleBilling('onetime')}
                     className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-sm cursor-pointer
-                    ${billingCycle === 'Plată Unică' 
+                    ${billingCycle === 'onetime' 
                         ? 'bg-blue-500/10 border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]' 
                         : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'}`}
                  >
                     <CreditCard className="w-4 h-4" />
-                    Plată Unică
+                    Plată unicǎ
                  </button>
               </div>
             </div>
