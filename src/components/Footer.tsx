@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-4 mt-4">
               <a
-                href="https://www.facebook.com/profile.php?id=61575720485744"
+                href="https://www.facebook.com/profile.php?id=61575912824832"
                 aria-label="Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
