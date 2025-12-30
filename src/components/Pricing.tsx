@@ -50,14 +50,15 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '200',
       cents: '00',
-      subtitle: 'Start rapid, cost minim lunar.',
+      subtitle: 'Firma ta arată profesionist și poate fi găsită ușor de clienți.',
       description: '', 
       features: [
-        'O pagină lungă, structurată pentru claritate',
-        'Design unic si optimizat',
-        'Încărcare rapidă',
-        'Email personalizat (nume@firma.ro)',
-        'Listare Google My Business'
+        'Prezență online clară, ușor de înțeles pentru clienți',
+        'Pagină unică structurată pentru conversie și contact rapid',
+        'Design profesional adaptat brandului tău',
+        'Încărcare rapidă și experiență optimă pe mobil',
+        'Vizibilitate locală prin Google Business Profile',
+        '30 de zile suport pentru ajustări și întrebări'
       ],
       ctaText: 'Abonează-te acum',
       oldPrice: { lei: 250, cents: 0 }
@@ -68,12 +69,12 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Un website simplu care îți face firma vizibilă și credibilă online.',
       description: '',
       features: [
-        'O pagină lungă, structurată pentru claritate',
-        'Design unic si optimizat',
-        'Încărcare rapidă',
-        'Email personalizat (nume@firma.ro)',
-        'Listare Google My Business',
-        '<strong>Bonus:</strong> 30 de zile suport gratuit',
+        'Prezență online clară, ușor de înțeles pentru clienți',
+        'Pagină unică structurată pentru conversie și contact rapid',
+        'Design profesional adaptat brandului tău',
+        'Încărcare rapidă și experiență optimă pe mobil',
+        'Vizibilitate locală prin Google Business Profile',
+        '30 de zile suport pentru ajustări și întrebări'
       ],
       ctaText: 'Pornește acum',
       oldPrice: { lei: 2300, cents: 0 },
@@ -91,15 +92,15 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '400',
       cents: '00',
-      subtitle: 'Website complex, gestionat complet de noi.',
+      subtitle: 'Transformăm vizitatorii în cereri și contacte reale.',
       description: '',
       features: [
         '<strong>Tot ce e în Esential, plus:</strong>',
-        'Website cu pagini multiple',
-        'SEO avansat + Google Business Profile',
-        'Google Analytics 4 + Search Console',
-        'Structurǎ ganditǎ pentru conversie',
-        'Raport lunar de performanță'
+        'Structură gândită să transforme vizitatorii în clienți',
+        'Pagini dedicate pentru servicii/produse',
+        'Optimizare SEO pentru intenție comercială',
+        'Monitorizare trafic și conversii (GA4 + Search Console)',
+        'Raport lunar clar, pe înțelesul tău'
       ],
       ctaText: 'Vreau abonament pro',
       oldPrice: { lei: 490, cents: 0 }
@@ -111,11 +112,11 @@ const mainPlans: PricingPlan[] = [
       description: '',
       features: [
         '<strong>Include tot ce este în ESENTIAL, plus:</strong>',
-        'Website cu pagini multiple',
-        'SEO avansat + Google Business Profile',
-        'Google Analytics 4 + Search Console',
-        'Structurǎ ganditǎ pentru conversie.',
-        '<strong>Bonus:</strong> 45 de zile suport',
+        'Structură gândită să transforme vizitatorii în clienți',
+        'Pagini dedicate pentru servicii/produse',
+        'Optimizare SEO pentru intenție comercială',
+        'Monitorizare trafic și conversii (GA4 + Search Console)',
+        'Raport lunar clar, pe înțelesul tău'
       ],
       ctaText: 'Vreau website profesionist',
       oldPrice: { lei: 5700, cents: 0 },
@@ -133,15 +134,15 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '850',
       cents: '00',
-      subtitle: 'Magazin online la cheie, fără griji tehnice.',
+      subtitle: 'Sistem complet de vânzare online, gata să producă comenzi.',
       description: '',
       features: [
         '<strong>Tot ce e în Profesional, plus:</strong>',
-        'Magazin online (coș, filtre, conturi)',
-        'Integrare curieri și facturare automată',
-        'Administrare stocuri din dashboard',
-        'WhatsApp Business integrat',
-        'SEO tehnic pentru produse'
+        'Vânzări online complet automatizate, fără bătăi de cap',
+        'Gestionare simplă a stocurilor și comenzilor dintr-un singur dashboard',
+        'Integrare cu curieri și facturare automată',
+        'Comunicare rapidă cu clienții prin WhatsApp Business',
+        'SEO pentru produse, ca să fii găsit exact când oamenii caută să cumpere'
       ],
       ctaText: 'Start vânzări',
       oldPrice: { lei: 1000, cents: 0 },
@@ -152,13 +153,12 @@ const mainPlans: PricingPlan[] = [
       subtitle: 'Magazin online propriu, automatizat complet.',
       description: '',
       features: [
-        '<strong>Include tot ce este în PROFESIONAL, plus:</strong>',
-        'Magazin online (coș, filtre, conturi)',
-        'Integrare curieri și facturare automată',
-        'Administrare stocuri din dashboard',
-        'WhatsApp Business integrat',
-        'SEO tehnic pentru produse',
-        '<strong>Bonus:</strong> 60 de zile suport'
+        '<strong>Tot ce e în Profesional, plus:</strong>',
+        'Vânzări online complet automatizate, fără bătăi de cap',
+        'Gestionare simplă a stocurilor și comenzilor dintr-un singur dashboard',
+        'Integrare cu curieri și facturare automată',
+        'Comunicare rapidă cu clienții prin WhatsApp Business',
+        'SEO pentru produse, ca să fii găsit exact când oamenii caută să cumpere'
       ],
       ctaText: 'Începe să vinzi',
       oldPrice: { lei: 14000, cents: 0 },
