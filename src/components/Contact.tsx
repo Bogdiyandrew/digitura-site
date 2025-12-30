@@ -225,9 +225,6 @@ const Contact: React.FC = () => {
     } else {
       setSelectedPackage(pkgName);
       // Dacă nu e selectat niciun billing, punem default pe 'onetime' când userul alege manual un pachet
-      if (!billingCycle) {
-          setBillingCycle('onetime'); 
-      }
     }
   };
 
@@ -235,7 +232,7 @@ const Contact: React.FC = () => {
       if (billingCycle === type) {
           setBillingCycle(''); // Dacă e deja selectat, îl deselectăm
       } else {
-          setBillingCycle(type); // Altfel, îl selectăm
+          setBillingCycle(type); 
       }
   };
 
