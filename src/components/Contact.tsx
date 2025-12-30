@@ -232,15 +232,13 @@ const Contact: React.FC = () => {
   };
 
   const toggleBilling = (type: 'monthly' | 'onetime') => {
-      setBillingCycle(type);
+      if (billingCycle === type) {
+          setBillingCycle(''); // Dacă e deja selectat, îl deselectăm
+      } else {
+          setBillingCycle(type); // Altfel, îl selectăm
+      }
   };
 
-  // Helper pentru afisarea textului frumos in UI
-  const getBillingLabel = () => {
-      if (billingCycle === 'monthly') return '(Abonament lunar)';
-      if (billingCycle === 'onetime') return '(Plată unicǎ)';
-      return '';
-  };
 
   return (
     <section
@@ -273,7 +271,6 @@ const Contact: React.FC = () => {
             <div>
               <h3 className="text-slate-200 font-semibold mb-4 text-lg flex items-center flex-wrap gap-2">
                 1. Configurare Pachet
-                {selectedPackage && billingCycle && <span className="text-teal-400 text-sm font-normal">{getBillingLabel()}</span>}
               </h3>
               
               {/* Selectie Pachet */}

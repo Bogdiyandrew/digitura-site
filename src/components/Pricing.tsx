@@ -367,7 +367,7 @@ const Pricing: React.FC = () => {
           
           <div className={`absolute -top-3 left-[calc(50%-130px)] sm:left-[calc(50%-150px)] transition-opacity duration-300 ${billingCycle === 'monthly' ? 'opacity-100' : 'opacity-0'}`}>
              <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg transform -rotate-6 block">
-               Mentenanță Inclusă
+               Mentenanță inclusă
              </span>
           </div>
         </div>
