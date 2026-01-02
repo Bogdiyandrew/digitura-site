@@ -413,25 +413,20 @@ const Pricing: React.FC = () => {
                       {activeData.subtitle}
                     </p>
 
-                    {/* --- ZONA PRET FIXATA --- */}
-                    {/* Am schimbat min-h-100px in min-h-60px si justify-end in justify-center */}
                     <div className="text-center mb-6 sm:mb-8 min-h-[60px] flex flex-col justify-center">
                       {activeData.price !== 'La cerere' ? (
                         <div className="flex items-center justify-center text-white">
 
-                          {/* Text "de la" pentru plata unică */}
+
                           {billingCycle === 'onetime' && (
                             <span className="text-slate-400 text-xs sm:text-sm mr-2 font-medium">
                               de la
                             </span>
                           )}
 
-                          {/* Prețul Mare */}
                           <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">
                             {activeData.price}
                           </span>
-
-                          {/* Coloana dreapta: zecimale + label */}
                           <div className="flex flex-col items-start ml-2 leading-none">
                             {activeData.cents && (
                               <span className="text-xl sm:text-2xl font-bold">,{activeData.cents}</span>
@@ -447,7 +442,6 @@ const Pricing: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    {/* --- FINAL FIX --- */}
 
                     <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
                       {activeData.features.map((feature, i) => (
