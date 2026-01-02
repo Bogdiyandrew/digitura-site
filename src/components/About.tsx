@@ -123,12 +123,12 @@ const About: React.FC = () => {
         <div className="mb-12 sm:mb-14 md:mb-16">
           <RevealText>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight px-2">
-              Alegerea care îți definește viitorul.
+              Site obișnuit vs Partener strategic
             </h2>
           </RevealText>
           <RevealText className="delay-200">
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto px-4 leading-relaxed">
-              Poți alege un simplu site sau poți alege un partener strategic.
+              Site care atrage clienți și crește afacerea ta
             </p>
           </RevealText>
         </div>
@@ -138,7 +138,7 @@ const About: React.FC = () => {
           <div className="relative">
             <div className="absolute -top-3 left-6 px-3 py-1 bg-slate-800 border border-slate-700 
                             rounded-full text-xs font-semibold text-slate-400 z-30">
-              Abordare tradițională
+              Abordare clasică
             </div>
 
             <div
@@ -149,7 +149,7 @@ const About: React.FC = () => {
             >
 
               <h3 className="text-xl sm:text-2xl md:text-2xl font-bold text-slate-400 mb-6 sm:mb-7 md:mb-8 mt-2">
-                Abordarea standard: &quot;Doar un site&quot;
+                Doar un site :
               </h3>
               <div className="space-y-5 sm:space-y-6">
                 <div className="flex items-start gap-3 sm:gap-4 opacity-70">
@@ -161,7 +161,7 @@ const About: React.FC = () => {
                       Invizibil pentru clienți
                     </h4>
                     <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
-                      Un design generic, bazat pe șabloane, te face să arăți ca toți ceilalți și te pierzi în mulțime.
+                      Design generic, greu de diferențiat
                     </p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ const About: React.FC = () => {
                       Timp pierdut, oportunități ratate
                     </h4>
                     <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
-                      Fără automatizări, petreci ore în șir cu sarcini manuale, în loc să te ocupi de creșterea afacerii.
+                      Site care doar „există”, fără obiectiv clar
                     </p>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ const About: React.FC = () => {
                       Stagnare și frustrare
                     </h4>
                     <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
-                      Fără date clare, deciziile sunt bazate pe ghicitori. Rezultatul? Creștere lentă și imprevizibilă.
+                      Decizii bazate pe presupuneri, nu pe date
                     </p>
                     <div className="h-16 sm:h-20 mt-3 sm:mt-4 bg-slate-800/30 rounded-lg p-2.5 sm:p-3 
                                     flex items-center justify-center border border-slate-700/30">
@@ -236,7 +236,7 @@ const About: React.FC = () => {
                   <h3 className="text-xl sm:text-2xl md:text-2xl font-bold mb-6 sm:mb-7 md:mb-8 mt-2
                                  bg-gradient-to-r from-teal-300 via-teal-400 to-blue-400 bg-clip-text text-transparent
                                  drop-shadow-sm">
-                    Parteneriatul premium: Un motor de creștere
+                    Parteneriatul strategic :
                   </h3>
                 </RevealText>
 
@@ -255,7 +255,7 @@ const About: React.FC = () => {
                         O mașinărie de atras clienți
                       </h4>
                       <p className="text-slate-200 leading-relaxed text-sm sm:text-base">
-                        Creăm o experiență unică, proiectată strategic pentru a-ți transforma vizitatorii în clienți fideli.
+                        Design construit să atragă și să convingă clienți
                       </p>
                     </div>
                   </div>
@@ -273,7 +273,7 @@ const About: React.FC = () => {
                         Afacerea ta rulează, chiar și când dormi
                       </h4>
                       <p className="text-slate-200 leading-relaxed text-sm sm:text-base">
-                        Implementăm sisteme care preiau comenzi, generează oferte și aduc clienți 24/7, automat.
+                        Automatizări care economisesc timp și aduc oportunități
                       </p>
                     </div>
                   </div>
@@ -291,7 +291,7 @@ const About: React.FC = () => {
                         Decizii clare, progres garantat
                       </h4>
                       <p className="text-slate-200 leading-relaxed text-sm sm:text-base">
-                        Folosim date concrete pentru a optimiza constant strategia, asigurând o creștere continuă și predictibilă.
+                        Decizii bazate pe date reale, optimizare constantă
                       </p>
                       <div className="h-16 sm:h-20 mt-3 sm:mt-4 bg-slate-900/80 rounded-xl p-2.5 sm:p-3 
                                       flex items-center justify-center backdrop-blur-sm 
