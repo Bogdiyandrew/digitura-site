@@ -28,7 +28,6 @@ const Hero = () => {
         defaults: { ease: 'power4.out' }
       });
 
-      // Animație Titlu Principal
       masterTL.fromTo(
         titleRef.current,
         {
@@ -45,7 +44,6 @@ const Hero = () => {
         0.8
       );
 
-      // Animație Subtitlu (urmează direct după titlu acum)
       masterTL.fromTo(
         subtitleRef.current,
         {
@@ -58,10 +56,9 @@ const Hero = () => {
           duration: 1.2,
           ease: 'power3.out'
         },
-        1.4 // Porneste putin mai devreme decat inainte
+        1.4
       );
 
-      // Animație Buton CTA
       masterTL.fromTo(
         ctaRef.current,
         {
@@ -76,10 +73,9 @@ const Hero = () => {
           duration: 1,
           ease: 'back.out(1.7)'
         },
-        1.8 // Ajustat timpul
+        1.8
       );
 
-      // Animații de scroll pentru fundal
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -189,7 +185,6 @@ const Hero = () => {
 
         <h1
           ref={titleRef}
-          // Am marit putin margin-bottom (mb-12) pentru spatiere mai buna
           className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-12 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
           style={{
             fontFamily: 'Exo2, sans-serif',
@@ -198,8 +193,6 @@ const Hero = () => {
         >
           <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
         </h1>
-
-        {/* IMAGINEA SI LINIA AU FOST STERSE DE AICI */}
 
         <p
           ref={subtitleRef}

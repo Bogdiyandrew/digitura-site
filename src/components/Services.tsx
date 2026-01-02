@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Globe, Target, Zap, Wrench, TrendingUp, X, LucideIcon, Shield, Gauge, Rocket, Sparkles, Clock, Settings } from 'lucide-react';
+import { ShoppingCart, Globe, Target, Zap, Wrench, TrendingUp, X, LucideIcon, Shield, Gauge, Rocket, Sparkles, Clock, Settings, Users, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useMediaQuery from '../hooks/useMediaQuery';
-import useScrollLock from '../hooks/useScrollLock';
+// import useScrollLock from '../hooks/useScrollLock'; // Uncomment if you use this
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -31,6 +31,7 @@ interface Benefit {
 interface ServiceData {
   id: string;
   title: string;
+  tagline?: string;
   desc: string;
   icon: LucideIcon;
   position: ServicePosition;
@@ -41,96 +42,104 @@ interface ServiceData {
 
 type ConnectionPair = [string, string];
 
+// --- AICI SUNT TEXTELE NOI (Modificate să fie directe și umane) ---
 const servicesData: ServiceData[] = [
   {
     id: 'ecommerce',
-    title: 'Magazin online',
-    desc: 'Motorul tău de vânzări care funcționează 24/7. Transformăm vizitatorii în clienți fideli cu un proces de plată impecabil și o experiență memorabilă.',
+    title: 'Magazin Online',
+    tagline: 'Vinde în timp ce dormi',
+    desc: 'Un magazin fizic te ține legat 12 ore pe zi. Aici, casa de marcat bate singură la 3 dimineața. Construim magazine care se încarcă instant și ghidează clientul direct spre butonul "Plătește", fără să se blocheze.',
     icon: ShoppingCart,
     position: { desktop: { x: 26, y: 32 }, mobile: { x: 22, y: 28 } },
     image: '/services/MAGAZIN.webp',
     color: 'teal',
     benefits: [
-      { icon: Gauge, stat: '<1.5s', label: 'Încărcare Rapidă', color: 'blue' },
-      { icon: Zap, stat: '24/7', label: 'Vânzări Automate', color: 'teal' },
+      { icon: Zap, stat: 'Rapid', label: 'Nu pierzi clienți', color: 'teal' },
+      { icon: Gauge, stat: 'Simplu', label: 'Ușor de administrat', color: 'blue' },
     ]
   },
   {
     id: 'website',
-    title: 'Website prezentare',
-    desc: 'Cartea ta de vizită digitală care nu doar impresionează, ci convertește. Construim o prezență online care comunică instant încredere și profesionalism.',
+    title: 'Website Prezentare',
+    tagline: 'Nu mai arăta "ieftin"',
+    desc: 'Prima impresie contează. Dacă site-ul tău arată a 2010, clienții cred că și afacerea ta e prăfuită. Îți facem un site curat, modern, care strigă "profesionalism" și justifică prețurile tale.',
     icon: Globe,
     position: { desktop: { x: 50, y: 50 }, mobile: { x: 50, y: 48 } },
     image: '/services/WEBSITEPREZENTARE.webp',
     color: 'blue',
     benefits: [
-      { icon: Sparkles, stat: '100%', label: 'Profesionalism', color: 'teal' },
-      { icon: Target, stat: 'Claritate', label: 'Magnet de Clienți', color: 'blue' },
+      { icon: Target, stat: 'Premium', label: 'Inspiri încredere', color: 'teal' },
+      { icon: Shield, stat: 'Validare', label: 'Te iau în serios', color: 'blue' },
     ]
   },
   {
     id: 'landing',
-    title: 'Landing page',
-    desc: 'O mașinărie de conversie creată cu un singur scop: rezultate maxime pentru campaniile tale. Fiecare pixel este optimizat pentru a ghida vizitatorul spre acțiune.',
+    title: 'Landing Page',
+    tagline: 'Pagină care vinde',
+    desc: 'Reclamele sunt scumpe. Nu le irosi trimițând oamenii pe "Home". Creăm pagini dedicate cu un singur scop: să ia banii sau emailul clientului ACUM. Fără meniuri, fără distrageri, doar convingere.',
     icon: Target,
     position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } },
     image: '/services/LGPAGE.webp',
     color: 'teal',
     benefits: [
-      { icon: TrendingUp, stat: '+ Conversii', label: 'Orientat spre Rezultat', color: 'teal' },
-      { icon: Rocket, stat: 'Zile', label: 'Lansare Rapidă', color: 'blue' },
+      { icon: ArrowUpRight, stat: 'Max', label: 'Conversie', color: 'teal' },
+      { icon: Rocket, stat: 'Rapid', label: 'Gata de campanie', color: 'blue' },
     ]
   },
   {
     id: 'automation',
     title: 'Automatizare',
-    desc: 'Îți redăm cel mai de preț activ: timpul. Implementăm sisteme inteligente care preiau sarcinile repetitive și elimină erorile umane.',
+    tagline: 'Scapă de munca de robot',
+    desc: 'Te-ai săturat să dai copy-paste din email în Excel? Conectăm aplicațiile între ele. Când intră o comandă, factura se face singură și clientul primește mail. Tu doar verifici contul.',
     icon: Zap,
     position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } },
     image: '/services/AUTO.webp',
     color: 'blue',
     benefits: [
-      { icon: Clock, stat: '+20h', label: 'Timp Salvat / Lună', color: 'blue' },
-      { icon: Settings, stat: 'Eficiență', label: 'Procese Optimizate', color: 'teal' },
+      { icon: Clock, stat: 'Ore', label: 'Câștigate săptămânal', color: 'blue' },
+      { icon: Settings, stat: 'Zero', label: 'Erori umane', color: 'teal' },
     ]
   },
   {
     id: 'maintenance',
     title: 'Mentenanță',
-    desc: 'Liniștea ta, garantată. Ne asigurăm că afacerea ta online este mereu protejată, actualizată și funcționează la performanță maximă.',
+    tagline: 'Departamentul tău IT',
+    desc: 'Nu îți bate capul cu update-uri, backup-uri sau securitate. Noi stăm cu ochii pe site ca tu să stai liniștit. Dacă pică ceva (deși nu pică), rezolvăm noi înainte să afli tu.',
     icon: Wrench,
     position: { desktop: { x: 50, y: 88 }, mobile: { x: 50, y: 84 } },
     image: '/services/MAINTENANCE.webp',
     color: 'teal',
     benefits: [
-      { icon: Shield, stat: 'Zero', label: 'Stres Tehnic', color: 'blue' },
-      { icon: Wrench, stat: '100%', label: 'Performanță', color: 'teal' },
+      { icon: Shield, stat: 'Sigur', label: 'Dormi liniștit', color: 'blue' },
+      { icon: Wrench, stat: 'Non-stop', label: 'Monitorizare', color: 'teal' },
     ]
   },
   {
     id: 'marketing',
-    title: 'Marketing digital',
-    desc: 'Sistemul care aduce un flux constant de clienți la ușa ta. Prin strategii SEO și Ads, nu doar atragem trafic, ci construim audiențe care cumpără.',
+    title: 'Marketing Digital',
+    tagline: 'Clienți, nu doar like-uri',
+    desc: 'Like-urile nu țin de foame. Noi îți aducem oameni care chiar caută ce vinzi tu. Setăm reclamele și SEO-ul ca să apari exact în fața clientului când e gata să cumpere.',
     icon: TrendingUp,
     position: { desktop: { x: 74, y: 70 }, mobile: { x: 78, y: 64 } },
     image: '/services/MARK.webp',
     color: 'teal',
     benefits: [
-      { icon: Target, stat: 'Creștere', label: 'Clienți Potriviți', color: 'blue' },
-      { icon: TrendingUp, stat: 'Măsurabil', label: 'ROI Pozitiv', color: 'teal' },
+      { icon: Users, stat: 'Reali', label: 'Clienți calificați', color: 'blue' },
+      { icon: TrendingUp, stat: 'Profit', label: 'Investiție recuperată', color: 'teal' },
     ]
   },
   {
     id: 'branding',
     title: 'Branding',
-    desc: 'Construim identități vizuale și mesaje coerente care te diferențiază și inspiră încredere. De la logo la tonul de comunicare, totul spune aceeași poveste.',
+    tagline: 'Fă-i să te țină minte',
+    desc: 'De ce să cumpere de la tine și nu de la concurență? Brandingul e răspunsul. Îți construim o poveste și o imagine vizuală care te scoate din anonimat și te pune pe harta marilor jucători.',
     icon: Sparkles,
     position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } },
     image: '/services/BRAND.webp',
     color: 'blue',
     benefits: [
-      { icon: Sparkles, stat: 'Memorabil', label: 'Identitate Clară', color: 'teal' },
-      { icon: Shield, stat: 'Încredere', label: 'Brand Consistent', color: 'blue' },
+      { icon: Sparkles, stat: 'Wow', label: 'Impact vizual', color: 'teal' },
+      { icon: Shield, stat: 'Top', label: 'Poziționare', color: 'blue' },
     ]
   }
 ];
@@ -150,16 +159,19 @@ const Services: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.lenis) {
+    if ((window as any).lenis) {
       if (activeServiceId) {
-        window.lenis.stop();
+        (window as any).lenis.stop();
       } else {
-        window.lenis.start();
+        (window as any).lenis.start();
       }
     }
     const html = document.documentElement;
     const body = document.body;
-    const preventTouch = (e: TouchEvent) => e.preventDefault();
+    const preventTouch = (e: TouchEvent) => {
+      if (activeServiceId) e.preventDefault();
+    };
+
     if (activeServiceId) {
       html.style.overflow = 'hidden';
       body.style.overflow = 'hidden';
@@ -173,7 +185,7 @@ const Services: React.FC = () => {
       html.style.overflow = '';
       body.style.overflow = '';
       document.removeEventListener('touchmove', preventTouch);
-      if (window.lenis) window.lenis.start();
+      if ((window as any).lenis) (window as any).lenis.start();
     };
   }, [activeServiceId]);
 
@@ -239,17 +251,19 @@ const Services: React.FC = () => {
       <div className="text-center px-6 pointer-events-none relative z-10">
         <div className="section-title">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 opacity-0">
-            Servicii? Nu. <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Un ecosistem de creștere.</span>
+            {/* TEXT TITLU SCHIMBAT */}
+            Tot ce ai nevoie <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">ca să crești online.</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto opacity-0">
-            Fiecare serviciu este o piesă dintr-un motor de creștere. Dă click pe o componentă pentru a vedea cum te ajută direct.
+            {/* TEXT SUBTITLU SCHIMBAT */}
+            Nu îți dăm doar un site și "mult succes". Îți construim întregul sistem prin care atragi clienți și vinzi, fără să îți bați capul cu tehnica.
           </p>
         </div>
       </div>
 
       <div className="relative w-full h-[80vh] md:h-[100vh] mt-8">
         <div
-          className={`fixed inset-0 z-20 transition-opacity duration-300 ${activeServiceId ? 'bg-black/50 backdrop-blur-sm' : 'bg-transparent pointer-events-none'}`}
+          className={`fixed inset-0 z-20 transition-opacity duration-300 ${activeServiceId ? 'bg-black/60 backdrop-blur-sm' : 'bg-transparent pointer-events-none'}`}
           onClick={() => activeServiceId && handleNodeClick(activeServiceId)}
         ></div>
 
@@ -314,25 +328,30 @@ const Services: React.FC = () => {
                   }}
                 ></div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/20"></div>
 
-                <div className="details-content absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-10 text-left">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 md:mb-4 text-white drop-shadow-lg" style={{ fontFamily: 'Exo2, sans-serif' }}>
+                <div className="details-content absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-12 text-left">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`px-2 py-1 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border ${activeService.color === 'teal' ? 'border-teal-500/30 text-teal-300 bg-teal-500/10' : 'border-blue-500/30 text-blue-300 bg-blue-500/10'}`}>
+                      {activeService.tagline}
+                    </div>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-5 text-white drop-shadow-lg" style={{ fontFamily: 'Exo2, sans-serif' }}>
                     {activeService.title}
                   </h3>
-                  <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 max-w-2xl drop-shadow-md">
+                  <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 max-w-2xl drop-shadow-md border-l-2 border-slate-500/50 pl-4">
                     {activeService.desc}
                   </p>
 
-                  <div className="mt-4 md:mt-6 flex flex-wrap gap-3 md:gap-6">
+                  <div className="mt-6 md:mt-8 flex flex-wrap gap-3 md:gap-5">
                     {activeService.benefits.map((benefit, index) => {
                       const BenefitIcon = benefit.icon;
                       return (
-                        <div key={index} className="flex items-center gap-3 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
-                          <BenefitIcon className={`w-5 h-5 ${benefit.color === 'teal' ? 'text-teal-300' : 'text-blue-300'}`} />
+                        <div key={index} className="flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                          <BenefitIcon className={`w-5 h-5 ${benefit.color === 'teal' ? 'text-teal-400' : 'text-blue-400'}`} />
                           <div>
-                            <div className={`text-base sm:text-lg font-bold ${benefit.color === 'teal' ? 'text-teal-300' : 'text-blue-300'}`}>{benefit.stat}</div>
-                            <div className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider">{benefit.label}</div>
+                            <div className={`text-sm sm:text-base font-bold ${benefit.color === 'teal' ? 'text-teal-100' : 'text-blue-100'}`}>{benefit.stat}</div>
+                            <div className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-medium">{benefit.label}</div>
                           </div>
                         </div>
                       );
@@ -342,10 +361,10 @@ const Services: React.FC = () => {
 
                 <button
                   onClick={() => activeServiceId && handleNodeClick(activeServiceId)}
-                  className="absolute top-4 right-4 text-slate-300 hover:text-white bg-black/30 hover:bg-black/60 backdrop-blur-sm rounded-full p-2 transition-all duration-200 z-20 hover:scale-110 cursor-pointer"
+                  className="absolute top-4 right-4 text-slate-300 hover:text-white bg-black/40 hover:bg-red-500/80 backdrop-blur-md rounded-full p-2 transition-all duration-200 z-20 hover:scale-110 cursor-pointer border border-white/10"
                   aria-label="Închide detaliile"
                 >
-                  <X size={20} />
+                  <X size={24} />
                 </button>
               </>
             )}
