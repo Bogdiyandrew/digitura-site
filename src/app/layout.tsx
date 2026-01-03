@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://digitura.ro"),
 
-  title: "Digitura - Partenerul Tău Strategic în Digital",
+  title: "Digitura - Partenerul tău strategic în digital",
   description: "Creăm site-uri web și experiențe digitale care nu doar arată bine, ci transformă vizitatorii în clienți. Contactează-ne pentru un prototip gratuit.",
-  
+
   alternates: {
     canonical: '/',
   },
