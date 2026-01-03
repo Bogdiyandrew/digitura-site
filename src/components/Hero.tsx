@@ -268,7 +268,7 @@ const Hero = () => {
         >
           Design web gândit să aducă mai mulți clienți, încredere și valoare brandului.
           <span className="mt-2 block font-semibold text-teal-300">
-            Prototip gratuit în 48h.
+            Demo gratuit în 48h.
           </span>
         </p>
 
@@ -305,7 +305,7 @@ const Hero = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" />
             </svg>
-            <span className="relative z-10">Vreau prototipul meu gratuit</span>
+            <span className="relative z-10">Vreau demo-ul meu gratuit</span>
             <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
