@@ -10,14 +10,13 @@ if (typeof window !== 'undefined') {
 }
 
 const Hero = () => {
+  // AICI AM ADĂUGAT TIPURILE PENTRU TYPESCRIPT CA SĂ SCAPI DE ERORI
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
-  const separatorRef = useRef<HTMLDivElement>(null);
-  const codeSymbolRef = useRef<HTMLSpanElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null); // Acesta rezolvă eroarea cu playbackRate
   const overlayRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
 
@@ -30,102 +29,31 @@ const Hero = () => {
         defaults: { ease: 'power4.out' }
       });
 
-
+      // 1. Animație Titlu
       masterTL.fromTo(
         titleRef.current,
-        {
-          opacity: 0,
-          y: 100,
-          scale: 0.8,
-          rotationX: -45
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-          duration: 1.8,
-          ease: 'power4.out'
-        },
-        0.8
+        { opacity: 0, y: 100, scale: 0.8, rotationX: -45 },
+        { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 1.8, ease: 'power4.out' },
+        0.5
       );
 
-      masterTL.fromTo(
-        codeSymbolRef.current,
-        {
-          opacity: 0,
-          scale: 0,
-          rotationY: -180,
-          rotationZ: -180
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          rotationY: 0,
-          rotationZ: 0,
-          duration: 1.5,
-          ease: 'back.out(2)',
-          onComplete: () => {
-            gsap.to(codeSymbolRef.current, {
-              rotationY: 360,
-              duration: 20,
-              repeat: -1,
-              ease: 'none'
-            });
-          }
-        },
-        1.5
-      );
-
-      masterTL.fromTo(
-        separatorRef.current,
-        {
-          scaleX: 0,
-          opacity: 0
-        },
-        {
-          scaleX: 1,
-          opacity: 1,
-          duration: 1.2,
-          ease: 'power3.out'
-        },
-        1.8
-      );
-
+      // 2. Animație Subtitlu (fără pauză pentru imagine)
       masterTL.fromTo(
         subtitleRef.current,
-        {
-          opacity: 0,
-          y: 50
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          ease: 'power3.out'
-        },
-        2
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' },
+        1.2
       );
 
+      // 3. Animație Buton CTA
       masterTL.fromTo(
         ctaRef.current,
-        {
-          opacity: 0,
-          scale: 0.8,
-          y: 30,
-          rotationX: 45
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 1,
-          ease: 'back.out(1.7)'
-        },
-        2.5
+        { opacity: 0, scale: 0.8, y: 30, rotationX: 45 },
+        { opacity: 1, scale: 1, y: 0, rotationX: 0, duration: 1, ease: 'back.out(1.7)' },
+        1.6
       );
 
+      // Parallax Video
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -138,6 +66,7 @@ const Hero = () => {
         ease: 'none'
       });
 
+      // Gradient Background Movement
       gsap.to(gradientRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -154,6 +83,7 @@ const Hero = () => {
     return () => ctx.revert();
   }, []);
 
+  // Aici TypeScript nu va mai da eroare pentru că știe că videoRef este HTMLVideoElement
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
@@ -236,7 +166,7 @@ const Hero = () => {
 
         <h1
           ref={titleRef}
-          className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-6 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
+          className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-8 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
           style={{
             fontFamily: 'Exo2, sans-serif',
             letterSpacing: 1,
@@ -246,25 +176,11 @@ const Hero = () => {
           <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
         </h1>
 
-        <div className="mb-6 flex justify-center" style={{ perspective: '1000px' }}>
-          <span
-            ref={codeSymbolRef}
-            className="select-none font-mono text-2xl font-bold text-teal-400 md:text-3xl cursor-pointer"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            &lt;/&gt;
-          </span>
-        </div>
-
-        <div
-          ref={separatorRef}
-          className="mx-auto mb-8 h-1 w-32 rounded-full bg-gradient-to-r from-teal-400 to-blue-400"
-          style={{ transformOrigin: 'center' }}
-        />
+        {/* FĂRĂ IMAGINE */}
 
         <p
           ref={subtitleRef}
-          className="mx-auto mb-10 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
+          className="mx-auto mb-12 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
         >
           Design web gândit să aducă mai mulți clienți, încredere și valoare brandului.
           <span className="mt-2 block font-semibold text-teal-300">
