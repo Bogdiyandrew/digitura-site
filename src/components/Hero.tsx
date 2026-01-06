@@ -10,13 +10,12 @@ if (typeof window !== 'undefined') {
 }
 
 const Hero = () => {
-  // AICI AM ADĂUGAT TIPURILE PENTRU TYPESCRIPT CA SĂ SCAPI DE ERORI
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null); // Acesta rezolvă eroarea cu playbackRate
+  const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
 
@@ -29,7 +28,6 @@ const Hero = () => {
         defaults: { ease: 'power4.out' }
       });
 
-      // 1. Animație Titlu
       masterTL.fromTo(
         titleRef.current,
         { opacity: 0, y: 100, scale: 0.8, rotationX: -45 },
@@ -37,7 +35,6 @@ const Hero = () => {
         0.5
       );
 
-      // 2. Animație Subtitlu (fără pauză pentru imagine)
       masterTL.fromTo(
         subtitleRef.current,
         { opacity: 0, y: 30 },
@@ -45,7 +42,6 @@ const Hero = () => {
         1.2
       );
 
-      // 3. Animație Buton CTA
       masterTL.fromTo(
         ctaRef.current,
         { opacity: 0, scale: 0.8, y: 30, rotationX: 45 },
@@ -53,7 +49,6 @@ const Hero = () => {
         1.6
       );
 
-      // Parallax Video
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -66,7 +61,6 @@ const Hero = () => {
         ease: 'none'
       });
 
-      // Gradient Background Movement
       gsap.to(gradientRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -83,7 +77,6 @@ const Hero = () => {
     return () => ctx.revert();
   }, []);
 
-  // Aici TypeScript nu va mai da eroare pentru că știe că videoRef este HTMLVideoElement
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
@@ -176,7 +169,6 @@ const Hero = () => {
           <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
         </h1>
 
-        {/* FĂRĂ IMAGINE */}
 
         <p
           ref={subtitleRef}
