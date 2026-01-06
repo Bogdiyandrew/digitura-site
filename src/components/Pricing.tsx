@@ -43,7 +43,7 @@ const mainPlans: PricingPlan[] = [
     iconGradient: 'from-teal-400 to-cyan-500',
     isPopular: false,
     monthly: {
-      price: '350',
+      price: '300',
       cents: '00',
       subtitle: 'Firma ta arată profesionist și poate fi găsită ușor de clienți.',
       description: '',
@@ -82,7 +82,7 @@ const mainPlans: PricingPlan[] = [
     isPopular: true,
     badge: { text: 'BEST SELLER' },
     monthly: {
-      price: '650',
+      price: '500',
       cents: '00',
       subtitle: 'Transformăm vizitatorii în cereri și contacte reale.',
       description: '',
@@ -121,7 +121,7 @@ const mainPlans: PricingPlan[] = [
     isPopular: false,
     badge: { text: 'PENTRU VÂNZĂRI' },
     monthly: {
-      price: '1100',
+      price: '1000',
       cents: '00',
       subtitle: 'Sistem complet de vânzare online, gata să producă comenzi.',
       description: '',

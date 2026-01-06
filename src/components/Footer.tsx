@@ -3,8 +3,29 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
 import { Facebook, Instagram, Mail, Phone, ArrowUp } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+
+interface LenisScrollToOptions {
+  offset?: number;
+  duration?: number;
+  easing?: (t: number) => number;
+  immediate?: boolean;
+  lock?: boolean;
+  force?: boolean;
+}
+
+interface LenisInstance {
+  scrollTo(target: HTMLElement | string | number, options?: LenisScrollToOptions): void;
+  stop(): void;
+  start(): void;
+}
+
+declare global {
+  interface Window {
+    lenis: LenisInstance;
+  }
+}
 
 interface MousePosition {
   x: number;
@@ -14,11 +35,7 @@ interface MousePosition {
 const Footer: React.FC = () => {
   const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const pathname = usePathname();
-
-  const isOnTermsPage = pathname === '/termeni-si-conditii';
-  const isOnConfPage = pathname === '/politica-de-confidentialitate';
-  const isOnCookiesPage = pathname === '/politica-cookies';
-  const isLegalPage = isOnTermsPage || isOnConfPage || isOnCookiesPage;
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -34,29 +51,43 @@ const Footer: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const scrollToTop = (): void => {
-    if (typeof window === 'undefined') return;
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, href: string): void => {
+    e.preventDefault();
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (href.startsWith('#')) {
+      if (pathname === '/') {
+        const id = href.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          if (window.lenis) {
+            window.lenis.scrollTo(element, { offset: -20 });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      } else {
+        router.push(`/${href}`);
+      }
+    } else {
+      router.push(href);
+    }
   };
 
-  const handleLogoClick = (e: MouseEvent<HTMLAnchorElement>): void => {
-    if (isOnTermsPage) return;
-    e.preventDefault();
-    if (typeof window !== 'undefined') {
+  const scrollToTop = (): void => {
+    if (typeof window === 'undefined') return;
+    if (window.lenis) {
+      window.lenis.scrollTo(0);
+    } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const handleSectionLinkClick = (href: string) => (e: MouseEvent<HTMLAnchorElement>): void => {
-    if (isLegalPage) {
-      e.preventDefault();
-      if (typeof window !== 'undefined') {
-        window.location.href = `/${href}`;
-      }
+  const handleLogoClick = (e: MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
+    if (pathname === '/') {
+      scrollToTop();
+    } else {
+      router.push('/');
     }
   };
 
@@ -74,10 +105,9 @@ const Footer: React.FC = () => {
 
       <div className="relative max-w-7xl mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-
           <div className="flex flex-col gap-4">
             <Link
-              href={isOnTermsPage ? "/" : "#"}
+              href="/"
               onClick={handleLogoClick}
               className="flex items-center gap-3 text-2xl font-bold text-white mb-2"
               style={{ fontFamily: 'Ethnocentric, sans-serif' }}
@@ -120,29 +150,29 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold text-white mb-4 tracking-wider">Link-uri utile</h3>
             <nav className="flex flex-col gap-3">
               <Link
-                href={isLegalPage ? "/#despre" : "#despre"}
-                onClick={handleSectionLinkClick('#despre')}
+                href="#despre"
+                onClick={(e) => handleLinkClick(e, '#despre')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Despre noi
               </Link>
               <Link
-                href={isLegalPage ? "/#servicii" : "#servicii"}
-                onClick={handleSectionLinkClick('#servicii')}
+                href="#servicii"
+                onClick={(e) => handleLinkClick(e, '#servicii')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Servicii
               </Link>
               <Link
-                href={isLegalPage ? "/#portofoliu" : "#portofoliu"}
-                onClick={handleSectionLinkClick('#portofoliu')}
+                href="#portofoliu"
+                onClick={(e) => handleLinkClick(e, pathname === '/' ? '#portofoliu' : '/portofoliu')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Portofoliu
               </Link>
               <Link
-                href={isLegalPage ? "/#preturi" : "#preturi"}
-                onClick={handleSectionLinkClick('#preturi')}
+                href="#preturi"
+                onClick={(e) => handleLinkClick(e, '#preturi')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Prețuri
@@ -155,18 +185,21 @@ const Footer: React.FC = () => {
             <nav className="flex flex-col gap-3">
               <Link
                 href="/termeni"
+                onClick={(e) => handleLinkClick(e, '/termeni')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Termeni și condiții
               </Link>
               <Link
                 href="/politica-de-confidentialitate"
+                onClick={(e) => handleLinkClick(e, '/politica-de-confidentialitate')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Politica de confidențialitate
               </Link>
               <Link
                 href="/politica-cookies"
+                onClick={(e) => handleLinkClick(e, '/politica-cookies')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Politica cookies

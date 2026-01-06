@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Calendar, CreditCard } from 'lucide-react';
+import { Mail, Phone, Send, User, Building, Briefcase, Target, Globe, ShoppingCart, CheckCircle, AlertTriangle, X, Loader2, LucideIcon, Calendar, CreditCard, ShieldCheck } from 'lucide-react';
 
 interface ToastProps {
   message: string;
@@ -141,6 +141,8 @@ const Contact: React.FC = () => {
       return;
     }
 
+    // HTML5 validation will handle the checkbox 'required' state automatically before this runs
+
     setIsSending(true);
     if (!formRef.current) { setIsSending(false); return; }
 
@@ -148,6 +150,9 @@ const Contact: React.FC = () => {
     const data: Record<string, any> = Object.fromEntries(formData.entries());
     data.package = selectedPackage;
     data.billing = billingCycle === 'monthly' ? 'Lunar (Abonament)' : 'Plată Unică';
+
+    // Checkbox value will be 'on' if checked, usually we don't need to send it to the email,
+    // but the validation happened in the browser.
 
     try {
       const response = await fetch('/api/send-email', {
@@ -331,6 +336,26 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* GDPR Checkbox Start - Adaugat nou */}
+            <div className="mt-2">
+              <div className="flex items-start gap-3">
+                <div className="relative flex items-center pt-0.5">
+                  <input
+                    id="gdpr_consent"
+                    name="gdpr_consent"
+                    type="checkbox"
+                    required
+                    className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-600 bg-slate-900/60 transition-all checked:border-teal-500 checked:bg-teal-500 hover:border-teal-400 focus:ring-2 focus:ring-teal-500/30"
+                  />
+                  <CheckCircle className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100" size={14} />
+                </div>
+                <label htmlFor="gdpr_consent" className="text-sm text-slate-400 cursor-pointer select-none leading-tight">
+                  Sunt de acord cu <a href="/politica-de-confidentialitate" className="text-teal-400 hover:text-teal-300 underline transition-colors">Politica de Confidențialitate</a> și cu prelucrarea datelor cu caracter personal în scopul procesării cererii mele.
+                </label>
+              </div>
+            </div>
+            {/* GDPR Checkbox End */}
 
             <button
               type="submit"
