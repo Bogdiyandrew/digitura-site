@@ -22,7 +22,7 @@ const NotFound = () => {
             <AlertOctagon className="w-16 h-16 text-red-500/80 animate-bounce" />
           </div>
 
-          <h1 className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-500">
+          <h1 className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
             404
           </h1>
 
