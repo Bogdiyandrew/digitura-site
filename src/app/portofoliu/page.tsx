@@ -220,7 +220,7 @@ export default function PortofoliuPage() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-between w-full px-4 py-3 bg-slate-800 hover:bg-teal-600 text-white rounded-xl transition-all duration-300 group/btn mt-auto"
                       >
-                        <span className="font-medium text-sm">Vezi Proiectul</span>
+                        <span className="font-medium text-sm">Vezi proiectul</span>
                         <ExternalLink size={16} className="transform group-hover/btn:translate-x-1 transition-transform duration-300" />
                       </a>
                     </div>
