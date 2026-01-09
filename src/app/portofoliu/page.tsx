@@ -4,65 +4,74 @@ import Head from "next/head";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React, { useState } from 'react';
-import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap, ExternalLink, Hospital } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap, ExternalLink, Hospital, Scale } from 'lucide-react'; import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 
 const projects = [
   {
     id: 1,
+    title: 'Cabinet avocaturǎ - consultanță juridică',
+    description: 'Website corporate premium dedicat serviciilor juridice. Design sobru și elegant care inspiră încredere, structurat pentru a prezenta clar ariile de practică și echipa, cu accent pe conversie și contact rapid.',
+    image: '/photos/avocatdemo.png',
+    link: 'https://avocatdemo.vercel.app/',
+    tags: ['Legal', 'Corporate', 'Next.js', 'Professional UI'],
+    category: 'Corporate',
+    Icon: Scale,
+  },
+  {
+    id: 2,
     title: 'Voltariss - Inginerie electricǎ',
     description: 'Platformă digitală High-Tech pentru servicii industriale. Design "Dark Mode" minimalist, animații fluide și optimizare SEO maximă pentru generarea de lead-uri locale.',
     image: '/photos/voltariss.png',
     link: 'https://voltariss.ro/',
-    tags: ['Corporate Website', 'Next.js', 'Industrial UI', 'Lead Generation'],
+    tags: ['Corporate website', 'Next.js', 'Industrial UI', 'Lead generation'],
     category: 'Corporate',
     Icon: PlugZap,
   },
   {
-    id: 2,
-    title: 'Aura - Cafenea & magazin artizanal',
+    id: 3,
+    title: 'Aura - Cafenea',
     description: 'Studiu de caz pentru un brand premium ce combină atmosfera unei cafenele cu un magazin artizanal online, oferind o experiență unică utilizatorilor.',
-    image: '/photos/aurarev.png',
+    image: '/photos/auracafea.png',
     link: 'https://aura-cafea-demo.vercel.app/',
-    tags: ['E-commerce', 'Branding', 'Next.js', 'Framer Motion', 'UI/UX'],
+    tags: ['E-commerce', 'Branding', 'Next.js', 'Framer motion', 'UI/UX'],
     category: 'E-commerce',
     Icon: ShoppingBag,
   },
   {
-    id: 3,
-    title: 'Clinia dentarǎ - Website pentru servicii dentare',
+    id: 4,
+    title: 'Clinia dentarǎ - Servicii dentare',
     description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
-    image: '/photos/clinicadent5.png',
+    image: '/photos/clinicadentara.png',
     link: 'https://demo-clinicadentara.vercel.app/',
     tags: ['Sănătate', 'Next.js', 'TypeScript', 'UI/UX'],
     category: 'Medical',
     Icon: Hospital,
   },
   {
-    id: 4,
-    title: 'Quantum - Landing page pentru SaaS',
+    id: 5,
+    title: 'Quantum - Landing page SaaS',
     description: 'Landing page custom cu animații 3D și interactivitate avansată, destinat unei platforme SaaS inovatoare pentru managementul proiectelor.',
-    image: '/photos/quantumrev.png',
+    image: '/photos/quantum.png',
     link: 'https://quantum-demo-gamma.vercel.app/',
     tags: ['SaaS', 'Landing Page', 'Next.js', 'TypeScript'],
     category: 'SaaS',
     Icon: Layers,
   },
   {
-    id: 5,
-    title: 'Precision Auto - Service auto & programări online',
+    id: 6,
+    title: 'Precision Auto - Service auto şi programări online',
     description: 'Website modern pentru un service auto, construit în Next.js, cu sistem de programări online, prezentare detaliată a serviciilor și design profesional.',
-    image: '/photos/precrev.png',
+    image: '/photos/precisionauto.png',
     link: 'https://precision-auto-demo.vercel.app/',
     tags: ['Service Auto', 'Next.js', 'Booking', 'Prezentare'],
     category: 'Services',
     Icon: Car,
   },
   {
-    id: 6,
-    title: 'Pas cu Pas - Asistent AI pentru români',
+    id: 7,
+    title: 'Pas cu Pas - Asistent AI',
     description: 'Un site integrat cu AI care oferă conversații empatice și suport pentru probleme precum depresia, singurătatea sau anxietatea. O inițiativă dedicată să aducă inteligența artificială mai aproape de oameni, în sprijinul comunității.',
     image: '/photos/pascupas3.png',
     link: 'https://www.pascupas.online/',
@@ -71,8 +80,8 @@ const projects = [
     Icon: Bot,
   },
   {
-    id: 7,
-    title: 'ShopFlow Dashboard - Panou de control pentru e-commerce',
+    id: 8,
+    title: 'ShopFlow Dashboard - Panou de control e-commerce',
     description: 'Dashboard interactiv pentru gestionarea magazinelor online, oferind analize detaliate, managementul comenzilor și optimizarea vânzărilor.',
     image: '/photos/dashboard-demo.png',
     link: 'https://dashboard-demo-eight.vercel.app/',
@@ -115,7 +124,7 @@ export default function PortofoliuPage() {
             className="relative z-10 max-w-4xl mx-auto"
           >
             <span className="inline-block py-1 px-3 rounded-full bg-teal-500/10 text-teal-400 text-sm font-semibold mb-6 border border-teal-500/20">
-              Showcase 2025
+              Portofoliu 2026
             </span>
             <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400" style={{ fontFamily: 'Ethnocentric, sans-serif', letterSpacing: 1 }}>
               Portofoliul nostru
