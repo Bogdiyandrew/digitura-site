@@ -195,7 +195,7 @@ const faqs = [
   },
   {
     question: 'Ce suport primesc după livrare?',
-    answer: 'La abonament ai <strong>suport continuu</strong>. La plata unică, ai <strong>30-60 de zile suport gratuit</strong>, după care poți opta pentru mentenanță la cerere.'
+    answer: 'La abonament ai <strong>suport continuu</strong>. La plata unică, ai <strong>30 de zile suport gratuit</strong>, după care poți opta pentru mentenanță la cerere.'
   }
 ];
 
