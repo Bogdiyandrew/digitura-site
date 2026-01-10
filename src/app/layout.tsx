@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+
+
+  icons: {
+    icon: '/digituralogo.png',
+    shortcut: '/digituralogo.png',
+    apple: '/digituralogo.png',
+  },
 };
 
 export default function RootLayout({
