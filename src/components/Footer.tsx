@@ -113,11 +113,10 @@ const Footer: React.FC = () => {
               style={{ fontFamily: 'Ethnocentric, sans-serif' }}
             >
               <Image
-                src="/favicon.ico"
+                src="/digituralogo.png"
                 alt="Digitura Logo"
                 width={40}
                 height={40}
-                className="rounded-full"
               />
               DIGITURA
             </Link>

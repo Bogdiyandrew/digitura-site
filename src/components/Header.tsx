@@ -187,12 +187,10 @@ const Header: React.FC = () => {
             className="group flex-shrink-0 flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
           >
             <Image
-              src="/favicon.ico"
+              src="/digituralogo.png"
               alt="Digitura Logo"
-              width={48}
-              height={48}
-              className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-lg bg-slate-900 border-2 border-slate-800"
-              style={{ boxShadow: '0 2px 16px 0 rgba(20,184,166,0.10)' }}
+              width={40}
+              height={40}
             />
             <span
               className="text-lg md:text-xl font-bold select-none text-white tracking-widest"
