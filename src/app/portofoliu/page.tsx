@@ -4,9 +4,9 @@ import Head from "next/head";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import React, { useState } from 'react';
-import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap, ExternalLink, Hospital, Scale } from 'lucide-react'; import Image from 'next/image';
+import { ArrowRight, Layers, ShoppingBag, Car, Bot, Database, PlugZap, ExternalLink, Hospital, Scale } from 'lucide-react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-
 
 const projects = [
   {
@@ -14,6 +14,7 @@ const projects = [
     title: 'Cabinet avocaturǎ - consultanță juridică',
     description: 'Website corporate premium dedicat serviciilor juridice. Design sobru și elegant care inspiră încredere, structurat pentru a prezenta clar ariile de practică și echipa, cu accent pe conversie și contact rapid.',
     image: '/photos/avocatdemo.png',
+    imageMobile: '/photos/avocatdemo.png',
     link: 'https://avocatdemo.vercel.app/',
     tags: ['Legal', 'Corporate', 'Next.js', 'Professional UI'],
     category: 'Corporate',
@@ -24,6 +25,7 @@ const projects = [
     title: 'Voltariss - Inginerie electricǎ',
     description: 'Platformă digitală High-Tech pentru servicii industriale. Design "Dark Mode" minimalist, animații fluide și optimizare SEO maximă pentru generarea de lead-uri locale.',
     image: '/photos/voltariss.png',
+    imageMobile: '/photos/voltariss.png',
     link: 'https://voltariss.ro/',
     tags: ['Corporate website', 'Next.js', 'Industrial UI', 'Lead generation'],
     category: 'Corporate',
@@ -34,6 +36,7 @@ const projects = [
     title: 'Aura - Cafenea',
     description: 'Studiu de caz pentru un brand premium ce combină atmosfera unei cafenele cu un magazin artizanal online, oferind o experiență unică utilizatorilor.',
     image: '/photos/auracafea.png',
+    imageMobile: '/photos/auracafea.png',
     link: 'https://aura-cafea-demo.vercel.app/',
     tags: ['E-commerce', 'Branding', 'Next.js', 'Framer motion', 'UI/UX'],
     category: 'E-commerce',
@@ -44,6 +47,7 @@ const projects = [
     title: 'Clinia dentarǎ - Servicii dentare',
     description: 'Website modern și profesional pentru o clinică dentară, construit cu Next.js și optimizat pentru conversii și experiența utilizatorilor.',
     image: '/photos/clinicadentara.png',
+    imageMobile: '/photos/clinicadentara.png',
     link: 'https://demo-clinicadentara.vercel.app/',
     tags: ['Sănătate', 'Next.js', 'TypeScript', 'UI/UX'],
     category: 'Medical',
@@ -54,6 +58,7 @@ const projects = [
     title: 'Quantum - Landing page SaaS',
     description: 'Landing page custom cu animații 3D și interactivitate avansată, destinat unei platforme SaaS inovatoare pentru managementul proiectelor.',
     image: '/photos/quantum.png',
+    imageMobile: '/photos/quantum.png',
     link: 'https://quantum-demo-gamma.vercel.app/',
     tags: ['SaaS', 'Landing Page', 'Next.js', 'TypeScript'],
     category: 'SaaS',
@@ -64,6 +69,7 @@ const projects = [
     title: 'Precision Auto - Service auto şi programări online',
     description: 'Website modern pentru un service auto, construit în Next.js, cu sistem de programări online, prezentare detaliată a serviciilor și design profesional.',
     image: '/photos/precisionauto.png',
+    imageMobile: '/photos/precisionauto.png',
     link: 'https://precision-auto-demo.vercel.app/',
     tags: ['Service Auto', 'Next.js', 'Booking', 'Prezentare'],
     category: 'Services',
@@ -74,6 +80,7 @@ const projects = [
     title: 'Pas cu Pas - Asistent AI',
     description: 'Un site integrat cu AI care oferă conversații empatice și suport pentru probleme precum depresia, singurătatea sau anxietatea. O inițiativă dedicată să aducă inteligența artificială mai aproape de oameni, în sprijinul comunității.',
     image: '/photos/pascupas3.png',
+    imageMobile: '/photos/pascupas3.png',
     link: 'https://www.pascupas.online/',
     tags: ['AI', 'Asistență', 'Conversație', 'Suport Emoțional'],
     category: 'AI',
@@ -84,6 +91,7 @@ const projects = [
     title: 'ShopFlow Dashboard - Panou de control e-commerce',
     description: 'Dashboard interactiv pentru gestionarea magazinelor online, oferind analize detaliate, managementul comenzilor și optimizarea vânzărilor.',
     image: '/photos/dashboard-demo.png',
+    imageMobile: '/photos/dashboard-demo.png',
     link: 'https://dashboard-demo-eight.vercel.app/',
     tags: ['E-commerce', 'Dashboard', 'Analytics', 'Sales Management'],
     category: 'E-commerce',
@@ -170,14 +178,23 @@ export default function PortofoliuPage() {
                     transition={{ duration: 0.3 }}
                     className="group relative bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-teal-500/30 transition-colors duration-300 flex flex-col h-full"
                   >
-                    <div className="relative h-80 overflow-hidden">
+                    <div className="relative h-64 md:h-80 overflow-hidden">
                       <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
+
                       <Image
                         src={project.image}
                         alt={project.title}
                         width={800}
                         height={600}
-                        className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 ease-out"
+                        className="hidden md:block w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 ease-out"
+                      />
+
+                      <Image
+                        src={project.imageMobile}
+                        alt={project.title}
+                        width={600}
+                        height={800}
+                        className="block md:hidden w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-700 ease-out"
                       />
                     </div>
 
@@ -243,7 +260,7 @@ export default function PortofoliuPage() {
               href="/#contact"
               className="inline-flex items-center gap-3 bg-teal-500 hover:bg-teal-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25 transform hover:-translate-y-1"
             >
-              Începe un Proiect
+              Începe un proiect
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
