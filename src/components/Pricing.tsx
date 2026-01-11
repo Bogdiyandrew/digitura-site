@@ -136,7 +136,7 @@ const mainPlans: PricingPlan[] = [
       ctaText: 'Start vânzări'
     },
     onetime: {
-      price: '12.500',
+      price: '10.000',
       cents: '',
       subtitle: 'Magazin online propriu, automatizat complet.',
       description: '',
