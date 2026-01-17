@@ -12,7 +12,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
-
 type PricingMode = {
   price: string;
   cents: string;
@@ -236,12 +235,19 @@ const FaqItem: React.FC<FaqItemProps> = ({ faq, isOpen, onClick }) => (
 
 const Pricing: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'onetime'>('onetime');
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'onetime'>('monthly');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const filteredServices = customServices.filter(service => {
+    if (billingCycle === 'monthly' && service.name.includes('Mentenanță')) {
+      return false;
+    }
+    return true;
+  });
 
   const handlePlanClick = (e: React.MouseEvent<HTMLButtonElement>, planName: string) => {
     e.preventDefault();
@@ -490,11 +496,15 @@ const Pricing: React.FC = () => {
                 </h3>
               </div>
 
-              <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
-                {customServices.map((service) => (
+              <div className={`max-w-5xl mx-auto grid gap-6 lg:gap-10 ${
+                filteredServices.length === 1 
+                  ? 'grid-cols-1 max-w-xl' 
+                  : 'grid-cols-1 md:grid-cols-2'
+              }`}>
+                {filteredServices.map((service) => (
                   <div
                     key={service.name}
-                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-xl sm:rounded-2xl p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] group opacity-0 flex flex-col h-full"
+                    className="custom-service bg-slate-800/60 backdrop-blur-sm border border-slate-600/50 rounded-xl sm:rounded-2xl p-6 md:p-8 hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] group flex flex-col h-full"
                   >
                     <div className="flex items-center gap-4 mb-4">
                       <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
