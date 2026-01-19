@@ -51,8 +51,7 @@ const mainPlans: PricingPlan[] = [
         'Pagină unică structurată pentru conversie și contact rapid',
         'Design profesional adaptat brandului tău',
         'Încărcare rapidă și experiență optimă pe mobil',
-        'Vizibilitate locală prin Google Business Profile',
-        '30 de zile suport pentru ajustări și întrebări'
+        'Vizibilitate locală prin Google Business Profile'
       ],
       ctaText: 'Abonează-te acum'
     },
@@ -67,7 +66,6 @@ const mainPlans: PricingPlan[] = [
         'Design profesional adaptat brandului tău',
         'Încărcare rapidă și experiență optimă pe mobil',
         'Vizibilitate locală prin Google Business Profile',
-        '30 de zile suport pentru ajustări și întrebări'
       ],
       ctaText: 'Pornește acum'
     }
