@@ -351,7 +351,7 @@ const Contact: React.FC = () => {
                   <CheckCircle className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100" size={14} />
                 </div>
                 <label htmlFor="gdpr_consent" className="text-sm text-slate-400 cursor-pointer select-none leading-tight">
-                  Sunt de acord cu <a href="/politica-de-confidentialitate" className="text-teal-400 hover:text-teal-300 underline transition-colors">Politica de Confidențialitate</a> și cu prelucrarea datelor cu caracter personal în scopul procesării cererii mele.
+                  Sunt de acord cu <a href="/politica-de-confidentialitate" className="text-teal-400 hover:text-teal-300 underline transition-colors">Politica de confidențialitate</a> și cu prelucrarea datelor cu caracter personal în scopul procesării cererii mele.
                 </label>
               </div>
             </div>
