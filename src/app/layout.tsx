@@ -90,17 +90,25 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService", // Sau "LocalBusiness"
+    "@type": "ProfessionalService",
     "name": "Digitura",
-    "image": `${baseUrl}/digituralogo.png`,
-    "@id": baseUrl,
+    "alternateName": ["Digitura Web Design", "Digitura Agency"], // Asta ajută Google să lege numele
     "url": baseUrl,
+    "logo": `${baseUrl}/digituralogo.png`, // Logo specific
+    "image": `${baseUrl}/digituralogo.png`,
+    "description": "Agenție Web Design & Creare Site Web Profesional în Pitești și România.",
     "telephone": "+40750488329",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "RO",
-      "addressLocality": "Piteşti" 
+      "addressLocality": "Piteşti",
+      "addressRegion": "Argeș"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "44.8565", 
+      "longitude": "24.8697"
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -112,13 +120,20 @@ export default function RootLayout({
         "Friday"
       ],
       "opens": "09:00",
-      "closes": "18:00"
+      "closes": "20:00"
     },
     "sameAs": [
       "https://www.facebook.com/digitura", 
       "https://www.instagram.com/digitura",
       "https://www.linkedin.com/company/digitura"
-    ]
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+40750488329",
+      "contactType": "customer service",
+      "areaServed": "RO",
+      "availableLanguage": "Romanian"
+    }
   };
 
   return (
