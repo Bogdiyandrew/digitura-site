@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
 
   const contactItems: ContactItem[] = [
     { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro', color: 'teal' },
-    { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 488 329', href: 'https://wa.me/40750414296', color: 'blue' },
+    { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 414 296', href: 'https://wa.me/40750414296', color: 'blue' },
   ];
 
   const sectionRef = useRef<HTMLElement>(null);
