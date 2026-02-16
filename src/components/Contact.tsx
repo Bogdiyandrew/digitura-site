@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
 
   const contactItems: ContactItem[] = [
     { icon: Mail, label: 'Email', value: 'suport@digitura.ro', href: 'mailto:suport@digitura.ro', color: 'teal' },
-    { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 488 329', href: 'https://wa.me/40750488329', color: 'blue' },
+    { icon: Phone, label: 'WhatsApp & telefon', value: '+40 750 488 329', href: 'https://wa.me/40750414296', color: 'blue' },
   ];
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -417,7 +417,7 @@ const Contact: React.FC = () => {
               <p className="text-slate-300 text-sm md:text-base leading-relaxed">
                 Timpul tău este prețios. Pentru un răspuns instant,
                 <a
-                  href="https://api.whatsapp.com/send/?phone=40750488329&text&type=phone_number&app_absent=0"
+                  href="https://api.whatsapp.com/send/?phone=40750414296&text&type=phone_number&app_absent=0"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 font-semibold block sm:inline sm:ml-1 mt-1 sm:mt-0 hover:underline"

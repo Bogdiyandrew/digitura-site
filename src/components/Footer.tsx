@@ -213,7 +213,7 @@ const Footer: React.FC = () => {
                 <Mail size={20} className="text-slate-400 group-hover:text-teal-400 transition-colors duration-300" />
                 <span className="group-hover:text-teal-400 transition-colors duration-300">suport@digitura.ro</span>
               </a>
-              <a href="tel:+40750488329" className="flex items-center gap-3 group">
+              <a href="tel:+40750414296" className="flex items-center gap-3 group">
                 <Phone size={20} className="text-slate-400 group-hover:text-teal-400 transition-colors duration-300" />
                 <span className="group-hover:text-teal-400 transition-colors duration-300">(+40) 750 488 329</span>
               </a>

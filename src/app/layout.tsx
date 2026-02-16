@@ -97,7 +97,7 @@ export default function RootLayout({
     "logo": `${baseUrl}/digituralogo.png`, // Logo specific
     "image": `${baseUrl}/digituralogo.png`,
     "description": "Agenție Web Design & Creare Site Web Profesional în Pitești și România.",
-    "telephone": "+40750488329",
+    "telephone": "+40750414296",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
@@ -129,7 +129,7 @@ export default function RootLayout({
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+40750488329",
+      "telephone": "+40750414296",
       "contactType": "customer service",
       "areaServed": "RO",
       "availableLanguage": "Romanian"
