@@ -256,7 +256,7 @@ const Contact: React.FC = () => {
           >
             <div>
               <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg flex items-center gap-2">
-                1. Configurare Pachet
+                1. Configurare pachet
               </h3>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
@@ -310,7 +310,7 @@ const Contact: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg">2. Completează Detaliile</h3>
+              <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg">2. Completează detaliile</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {renderInputField('nume', 'Nume complet', 'text', true, User)}
                 {renderInputField('company_name', 'Numele firmei (Opțional)', 'text', false, Building)}
