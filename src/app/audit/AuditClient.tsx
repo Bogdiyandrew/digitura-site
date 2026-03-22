@@ -13,7 +13,8 @@ export default function AuditClient() {
     name: '',
     email: '',
     website: '',
-    goals: ''
+    goals: '',
+    gdpr: false
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,10 +42,15 @@ export default function AuditClient() {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
-    if (e.target.id === 'email') {
-        setEmailError('');
-    }
+    const { id, type, value } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    setFormData(prev => ({
+      ...prev,
+      [id]: type === 'checkbox' ? checked : value
+    }));
+
+    if (id === 'email') setEmailError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,17 +59,29 @@ export default function AuditClient() {
     setErrorMessage('');
     setEmailError('');
 
+    if (!formData.name.trim() || !formData.website.trim() || !formData.gdpr) {
+      setErrorMessage('Numele, link-ul website-ului și acordul GDPR sunt obligatorii.');
+      setStatus('error');
+      return;
+    }
+
+    if (!formData.website.includes('.') || formData.website.length < 4) {
+      setErrorMessage('Te rugăm să introduci un link valid pentru website.');
+      setStatus('error');
+      return;
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-        setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
-        setStatus('idle');
-        return;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
+      setStatus('error');
+      return;
     }
 
     const payload = {
       nume: formData.name,
       email: formData.email,
-      package: "Audit Gratuit",
+      package: "Audit Gratuit", 
       project_details: `Website de auditat: ${formData.website}\n\nCe dorește să îmbunătățească:\n${formData.goals || 'Nu a specificat detalii suplimentare.'}`,
     };
 
@@ -79,11 +97,11 @@ export default function AuditClient() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Ceva nu a mers bine.');
+        throw new Error(data.message || 'Eroare la trimiterea mesajului. Te rugăm să încerci din nou.');
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', website: '', goals: '' });
+      setFormData({ name: '', email: '', website: '', goals: '', gdpr: false });
     } catch (error: any) {
       console.error('Eroare trimitere formular:', error);
       setStatus('error');
@@ -92,11 +110,12 @@ export default function AuditClient() {
   };
 
   const handleInvalid = (e: FormEvent<HTMLInputElement>) => {
-      const target = e.target as HTMLInputElement;
-      if (target.id === 'email' && target.validity.typeMismatch) {
-          e.preventDefault();
-          setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
-      }
+    const target = e.target as HTMLInputElement;
+    e.preventDefault(); 
+    if (target.id === 'email' && target.validity.typeMismatch) {
+      setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
+      setStatus('error');
+    }
   };
 
   return (
@@ -131,7 +150,7 @@ export default function AuditClient() {
 
         <div 
           ref={formRef}
-          className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-teal-500/5 group hover:border-teal-500/30 transition-colors duration-500"
+          className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-teal-500/5 group hover:border-teal-500/30 transition-colors duration-500 max-w-3xl mx-auto"
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -161,24 +180,27 @@ export default function AuditClient() {
               </div>
             )}
             
-            <form onSubmit={handleSubmit} noValidate className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">Numele tău</label>
+                  <label htmlFor="name" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">
+                    Numele tău <span className="text-teal-400">*</span>
+                  </label>
                   <input 
                     type="text" 
                     id="name" 
                     value={formData.name}
                     onChange={handleChange}
                     disabled={status === 'loading'}
-                    className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 disabled:opacity-50" 
+                    className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 disabled:opacity-50" 
                     placeholder="Ex: Ion Popescu" 
-                    required 
                   />
                 </div>
                 
                 <div className="flex flex-col">
-                  <label htmlFor="email" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">Adresa de email</label>
+                  <label htmlFor="email" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">
+                    Adresa de email <span className="text-teal-400">*</span>
+                  </label>
                   <input 
                     type="email" 
                     id="email" 
@@ -186,9 +208,8 @@ export default function AuditClient() {
                     onChange={handleChange}
                     onInvalid={handleInvalid}
                     disabled={status === 'loading'}
-                    className={`w-full bg-slate-950/50 border ${emailError ? 'border-red-500/50 focus:border-red-400 focus:ring-red-400' : 'border-slate-700/50 focus:border-blue-400 focus:ring-blue-400'} rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 transition-all duration-300 disabled:opacity-50`} 
+                    className={`w-full bg-slate-950/50 border ${emailError ? 'border-red-500/50 focus:border-red-400 focus:ring-red-400' : 'border-slate-700/50 focus:border-blue-400 focus:ring-blue-400'} rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 transition-all duration-300 disabled:opacity-50`} 
                     placeholder="contact@email.ro" 
-                    required 
                   />
                   {emailError && (
                     <div className="flex items-center gap-1.5 mt-2 pl-1">
@@ -200,21 +221,22 @@ export default function AuditClient() {
               </div>
 
               <div>
-                <label htmlFor="website" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1 mt-1">Link-ul website-ului</label>
+                <label htmlFor="website" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">
+                  Link-ul website-ului <span className="text-teal-400">*</span>
+                </label>
                 <input 
                   type="url" 
                   id="website" 
                   value={formData.website}
                   onChange={handleChange}
                   disabled={status === 'loading'}
-                  className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 disabled:opacity-50" 
-                  placeholder="https://site-ul-tau.ro" 
-                  required 
+                  className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 disabled:opacity-50" 
+                  placeholder="site-ul-tau.ro" 
                 />
               </div>
 
               <div>
-                <label htmlFor="goals" className="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-1.5 pl-1 mt-1">
+                <label htmlFor="goals" className="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-1.5 pl-1">
                   <Target size={16} className="text-slate-400" />
                   Ce dorești să îmbunătățești? (Opțional)
                 </label>
@@ -224,15 +246,30 @@ export default function AuditClient() {
                   onChange={handleChange}
                   disabled={status === 'loading'}
                   rows={3} 
-                  className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 resize-none disabled:opacity-50" 
+                  className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 resize-none disabled:opacity-50" 
                   placeholder="Vreau mai mult trafic, un design mai modern, să atrag mai multe lead-uri etc."
                 ></textarea>
+              </div>
+
+              <div className="flex items-start gap-3 pt-2">
+                <div className="flex items-center h-5 mt-0.5">
+                  <input
+                    id="gdpr"
+                    type="checkbox"
+                    checked={formData.gdpr}
+                    onChange={handleChange}
+                    className="w-4 h-4 bg-slate-950/50 border-slate-700 rounded text-teal-500 focus:ring-teal-500 focus:ring-offset-slate-900 transition-colors"
+                  />
+                </div>
+                <label htmlFor="gdpr" className="text-sm text-slate-400 cursor-pointer select-none leading-tight">
+                  Sunt de acord cu <a href="/politica-de-confidentialitate" className="text-teal-400 hover:text-teal-300 underline transition-colors">Politica de confidențialitate</a> și cu prelucrarea datelor cu caracter personal în scopul procesării cererii mele.
+                </label>
               </div>
 
               <button 
                 type="submit" 
                 disabled={status === 'loading' || status === 'success'}
-                className="group relative w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-3.5 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-teal-500/30 hover:scale-[1.02] cursor-pointer overflow-hidden mt-6 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
+                className="group relative w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-teal-500/30 hover:scale-[1.02] cursor-pointer overflow-hidden mt-6 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="relative z-10">
