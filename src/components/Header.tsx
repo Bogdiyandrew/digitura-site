@@ -48,7 +48,7 @@ const menuLinks: MenuLink[] = [
   { href: '#preturi', label: 'Prețuri' },
   { href: '#contact', label: 'Contact' },
   { href: '/portofoliu', label: 'Portofoliu', isSpecial: true },
-  { href: '/ai', label: 'Laborator AI', isSpecial: true },
+  { href: '/audit', label: 'Audit gratuit', isSpecial: true },
 ];
 
 const Header: React.FC = () => {

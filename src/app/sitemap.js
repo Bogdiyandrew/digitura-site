@@ -1,12 +1,10 @@
-import { prompts } from '@/lib/prompts';
-
 export default function sitemap() {
   const baseUrl = 'https://digitura.ro';
 
   const staticPages = [
     '/',
     '/portofoliu',
-    '/ai',
+    '/audit-gratuit', // Am adăugat noua pagină aici
     '/politica-cookies',
     '/politica-de-confidentialitate',
     '/termeni',
@@ -19,12 +17,5 @@ export default function sitemap() {
     priority: page === '/' ? 1 : 0.8,
   }));
 
-  const promptUrls = prompts.map((prompt) => ({
-    url: `${baseUrl}/ai/prompt/${encodeURIComponent(prompt.slug)}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }));
-
-  return [...staticUrls, ...promptUrls];
+  return staticUrls;
 }
