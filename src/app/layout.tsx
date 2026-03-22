@@ -4,6 +4,10 @@ import "./globals.css";
 import LenisSmoothScroll from "@/components/LenisSmoothScroll";
 import Script from "next/script"; // Import necesar pentru JSON-LD
 
+// Importăm Header-ul și Footer-ul
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -149,7 +153,13 @@ export default function RootLayout({
         />
         
         <LenisSmoothScroll>
+          {/* Adăugăm Header-ul global */}
+          <Header />
+          
           {children}
+          
+          {/* Adăugăm Footer-ul global */}
+          <Footer />
         </LenisSmoothScroll>
       </body>
     </html>
