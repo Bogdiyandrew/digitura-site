@@ -146,7 +146,7 @@ export default function AuditClient() {
           </h1>
           
           <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Identificăm problemele de performanță, SEO și experiența utilizatorului (UX). Află problemele site-ului în mai puțin de 48h.
+            Identificăm problemele de performanță, SEO, securitate şi experiența utilizatorului (UX). Află problemele site-ului în mai puțin de 48h.
           </p>
         </div>
 
