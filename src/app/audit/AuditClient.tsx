@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, FormEvent } from 'react';
 import { ArrowRight, Activity, Target, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import gsap from 'gsap';
 
@@ -9,7 +9,6 @@ export default function AuditClient() {
   const titleRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
-  // Stările pentru formular
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,6 +17,7 @@ export default function AuditClient() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -42,14 +42,24 @@ export default function AuditClient() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    if (e.target.id === 'email') {
+        setEmailError('');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
+    setEmailError('');
 
-    // Construim payload-ul exact cum îl așteaptă route.ts-ul tău
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+        setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
+        setStatus('idle');
+        return;
+    }
+
     const payload = {
       nume: formData.name,
       email: formData.email,
@@ -73,12 +83,20 @@ export default function AuditClient() {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', website: '', goals: '' }); // Resetăm formularul
+      setFormData({ name: '', email: '', website: '', goals: '' });
     } catch (error: any) {
       console.error('Eroare trimitere formular:', error);
       setStatus('error');
       setErrorMessage(error.message || 'Eroare la trimiterea mesajului. Te rugăm să încerci din nou.');
     }
+  };
+
+  const handleInvalid = (e: FormEvent<HTMLInputElement>) => {
+      const target = e.target as HTMLInputElement;
+      if (target.id === 'email' && target.validity.typeMismatch) {
+          e.preventDefault();
+          setEmailError('Te rugăm să introduci o adresă de email validă (ex: nume@domeniu.ro).');
+      }
   };
 
   return (
@@ -87,7 +105,6 @@ export default function AuditClient() {
       className="relative min-h-screen bg-slate-950 text-white pt-28 pb-12 overflow-hidden flex flex-col justify-center"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
-      {/* Background Effects */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-500/10 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
@@ -102,7 +119,6 @@ export default function AuditClient() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 w-full">
         
-        {/* Header Secțiune - Spațieri reduse */}
         <div ref={titleRef} className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-white to-blue-400 drop-shadow-lg leading-tight">
             Audit gratuit pentru <br className="hidden md:block" /> site-ul tǎu
@@ -113,7 +129,6 @@ export default function AuditClient() {
           </p>
         </div>
 
-        {/* Formular Container - Padding-uri interioare reduse */}
         <div 
           ref={formRef}
           className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-teal-500/5 group hover:border-teal-500/30 transition-colors duration-500"
@@ -121,13 +136,11 @@ export default function AuditClient() {
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
           <div className="relative z-10">
-            {/* Header Formular - Spațieri mai mici */}
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
               <Activity className="text-teal-400 w-5 h-5" />
               <h2 className="text-xl font-bold text-white">Completează datele</h2>
             </div>
 
-            {/* Mesaj de Succes */}
             {status === 'success' && (
               <div className="mb-6 p-4 bg-teal-500/10 border border-teal-500/30 rounded-xl flex items-start gap-3 text-teal-200">
                 <CheckCircle2 className="w-6 h-6 flex-shrink-0 text-teal-400" />
@@ -138,7 +151,6 @@ export default function AuditClient() {
               </div>
             )}
 
-            {/* Mesaj de Eroare */}
             {status === 'error' && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3 text-red-200">
                 <AlertCircle className="w-6 h-6 flex-shrink-0 text-red-400" />
@@ -149,9 +161,8 @@ export default function AuditClient() {
               </div>
             )}
             
-            {/* Spațiere (space-y-4) redusă între elementele formularului */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">Numele tău</label>
                   <input 
@@ -166,23 +177,30 @@ export default function AuditClient() {
                   />
                 </div>
                 
-                <div>
+                <div className="flex flex-col">
                   <label htmlFor="email" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">Adresa de email</label>
                   <input 
                     type="email" 
                     id="email" 
                     value={formData.email}
                     onChange={handleChange}
+                    onInvalid={handleInvalid}
                     disabled={status === 'loading'}
-                    className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all duration-300 disabled:opacity-50" 
+                    className={`w-full bg-slate-950/50 border ${emailError ? 'border-red-500/50 focus:border-red-400 focus:ring-red-400' : 'border-slate-700/50 focus:border-blue-400 focus:ring-blue-400'} rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 transition-all duration-300 disabled:opacity-50`} 
                     placeholder="contact@email.ro" 
                     required 
                   />
+                  {emailError && (
+                    <div className="flex items-center gap-1.5 mt-2 pl-1">
+                      <AlertCircle size={14} className="text-red-400 flex-shrink-0" />
+                      <p className="text-xs font-medium text-red-400 leading-tight">{emailError}</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div>
-                <label htmlFor="website" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">Link-ul website-ului</label>
+                <label htmlFor="website" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1 mt-1">Link-ul website-ului</label>
                 <input 
                   type="url" 
                   id="website" 
@@ -196,7 +214,7 @@ export default function AuditClient() {
               </div>
 
               <div>
-                <label htmlFor="goals" className="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-1.5 pl-1">
+                <label htmlFor="goals" className="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-1.5 pl-1 mt-1">
                   <Target size={16} className="text-slate-400" />
                   Ce dorești să îmbunătățești? (Opțional)
                 </label>
