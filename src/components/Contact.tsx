@@ -148,6 +148,7 @@ const Contact: React.FC = () => {
 
     const formData = new FormData(formRef.current);
     const data: Record<string, any> = Object.fromEntries(formData.entries());
+    data.formType = "contact"; // <-- Adăugăm asta
     data.package = selectedPackage;
     data.billing = billingCycle === 'monthly' ? 'Lunar (Abonament)' : 'Plată Unică';
 

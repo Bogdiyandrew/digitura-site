@@ -79,10 +79,12 @@ export default function AuditClient() {
     }
 
     const payload = {
+      formType: "audit", //
       nume: formData.name,
       email: formData.email,
-      package: "Audit Gratuit", 
-      project_details: `Website de auditat: ${formData.website}\n\nCe dorește să îmbunătățească:\n${formData.goals || 'Nu a specificat detalii suplimentare.'}`,
+      website: formData.website, // <-- Trimitem website-ul curat
+      goals: formData.goals,     // <-- Trimitem goals-urile curate
+      // project_details și package nu mai sunt necesare aici dacă refacem API-ul
     };
 
     try {
