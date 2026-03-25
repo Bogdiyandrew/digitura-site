@@ -1,331 +1,224 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef, MouseEvent } from 'react';
-import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { Poppins } from 'next/font/google';
+import React, { useRef, useEffect, useState } from 'react';
+import { ArrowRight, Star, Award } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
-
-interface LenisScrollToOptions {
-  offset?: number;
-  duration?: number;
-  easing?: (t: number) => number;
-  immediate?: boolean;
-  lock?: boolean;
-  force?: boolean;
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
 }
-
-interface LenisInstance {
-  scrollTo(target: HTMLElement | string | number, options?: LenisScrollToOptions): void;
-  stop(): void;
-  start(): void;
-}
-
-declare global {
-  interface Window {
-    lenis: LenisInstance;
-  }
-}
-
-interface MenuLink {
-  href: string;
-  label: string;
-  isSpecial?: boolean;
-  mobileOnly?: boolean; // Am adăugat această proprietate
-}
-
-interface MousePosition {
-  x: number;
-  y: number;
-}
-
-const menuLinks: MenuLink[] = [
-  { href: '/', label: 'Acasă', mobileOnly: true }, // Adăugat Acasă, vizibil doar pe mobil
-  { href: '#despre', label: 'Despre' },
-  { href: '#servicii', label: 'Servicii' },
-  { href: '#preturi', label: 'Prețuri' },
-  { href: '#contact', label: 'Contact' },
-  { href: '/portofoliu', label: 'Portofoliu', isSpecial: true },
-  { href: '/audit', label: 'Audit gratuit', isSpecial: true },
-];
-
-const Header: React.FC = () => {
-  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
-  const [scrolled, setScrolled] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(true);
-  const lastScrollY = useRef<number>(0);
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
-  const pathname = usePathname();
-  const router = useRouter();
+    // Dati si voi un like, ma ajuta mult
+const Hero = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const gradientRef = useRef<HTMLDivElement>(null);
+  const [showBlackBg, setShowBlackBg] = useState(false);
+  const [blackBgVisible, setBlackBgVisible] = useState(false);
 
   useEffect(() => {
-    const handleHashScroll = () => {
-      if (window.location.hash) {
-        const id = window.location.hash.substring(1);
-        let attempts = 0;
-        const maxAttempts = 50;
-
-        const tryScroll = () => {
-          const element = document.getElementById(id);
-          if (element) {
-            if (window.lenis) {
-              window.lenis.scrollTo(element, { offset: -20 });
-            } else {
-              element.scrollIntoView({ behavior: 'smooth' });
-            }
-          } else if (attempts < maxAttempts) {
-            attempts++;
-            setTimeout(tryScroll, 100);
-          }
-        };
-
-        setTimeout(tryScroll, 100);
-      }
-    };
-
-    handleHashScroll();
-  }, [pathname]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleScroll = (): void => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 20);
-
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100 && !mobileOpen) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [mobileOpen]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleMouseMove = (e: globalThis.MouseEvent): void => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100
+    const ctx = gsap.context(() => {
+      const masterTL = gsap.timeline({
+        defaults: { ease: 'power4.out' }
       });
-    };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+      masterTL.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 100, scale: 0.8, rotationX: -45 },
+        { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 1.8, ease: 'power4.out' },
+        0.5
+      );
+
+      masterTL.fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' },
+        1.2
+      );
+
+      masterTL.fromTo(
+        ctaRef.current,
+        { opacity: 0, scale: 0.8, y: 30, rotationX: 45 },
+        { opacity: 1, scale: 1, y: 0, rotationX: 0, duration: 1, ease: 'back.out(1.7)' },
+        1.6
+      );
+
+      gsap.to(videoRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        },
+        y: 200,
+        scale: 1.2,
+        ease: 'none'
+      });
+
+      gsap.to(gradientRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        },
+        backgroundPosition: '0% 100%',
+        ease: 'none'
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
-    if (typeof document === 'undefined') return;
-    document.body.style.overflow = mobileOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [mobileOpen]);
-
-  const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>, isMobile: boolean = false): void => {
-    e.preventDefault();
-
-    if (isMobile) {
-      setMobileOpen(false);
+    const video = videoRef.current;
+    if (video) {
+      video.playbackRate = 0.8;
+      video.onended = () => {
+        setShowBlackBg(true);
+      };
     }
+  }, []);
 
-    if (href.startsWith('#')) {
-      if (pathname !== '/') {
-        router.push(`/${href}`);
-      } else {
-        const id = href.substring(1);
-        const element = document.getElementById(id);
-        if (element) {
-          if (window.lenis) {
-            window.lenis.scrollTo(element, { offset: -20 });
-          } else {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      }
-    } else if (href === '/') {
-      if (pathname === '/') {
-        if (window.lenis) {
-          window.lenis.scrollTo(0);
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      } else {
-        router.push('/');
-      }
-    } else {
-      router.push(href);
+  useEffect(() => {
+    if (showBlackBg) {
+      setTimeout(() => setBlackBgVisible(true), 50);
     }
-  };
-
+  }, [showBlackBg]);
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 w-full transition-all duration-500 z-[60] ${visible ? 'translate-y-0' : '-translate-y-full'} ${scrolled
-          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-700/80 shadow-2xl shadow-teal-400/10'
-          : 'bg-slate-950/60 backdrop-blur-sm border-b border-slate-800/40'
-          }`}
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
+      style={{ fontFamily: 'Exo2, sans-serif' }}
+    >
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
         style={{
-          background: scrolled
-            ? `radial-gradient(ellipse at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.1) 0%, rgba(15,23,42,0.95) 50%)`
-            : `radial-gradient(ellipse at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.05) 0%, rgba(15,23,42,0.6) 50%)`,
-          fontFamily: 'Exo2, sans-serif'
+          willChange: 'transform',
+          objectPosition: 'center 35%'
         }}
       >
-        <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
-            className="group flex-shrink-0 flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
-          >
-            <Image
-              src="/digituralogo.png"
-              alt="Digitura Logo"
-              width={40}
-              height={40}
-            />
-            <span
-              className="text-lg md:text-xl font-bold select-none text-white tracking-widest"
-              style={{
-                fontFamily: 'Ethnocentric, sans-serif',
-                letterSpacing: '0.12em',
-                textShadow: '0 2px 12px rgba(0,0,0,0.18)'
-              }}
-            >
-              DIGITURA
-            </span>
-          </Link>
+        <source src="/services/backnou.mp4" type="video/mp4" />
+      </video>
 
-          <nav className={`hidden lg:flex items-center gap-6 mx-auto ${poppins.className}`}>
-            {/* Filtrăm aici să NU apară link-urile 'mobileOnly' în meniul de desktop */}
-            {menuLinks.filter(link => !link.isSpecial && !link.mobileOnly).map((link: MenuLink) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${link.label === 'Contact'
-                  ? 'text-teal-300 hover:text-white'
-                  : 'text-slate-200 hover:text-white'
-                  }`}
-                onClick={(e) => handleLinkClick(link.href, e)}
-              >
-                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }} />
-                <span className="relative z-10">{link.label}</span>
-              </a>
-            ))}
-            <div className="h-6 border-l border-slate-700/40 mx-4"></div>
-            {menuLinks.filter(link => link.isSpecial).map((link: MenuLink) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-2.5 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 leading-none"
-                onClick={(e) => handleLinkClick(link.href, e)}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+      <div
+        ref={overlayRef}
+        className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70"
+        style={{ willChange: 'opacity' }}
+      />
 
+      {showBlackBg && (
+        <div
+          className={`absolute inset-0 z-40 transition-opacity duration-2000 ease-in-out ${blackBgVisible ? 'opacity-100' : 'opacity-0'}`}
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, #0f172a 60%, #000 100%)',
+          }}
+        >
+          <div className="pointer-events-none">
+            <div className="absolute top-0 left-0 h-32 w-32 rounded-full bg-teal-400/15 blur-2xl" style={{ zIndex: 41 }} />
+            <div className="absolute bottom-0 right-0 h-32 w-32 rounded-full bg-blue-400/15 blur-2xl" style={{ zIndex: 41 }} />
+          </div>
+        </div>
+      )}
+
+      <div
+        ref={gradientRef}
+        className="pointer-events-none absolute inset-0 z-20"
+        style={{
+          background: 'linear-gradient(135deg, rgba(20,184,166,0.08) 0%, rgba(59,130,246,0.08) 50%, rgba(15,23,42,0.7) 100%)',
+          backgroundSize: '200% 200%',
+          willChange: 'background-position'
+        }}
+      />
+
+      <div className="relative z-50 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
+
+        <div
+          ref={badgeRef}
+          className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105"
+          style={{ perspective: '1000px' }}
+        >
+          <Award size={16} />
+          <span className="flex items-center gap-2">
+            <Star size={14} className="fill-current text-yellow-400" />
+            4.8/5 din 40+ clienți mulțumiți
+          </span>
+        </div>
+
+        <h1
+          ref={titleRef}
+          className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-8 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
+          style={{
+            fontFamily: 'Exo2, sans-serif',
+            letterSpacing: 1,
+            perspective: '1000px'
+          }}
+        >
+          <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
+        </h1>
+
+
+        <p
+          ref={subtitleRef}
+          className="mx-auto mb-12 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
+        >
+          Design web gândit să aducă mai mulți clienți, încredere și valoare brandului.
+          <span className="mt-2 block font-semibold text-teal-300">
+            Demo gratuit în 48h.
+          </span>
+        </p>
+
+        <div
+          ref={ctaRef}
+          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          style={{ perspective: '1000px' }}
+        >
           <button
-            className="lg:hidden flex-shrink-0 p-2 text-teal-300"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Deschide meniul"
+            className="group relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-2xl transition-all duration-300 hover:shadow-teal-500/50 hover:scale-105 cursor-pointer overflow-hidden"
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1.05,
+                boxShadow: '0 0 40px rgba(20,184,166,0.6)',
+                duration: 0.3
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1,
+                boxShadow: '0 0 0px rgba(20,184,166,0)',
+                duration: 0.3
+              });
+            }}
+            onClick={() => {
+              const el = document.getElementById('contact');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            type="button"
           >
-            <Menu size={28} />
+            <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <svg xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" />
+            </svg>
+            <span className="relative z-10">Vreau demo-ul meu gratuit</span>
+            <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
-      </header>
-
-      <div className={`fixed inset-0 z-[70] transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-slate-950 animated-gradient" onClick={() => setMobileOpen(false)} />
-        <nav className={`absolute top-0 right-0 h-full w-full max-w-sm bg-slate-900/80 backdrop-blur-2xl border-l border-slate-700/50 shadow-2xl flex flex-col transition-transform duration-500 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex justify-between items-center p-6 border-b border-slate-800">
-            <span
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: 'Ethnocentric, sans-serif' }}
-            >
-              MENIU
-            </span>
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="p-2 text-slate-400 hover:text-white transition-colors"
-              aria-label="Închide meniul"
-            >
-              <X size={28} />
-            </button>
-          </div>
-
-          <div className="flex flex-col p-6 gap-2">
-            {menuLinks.map((link: MenuLink, index: number) => (
-              link.isSpecial ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="group w-full text-center bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-3 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 text-lg"
-                  style={{
-                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
-                    opacity: mobileOpen ? 1 : 0,
-                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-                  }}
-                  onClick={(e) => handleLinkClick(link.href, e, true)}
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="group relative text-xl font-semibold text-slate-200 hover:text-white transition-all duration-300"
-                  style={{
-                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
-                    opacity: mobileOpen ? 1 : 0,
-                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-                  }}
-                  onClick={(e) => handleLinkClick(link.href, e, true)}
-                >
-                  <div className="absolute -inset-x-3 -inset-y-2 z-0 rounded-full bg-slate-800/0 group-hover:bg-slate-800/80 scale-95 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                  <span className="relative z-10 block p-3">{link.label}</span>
-                </a>
-              )
-            ))}
-          </div>
-
-        </nav>
       </div>
-
-      <style jsx>{`
-        @keyframes gradient-animation {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animated-gradient {
-          background: linear-gradient(-45deg, #0f172a, #1e293b, #0284c7, #14b8a6);
-          background-size: 400% 400%;
-          animation: gradient-animation 15s ease infinite;
-        }
-        @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 20px -5px rgba(20, 184, 166, 0.4), 0 0 30px -10px rgba(10, 150, 130, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 30px 0px rgba(20, 184, 166, 0.6), 0 0 45px -5px rgba(10, 150, 130, 0.5);
-          }
-        }
-        :global(.cta-button-glow) {
-          animation: pulse-glow 3s infinite ease-in-out;
-        }
-      `}</style>
-    </>
+    </section>
   );
 };
 
-export default Header;
+export default Hero;
