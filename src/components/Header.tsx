@@ -9,7 +9,6 @@ import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
-
 interface LenisScrollToOptions {
   offset?: number;
   duration?: number;
@@ -35,6 +34,7 @@ interface MenuLink {
   href: string;
   label: string;
   isSpecial?: boolean;
+  mobileOnly?: boolean; // Am adăugat această proprietate
 }
 
 interface MousePosition {
@@ -43,6 +43,7 @@ interface MousePosition {
 }
 
 const menuLinks: MenuLink[] = [
+  { href: '/', label: 'Acasă', mobileOnly: true }, // Adăugat Acasă, vizibil doar pe mobil
   { href: '#despre', label: 'Despre' },
   { href: '#servicii', label: 'Servicii' },
   { href: '#preturi', label: 'Prețuri' },
@@ -205,7 +206,8 @@ const Header: React.FC = () => {
           </Link>
 
           <nav className={`hidden lg:flex items-center gap-6 mx-auto ${poppins.className}`}>
-            {menuLinks.filter(link => !link.isSpecial).map((link: MenuLink) => (
+            {/* Filtrăm aici să NU apară link-urile 'mobileOnly' în meniul de desktop */}
+            {menuLinks.filter(link => !link.isSpecial && !link.mobileOnly).map((link: MenuLink) => (
               <a
                 key={link.href}
                 href={link.href}
