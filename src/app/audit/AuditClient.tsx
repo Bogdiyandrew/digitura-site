@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, FormEvent } from 'react';
-import { ArrowRight, Activity, Target, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { ArrowRight, Activity, CheckCircle2, AlertCircle, Loader2, Mail, Phone } from 'lucide-react';
 import gsap from 'gsap';
 
 export default function AuditClient() {
@@ -13,7 +13,8 @@ export default function AuditClient() {
     name: '',
     email: '',
     website: '',
-    goals: '',
+    deliveryMethod: 'email' as 'email' | 'phone', // Nou: metoda de livrare
+    phone: '', // Nou: campul pentru telefon
     gdpr: false
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -59,8 +60,16 @@ export default function AuditClient() {
     setErrorMessage('');
     setEmailError('');
 
+    // Validări de bază
     if (!formData.name.trim() || !formData.website.trim() || !formData.gdpr) {
       setErrorMessage('Numele, link-ul website-ului și acordul GDPR sunt obligatorii.');
+      setStatus('error');
+      return;
+    }
+
+    // Validare telefon dacă este selectat
+    if (formData.deliveryMethod === 'phone' && (!formData.phone || formData.phone.length < 10)) {
+      setErrorMessage('Te rugăm să introduci un număr de telefon valid.');
       setStatus('error');
       return;
     }
@@ -79,12 +88,12 @@ export default function AuditClient() {
     }
 
     const payload = {
-      formType: "audit", //
+      formType: "audit",
       nume: formData.name,
       email: formData.email,
-      website: formData.website, // <-- Trimitem website-ul curat
-      goals: formData.goals,     // <-- Trimitem goals-urile curate
-      // project_details și package nu mai sunt necesare aici dacă refacem API-ul
+      website: formData.website,
+      deliveryMethod: formData.deliveryMethod,
+      phone: formData.deliveryMethod === 'phone' ? formData.phone : 'N/A'
     };
 
     try {
@@ -103,7 +112,7 @@ export default function AuditClient() {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', website: '', goals: '', gdpr: false });
+      setFormData({ name: '', email: '', website: '', deliveryMethod: 'email', phone: '', gdpr: false });
     } catch (error: any) {
       console.error('Eroare trimitere formular:', error);
       setStatus('error');
@@ -167,7 +176,7 @@ export default function AuditClient() {
                 <CheckCircle2 className="w-6 h-6 flex-shrink-0 text-teal-400" />
                 <div>
                   <h3 className="font-semibold text-teal-300">Cerere trimisă cu succes!</h3>
-                  <p className="text-sm mt-1">Echipa Digitura va analiza site-ul tău și te vom contacta în cel mai scurt timp pe email.</p>
+                  <p className="text-sm mt-1">Echipa Digitura va analiza site-ul tău și te vom contacta în cel mai scurt timp.</p>
                 </div>
               </div>
             )}
@@ -237,20 +246,55 @@ export default function AuditClient() {
                 />
               </div>
 
-              <div>
-                <label htmlFor="goals" className="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-1.5 pl-1">
-                  <Target size={16} className="text-slate-400" />
-                  Ce dorești să îmbunătățești? (Opțional)
+              {/* SECTIUNEA NOUA: UNDE VREI SA PRIMESTI REZULTATUL */}
+              <div className="space-y-4">
+                <label className="block text-sm font-semibold text-slate-300 pl-1">
+                  Unde vrei să primești rezultatul? <span className="text-teal-400">*</span>
                 </label>
-                <textarea 
-                  id="goals" 
-                  value={formData.goals}
-                  onChange={handleChange}
-                  disabled={status === 'loading'}
-                  rows={3} 
-                  className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 transition-all duration-300 resize-none disabled:opacity-50" 
-                  placeholder="Vreau mai mult trafic, un design mai modern, să atrag mai multe lead-uri etc."
-                ></textarea>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, deliveryMethod: 'email' }))}
+                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all duration-300 ${
+                      formData.deliveryMethod === 'email'
+                        ? 'bg-teal-500/20 border-teal-500 text-teal-300 shadow-[0_0_15px_rgba(20,184,166,0.2)]'
+                        : 'bg-slate-950/50 border-slate-700/50 text-slate-400 hover:border-slate-600'
+                    }`}
+                  >
+                    <Mail size={18} />
+                    <span className="font-medium">Email</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, deliveryMethod: 'phone' }))}
+                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all duration-300 ${
+                      formData.deliveryMethod === 'phone'
+                        ? 'bg-blue-500/20 border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.2)]'
+                        : 'bg-slate-950/50 border-slate-700/50 text-slate-400 hover:border-slate-600'
+                    }`}
+                  >
+                    <Phone size={18} />
+                    <span className="font-medium">Telefon</span>
+                  </button>
+                </div>
+
+                {/* Casuta conditionata pentru Telefon */}
+                {formData.deliveryMethod === 'phone' && (
+                  <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                    <label htmlFor="phone" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">
+                      Numărul de telefon <span className="text-teal-400">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      disabled={status === 'loading'}
+                      className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all duration-300"
+                      placeholder="07xx xxx xxx"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="flex items-start gap-3 pt-2">
