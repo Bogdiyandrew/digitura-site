@@ -23,15 +23,25 @@ const Hero = () => {
   const [skipVideo, setSkipVideo] = useState(false);
 
   useEffect(() => {
-    const alreadySeen = sessionStorage.getItem('hero_seen');
-    if (alreadySeen) {
-      setSkipVideo(true);
-      setShowBlackBg(true);
-      setTimeout(() => setBlackBgVisible(true), 50);
-    } else {
-      sessionStorage.setItem('hero_seen', 'true');
-    }
-  }, []);
+  const ua = navigator.userAgent.toLowerCase();
+  const isInAppBrowser =
+    ua.includes('bytedancewebview') ||
+    ua.includes('musical_ly') ||
+    ua.includes('tiktok') ||
+    ua.includes('fban') ||
+    ua.includes('fbav') ||
+    ua.includes('instagram');
+
+  const alreadySeen = sessionStorage.getItem('hero_seen');
+
+  if (isInAppBrowser || alreadySeen) {
+    setSkipVideo(true);
+    setShowBlackBg(true);
+    setTimeout(() => setBlackBgVisible(true), 50);
+  } else {
+    sessionStorage.setItem('hero_seen', 'true');
+  }
+}, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
