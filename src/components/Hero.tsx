@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-    // Dati si voi un like!
+
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -20,6 +20,18 @@ const Hero = () => {
   const gradientRef = useRef<HTMLDivElement>(null);
   const [showBlackBg, setShowBlackBg] = useState(false);
   const [blackBgVisible, setBlackBgVisible] = useState(false);
+  const [skipVideo, setSkipVideo] = useState(false);
+
+  useEffect(() => {
+    const alreadySeen = sessionStorage.getItem('hero_seen');
+    if (alreadySeen) {
+      setSkipVideo(true);
+      setShowBlackBg(true);
+      setTimeout(() => setBlackBgVisible(true), 50);
+    } else {
+      sessionStorage.setItem('hero_seen', 'true');
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,13 +90,13 @@ const Hero = () => {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
+    if (video && !skipVideo) {
       video.playbackRate = 0.8;
       video.onended = () => {
         setShowBlackBg(true);
       };
     }
-  }, []);
+  }, [skipVideo]);
 
   useEffect(() => {
     if (showBlackBg) {
@@ -100,10 +112,10 @@ const Hero = () => {
     >
       <video
         ref={videoRef}
-         autoPlay
+        autoPlay
         muted
         playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+        className={`absolute inset-0 z-0 h-full w-full object-cover opacity-25 ${skipVideo ? 'hidden' : ''}`}
         style={{
           willChange: 'transform',
           objectPosition: 'center 35%'
@@ -168,7 +180,6 @@ const Hero = () => {
           <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
         </h1>
 
-
         <p
           ref={subtitleRef}
           className="mx-auto mb-12 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
@@ -222,5 +233,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-// test pentru vercel update 1
