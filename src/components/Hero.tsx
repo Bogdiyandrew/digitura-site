@@ -9,7 +9,6 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Dati si voi un like, ma ajuta mult
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -21,6 +20,14 @@ const Hero = () => {
   const gradientRef = useRef<HTMLDivElement>(null);
   const [showBlackBg, setShowBlackBg] = useState(false);
   const [blackBgVisible, setBlackBgVisible] = useState(false);
+  
+  // 1. Stare pentru a ști când suntem pe client
+  const [isMounted, setIsMounted] = useState(false);
+
+  // 2. Efect pentru a marca montarea
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -75,17 +82,16 @@ const Hero = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]); // Adăugat isMounted ca dependență pentru a rula gsap DUPĂ ce video e în DOM
 
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
+    if (video && isMounted) {
       video.playbackRate = 0.8;
       video.onended = () => {
         setShowBlackBg(true);
       };
 
-      // FORȚĂM redarea din JavaScript pentru a preveni bug-ul de iOS/TikTok
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
@@ -93,7 +99,7 @@ const Hero = () => {
         });
       }
     }
-  }, []);
+  }, [isMounted]); // Rulăm logica de video doar după ce componenta e montată
 
   useEffect(() => {
     if (showBlackBg) {
@@ -107,21 +113,25 @@ const Hero = () => {
       className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        disablePictureInPicture // Previne minimizarea pe iOS
-        disableRemotePlayback   // Previne funcțiile de Cast/AirPlay
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
-        style={{
-          willChange: 'transform',
-          objectPosition: 'center 35%'
-        }}
-      >
-        <source src="/services/backnou.mp4" type="video/mp4" />
-      </video>
+      {/* 3. Randare condiționată a videoclipului */}
+      {isMounted && (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          disablePictureInPicture
+          disableRemotePlayback
+          className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+          style={{
+            willChange: 'transform',
+            objectPosition: 'center 35%'
+          }}
+        >
+          <source src="/services/backnou.mp4" type="video/mp4" />
+        </video>
+      )}
 
       <div
         ref={overlayRef}
