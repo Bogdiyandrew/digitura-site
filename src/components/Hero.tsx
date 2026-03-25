@@ -20,8 +20,9 @@ const Hero = () => {
   const gradientRef = useRef<HTMLDivElement>(null);
   const [showBlackBg, setShowBlackBg] = useState(false);
   const [blackBgVisible, setBlackBgVisible] = useState(false);
-  const [skipVideo] = useState(() => {
-    if (typeof window === 'undefined') return true;
+  const [skipVideo, setSkipVideo] = useState(true);
+
+  useEffect(() => {
     const ua = navigator.userAgent.toLowerCase();
     const isInAppBrowser =
       ua.includes('bytedancewebview') ||
@@ -31,15 +32,14 @@ const Hero = () => {
       ua.includes('fbav') ||
       ua.includes('instagram');
     const alreadySeen = sessionStorage.getItem('hero_seen');
-    return isInAppBrowser || !!alreadySeen;
-  });
 
-  useEffect(() => {
-    if (!skipVideo) {
-      sessionStorage.setItem('hero_seen', 'true');
-    } else {
+    if (isInAppBrowser || alreadySeen) {
+      setSkipVideo(true);
       setShowBlackBg(true);
       setTimeout(() => setBlackBgVisible(true), 50);
+    } else {
+      setSkipVideo(false);
+      sessionStorage.setItem('hero_seen', 'true');
     }
   }, []);
 
