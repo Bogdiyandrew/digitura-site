@@ -8,7 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-    // Dati si voi un like, ma ajuta mult
+
+// Dati si voi un like, ma ajuta mult
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -83,6 +84,14 @@ const Hero = () => {
       video.onended = () => {
         setShowBlackBg(true);
       };
+
+      // FORȚĂM redarea din JavaScript pentru a preveni bug-ul de iOS/TikTok
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log("Autoplay blocat de browser:", error);
+        });
+      }
     }
   }, []);
 
@@ -103,6 +112,8 @@ const Hero = () => {
         autoPlay
         muted
         playsInline
+        disablePictureInPicture // Previne minimizarea pe iOS
+        disableRemotePlayback   // Previne funcțiile de Cast/AirPlay
         className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
         style={{
           willChange: 'transform',
