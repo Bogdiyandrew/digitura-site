@@ -20,28 +20,28 @@ const Hero = () => {
   const gradientRef = useRef<HTMLDivElement>(null);
   const [showBlackBg, setShowBlackBg] = useState(false);
   const [blackBgVisible, setBlackBgVisible] = useState(false);
-  const [skipVideo, setSkipVideo] = useState(false);
+  const [skipVideo] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const ua = navigator.userAgent.toLowerCase();
+    const isInAppBrowser =
+      ua.includes('bytedancewebview') ||
+      ua.includes('musical_ly') ||
+      ua.includes('tiktok') ||
+      ua.includes('fban') ||
+      ua.includes('fbav') ||
+      ua.includes('instagram');
+    const alreadySeen = sessionStorage.getItem('hero_seen');
+    return isInAppBrowser || !!alreadySeen;
+  });
 
   useEffect(() => {
-  const ua = navigator.userAgent.toLowerCase();
-  const isInAppBrowser =
-    ua.includes('bytedancewebview') ||
-    ua.includes('musical_ly') ||
-    ua.includes('tiktok') ||
-    ua.includes('fban') ||
-    ua.includes('fbav') ||
-    ua.includes('instagram');
-
-  const alreadySeen = sessionStorage.getItem('hero_seen');
-
-  if (isInAppBrowser || alreadySeen) {
-    setSkipVideo(true);
-    setShowBlackBg(true);
-    setTimeout(() => setBlackBgVisible(true), 50);
-  } else {
-    sessionStorage.setItem('hero_seen', 'true');
-  }
-}, []);
+    if (!skipVideo) {
+      sessionStorage.setItem('hero_seen', 'true');
+    } else {
+      setShowBlackBg(true);
+      setTimeout(() => setBlackBgVisible(true), 50);
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -69,18 +69,6 @@ const Hero = () => {
         { opacity: 1, scale: 1, y: 0, rotationX: 0, duration: 1, ease: 'back.out(1.7)' },
         1.6
       );
-
-      gsap.to(videoRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1
-        },
-        y: 200,
-        scale: 1.2,
-        ease: 'none'
-      });
 
       gsap.to(gradientRef.current, {
         scrollTrigger: {
@@ -120,19 +108,21 @@ const Hero = () => {
       className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        className={`absolute inset-0 z-0 h-full w-full object-cover opacity-25 ${skipVideo ? 'hidden' : ''}`}
-        style={{
-          willChange: 'transform',
-          objectPosition: 'center 35%'
-        }}
-      >
-        <source src="/services/backnou.mp4" type="video/mp4" />
-      </video>
+      {!skipVideo && (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+          style={{
+            willChange: 'transform',
+            objectPosition: 'center 35%'
+          }}
+        >
+          <source src="/services/backnou.mp4" type="video/mp4" />
+        </video>
+      )}
 
       <div
         ref={overlayRef}

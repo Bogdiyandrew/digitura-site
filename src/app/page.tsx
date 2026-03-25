@@ -4,8 +4,9 @@ import About from '@/components/About';
 import Services from '@/components/Services';
 import Pricing from '@/components/Pricing';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+
+// Am eliminat importurile pentru Header și Footer de aici, 
+// deoarece sunt deja în layout.tsx
 
 const ContactLoading = () => {
   return (
@@ -18,7 +19,7 @@ const ContactLoading = () => {
 export default function Home() {
   return (
     <main>
-      <Header />
+      {/* Am eliminat <Header /> */}
       <Hero />
       <About />
       <Services />
@@ -26,7 +27,7 @@ export default function Home() {
       <Suspense fallback={<ContactLoading />}>
         <Contact />
       </Suspense>
-      <Footer />
+      {/* Am eliminat <Footer /> */}
     </main>
   );
 }
