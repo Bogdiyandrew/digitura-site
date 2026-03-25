@@ -117,7 +117,7 @@ const Hero = () => {
       {isMounted && (
         <video
           ref={videoRef}
-         // autoPlay
+         autoPlay
           muted
           loop
           playsInline
