@@ -131,10 +131,8 @@ export default function PortofoliuPage() {
             transition={{ duration: 0.8 }}
             className="relative z-10 max-w-4xl mx-auto"
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-teal-500/10 text-teal-400 text-sm font-semibold mb-6 border border-teal-500/20">
-              Portofoliu 2026
-            </span>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400" style={{ fontFamily: 'Ethnocentric, sans-serif', letterSpacing: 1 }}>
+            {/* Titlu responsive ajustat pentru a nu fi tăiat pe mobil */}
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight break-words bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400" style={{ fontFamily: 'Ethnocentric, sans-serif', letterSpacing: 1 }}>
               Portofoliul nostru
             </h1>
             <p className="text-xl md:text-2xl text-slate-400 leading-relaxed max-w-2xl mx-auto">
