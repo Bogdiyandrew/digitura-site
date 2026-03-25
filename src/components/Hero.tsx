@@ -100,7 +100,7 @@ const Hero = () => {
     >
       <video
         ref={videoRef}
-        autoPlay
+        // autoPlay
         muted
         playsInline
         className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
