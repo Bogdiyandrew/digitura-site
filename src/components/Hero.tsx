@@ -222,5 +222,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-// test pentru vercel update 1

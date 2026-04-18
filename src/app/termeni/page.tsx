@@ -52,7 +52,7 @@ const TermeniSiConditii: React.FC = () => (
               <Copyright className="text-blue-400" size={24} /> 2. Drepturi de proprietate intelectuală
             </h2>
             <p className="text-slate-300 text-base">
-              Întregul conținut al site-ului Digitura (texte, imagini, grafică, logo-uri, elemente de design web, scripturi) este proprietatea <strong>[NUME FIRMA]</strong> și este protejat de Legea drepturilor de autor și de legile privind proprietatea intelectuală și industrială. Folosirea fără acordul scris a oricăror elemente enumerate mai sus se pedepsește conform legilor în vigoare.
+              Întregul conținut al site-ului Digitura (texte, imagini, grafică, logo-uri, elemente de design web, scripturi) este proprietatea <strong>Voltariss S.R.L</strong> și este protejat de Legea drepturilor de autor și de legile privind proprietatea intelectuală și industrială. Folosirea fără acordul scris a oricăror elemente enumerate mai sus se pedepsește conform legilor în vigoare.
             </p>
           </section>
 

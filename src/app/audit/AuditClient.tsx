@@ -13,8 +13,8 @@ export default function AuditClient() {
     name: '',
     email: '',
     website: '',
-    deliveryMethod: 'email' as 'email' | 'phone', // Nou: metoda de livrare
-    phone: '', // Nou: campul pentru telefon
+    deliveryMethod: 'email' as 'email' | 'phone', 
+    phone: '',
     gdpr: false
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
