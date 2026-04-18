@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
 import Services from '@/components/Services';
 import Pricing from '@/components/Pricing';
 import Contact from '@/components/Contact';
@@ -21,7 +20,6 @@ export default function Home() {
     <main>
       {/* Am eliminat <Header /> */}
       <Hero />
-      <About />
       <Services />
       <Pricing />
       <Suspense fallback={<ContactLoading />}>

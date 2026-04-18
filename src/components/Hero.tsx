@@ -1,76 +1,89 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowRight, Star, Award } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-    // Dati si voi un like!
+
+const lines = [
+  {
+    words: ['Construim'],
+    gradient: false,
+  },
+  {
+    words: ['site-uri', 'web'],
+    gradient: true,
+    gradientStyle: 'linear-gradient(90deg, #14b8a6 0%, #7dd3fc 55%, #3b82f6 100%)',
+  },
+  {
+    words: ['care', 'duc', 'afacerile'],
+    gradient: false,
+  },
+  {
+    words: ['mai', 'departe.'],
+    gradient: true,
+    gradientStyle: 'linear-gradient(90deg, #3b82f6 0%, #14b8a6 100%)',
+  },
+];
+
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const gradientRef = useRef<HTMLDivElement>(null);
   const [showBlackBg, setShowBlackBg] = useState(false);
   const [blackBgVisible, setBlackBgVisible] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const masterTL = gsap.timeline({
-        defaults: { ease: 'power4.out' }
-      });
+      // Per-word stagger animation
+      const words = gsap.utils.toArray<HTMLElement>('.hero-word', titleRef.current);
 
-      masterTL.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 100, scale: 0.8, rotationX: -45 },
-        { opacity: 1, y: 0, scale: 1, rotationX: 0, duration: 1.8, ease: 'power4.out' },
-        0.5
+      gsap.fromTo(
+        words,
+        { opacity: 0, y: 36, filter: 'blur(6px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.75,
+          ease: 'power3.out',
+          stagger: 0.08,
+          delay: 0.3,
+        }
       );
 
-      masterTL.fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' },
-        1.2
-      );
-
-      masterTL.fromTo(
+      // CTA appears after last word
+      gsap.fromTo(
         ctaRef.current,
-        { opacity: 0, scale: 0.8, y: 30, rotationX: 45 },
-        { opacity: 1, scale: 1, y: 0, rotationX: 0, duration: 1, ease: 'back.out(1.7)' },
-        1.6
+        { opacity: 0, y: 16, filter: 'blur(4px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.6,
+          ease: 'power3.out',
+          delay: 0.3 + words.length * 0.08 + 0.1,
+        }
       );
 
+      // Parallax on scroll
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1
+          scrub: 1,
         },
         y: 200,
-        scale: 1.2,
-        ease: 'none'
+        scale: 1.15,
+        ease: 'none',
       });
-
-      gsap.to(gradientRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1
-        },
-        backgroundPosition: '0% 100%',
-        ease: 'none'
-      });
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -79,10 +92,8 @@ const Hero = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.playbackRate = 0.8;
-      video.onended = () => {
-        setShowBlackBg(true);
-      };
+      video.playbackRate = 0.75;
+      video.onended = () => setShowBlackBg(true);
     }
   }, []);
 
@@ -95,126 +106,110 @@ const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-screen items-center overflow-hidden bg-slate-900 text-white"
+      className="relative min-h-screen overflow-hidden bg-slate-950 text-white"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
+      {/* Video background */}
       <video
         ref={videoRef}
         autoPlay
         muted
         playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
-        style={{
-          willChange: 'transform',
-          objectPosition: 'center 35%'
-        }}
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-20"
+        style={{ willChange: 'transform', objectPosition: 'center 35%' }}
       >
         <source src="/services/backnou.mp4" type="video/mp4" />
       </video>
 
-      <div
-        ref={overlayRef}
-        className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/70"
-        style={{ willChange: 'opacity' }}
-      />
+      {/* Overlay gradients */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-br from-slate-950/90 via-slate-950/60 to-transparent" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40" />
 
-      {showBlackBg && (
-        <div
-          className={`absolute inset-0 z-40 transition-opacity duration-2000 ease-in-out ${blackBgVisible ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            background: 'radial-gradient(ellipse at 50% 50%, #0f172a 60%, #000 100%)',
-          }}
-        >
-          <div className="pointer-events-none">
-            <div className="absolute top-0 left-0 h-32 w-32 rounded-full bg-teal-400/15 blur-2xl" style={{ zIndex: 41 }} />
-            <div className="absolute bottom-0 right-0 h-32 w-32 rounded-full bg-blue-400/15 blur-2xl" style={{ zIndex: 41 }} />
-          </div>
-        </div>
-      )}
-
+      {/* Radial glow — teal, bottom-left anchor */}
       <div
-        ref={gradientRef}
-        className="pointer-events-none absolute inset-0 z-20"
+        className="pointer-events-none absolute bottom-0 left-0 z-10"
         style={{
-          background: 'linear-gradient(135deg, rgba(20,184,166,0.08) 0%, rgba(59,130,246,0.08) 50%, rgba(15,23,42,0.7) 100%)',
-          backgroundSize: '200% 200%',
-          willChange: 'background-position'
+          width: '60vw',
+          height: '60vh',
+          background: 'radial-gradient(ellipse at bottom left, rgba(20,184,166,0.13) 0%, transparent 70%)',
         }}
       />
 
-      <div className="relative z-50 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
+      {/* Radial glow — blue, top-right */}
+      <div
+        className="pointer-events-none absolute top-0 right-0 z-10"
+        style={{
+          width: '50vw',
+          height: '55vh',
+          background: 'radial-gradient(ellipse at top right, rgba(59,130,246,0.10) 0%, transparent 70%)',
+        }}
+      />
 
+      {/* Video-end black fade */}
+      {showBlackBg && (
         <div
-          ref={badgeRef}
-          className="mb-8 inline-flex items-center gap-3 rounded-full border border-teal-400/30 bg-teal-500/10 px-6 py-3 text-sm font-medium text-teal-200 backdrop-blur-sm transition-all duration-300 hover:bg-teal-500/20 hover:scale-105"
-          style={{ perspective: '1000px' }}
-        >
-          <Award size={16} />
-          <span className="flex items-center gap-2">
-            <Star size={14} className="fill-current text-yellow-400" />
-            4.8/5 din 40+ clienți mulțumiți
-          </span>
-        </div>
+          className={`absolute inset-0 z-40 transition-opacity duration-[2000ms] ease-in-out ${blackBgVisible ? 'opacity-100' : 'opacity-0'}`}
+          style={{ background: 'radial-gradient(ellipse at 50% 50%, #0f172a 60%, #000 100%)' }}
+        />
+      )}
 
-        <h1
-          ref={titleRef}
-          className="text-3xl font-bold leading-tight text-transparent drop-shadow-lg sm:text-4xl lg:text-5xl mb-8 bg-clip-text bg-gradient-to-r from-teal-400 via-white to-blue-400"
-          style={{
-            fontFamily: 'Exo2, sans-serif',
-            letterSpacing: 1,
-            perspective: '1000px'
-          }}
-        >
-          <strong>Site-uri clare</strong> pentru afaceri <br></br>care vor<strong> rezultate reale</strong>.
-        </h1>
+      {/* MAIN CONTENT — vertically centered, left aligned */}
+      <div
+        ref={contentRef}
+        className="relative z-50 flex min-h-screen flex-col justify-center px-6 pt-20 sm:px-10 lg:px-16 xl:px-20"
+      >
+        <div className="max-w-2xl xl:max-w-3xl mt-24 lg:mt-32">
 
-
-        <p
-          ref={subtitleRef}
-          className="mx-auto mb-12 max-w-3xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg"
-        >
-          Design web gândit să aducă mai mulți clienți, încredere și valoare brandului.
-          <span className="mt-2 block font-semibold text-teal-300">
-            Demo gratuit în 48h.
-          </span>
-        </p>
-
-        <div
-          ref={ctaRef}
-          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-          style={{ perspective: '1000px' }}
-        >
-          <button
-            className="group relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-2xl transition-all duration-300 hover:shadow-teal-500/50 hover:scale-105 cursor-pointer overflow-hidden"
-            onMouseEnter={(e) => {
-              gsap.to(e.currentTarget, {
-                scale: 1.05,
-                boxShadow: '0 0 40px rgba(20,184,166,0.6)',
-                duration: 0.3
-              });
-            }}
-            onMouseLeave={(e) => {
-              gsap.to(e.currentTarget, {
-                scale: 1,
-                boxShadow: '0 0 0px rgba(20,184,166,0)',
-                duration: 0.3
-              });
-            }}
-            onClick={() => {
-              const el = document.getElementById('contact');
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            type="button"
+          {/* Headline — per-word animated */}
+          <h1
+            ref={titleRef}
+            className="font-semibold leading-[1.0] tracking-[-0.04em]"
+            style={{ fontSize: 'clamp(52px, 7vw, 96px)' }}
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <svg xmlns="http://www.w3.org/2000/svg" className="relative z-10 w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.21.895 4.21 2.343 5.657" />
-            </svg>
-            <span className="relative z-10">Vreau demo-ul meu gratuit</span>
-            <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
-          </button>
+            {lines.map((line, li) => (
+              <span key={li} className="block">
+                {line.words.map((word, wi) => (
+                  <span
+                    key={wi}
+                    className="hero-word inline-block"
+                    style={
+                      line.gradient
+                        ? {
+                            backgroundImage: line.gradientStyle,
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            marginRight: wi < line.words.length - 1 ? '0.3em' : 0,
+                          }
+                        : { marginRight: wi < line.words.length - 1 ? '0.3em' : 0 }
+                    }
+                  >
+                    {word}
+                  </span>
+                ))}
+              </span>
+            ))}
+          </h1>
+
+          {/* CTA */}
+          <div ref={ctaRef} className="mt-10">
+            <button
+              className="group relative flex items-center gap-3 overflow-hidden rounded-xl px-7 py-4 text-md font-bold transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              style={{
+                background: 'white',
+                boxShadow: '0 0 32px rgba(20,184,166,0.25)',
+              }}
+              onClick={() => {
+                const el = document.getElementById('contact');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              type="button"
+            >
+              <span className="relative z-10 text-black">Discută cu noi</span>
+              <ArrowRight size={18} className="relative z-10 text-black transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
+
         </div>
       </div>
     </section>

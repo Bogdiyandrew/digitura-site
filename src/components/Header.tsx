@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import gsap from 'gsap';
 
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
 interface LenisScrollToOptions {
   offset?: number;
@@ -33,94 +34,101 @@ declare global {
 interface MenuLink {
   href: string;
   label: string;
-  isSpecial?: boolean;
-  mobileOnly?: boolean; // Am adăugat această proprietate
-}
-
-interface MousePosition {
-  x: number;
-  y: number;
+  isCTA?: boolean;
+  mobileOnly?: boolean;
 }
 
 const menuLinks: MenuLink[] = [
-  { href: '/', label: 'Acasă', mobileOnly: true }, // Adăugat Acasă, vizibil doar pe mobil
-  { href: '#despre', label: 'Despre' },
+  { href: '/', label: 'Acasa', mobileOnly: true },
   { href: '#servicii', label: 'Servicii' },
-  { href: '#preturi', label: 'Prețuri' },
+  { href: '#preturi', label: 'Preturi' },
   { href: '#contact', label: 'Contact' },
-  { href: '/portofoliu', label: 'Portofoliu', isSpecial: true },
-  { href: '/audit', label: 'Audit gratuit', isSpecial: true },
+  { href: '/audit', label: 'Audit gratuit', isCTA: true },
 ];
 
 const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(true);
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  
   const lastScrollY = useRef<number>(0);
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
   const pathname = usePathname();
   const router = useRouter();
 
+  const navRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const isFirstHover = useRef<boolean>(true);
+
+  const movePillTo = (target: HTMLElement, href: string) => {
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    if (!nav || !pill) return;
+
+    setHoveredPath(href);
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = target.getBoundingClientRect();
+    const left = linkRect.left - navRect.left;
+    const width = linkRect.width;
+
+    if (isFirstHover.current) {
+      gsap.fromTo(
+        pill,
+        { left: left + width / 2, width: 0, opacity: 0 },
+        { left, width, opacity: 1, duration: 0.35, ease: 'power3.out', overwrite: true }
+      );
+      isFirstHover.current = false;
+    } else {
+      gsap.to(pill, { left, width, opacity: 1, duration: 0.35, ease: 'power3.out', overwrite: true });
+    }
+  };
+
+  const hidePill = () => {
+    isFirstHover.current = true;
+    setHoveredPath(null);
+    gsap.to(pillRef.current, { opacity: 0, duration: 0.25, ease: 'power2.out', overwrite: true });
+  };
+
   useEffect(() => {
     const handleHashScroll = () => {
-      if (window.location.hash) {
-        const id = window.location.hash.substring(1);
-        let attempts = 0;
-        const maxAttempts = 50;
-
-        const tryScroll = () => {
-          const element = document.getElementById(id);
-          if (element) {
-            if (window.lenis) {
-              window.lenis.scrollTo(element, { offset: -20 });
-            } else {
-              element.scrollIntoView({ behavior: 'smooth' });
-            }
-          } else if (attempts < maxAttempts) {
-            attempts++;
-            setTimeout(tryScroll, 100);
+      if (!window.location.hash) return;
+      const id = window.location.hash.substring(1);
+      let attempts = 0;
+      const maxAttempts = 50;
+      const tryScroll = () => {
+        const element = document.getElementById(id);
+        if (element) {
+          if (window.lenis) {
+            window.lenis.scrollTo(element, { offset: -24 });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
           }
-        };
-
-        setTimeout(tryScroll, 100);
-      }
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(tryScroll, 100);
+        }
+      };
+      setTimeout(tryScroll, 100);
     };
-
     handleHashScroll();
   }, [pathname]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     const handleScroll = (): void => {
       const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 20);
-
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100 && !mobileOpen) {
+      setScrolled(currentScrollY > 12);
+      if (currentScrollY > lastScrollY.current && currentScrollY > 120 && !mobileOpen) {
         setVisible(false);
       } else {
         setVisible(true);
       }
       lastScrollY.current = currentScrollY;
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [mobileOpen]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleMouseMove = (e: globalThis.MouseEvent): void => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -130,12 +138,13 @@ const Header: React.FC = () => {
     };
   }, [mobileOpen]);
 
-  const handleLinkClick = (href: string, e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>, isMobile: boolean = false): void => {
+  const handleLinkClick = (
+    href: string,
+    e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+    isMobile: boolean = false
+  ): void => {
     e.preventDefault();
-
-    if (isMobile) {
-      setMobileOpen(false);
-    }
+    if (isMobile) setMobileOpen(false);
 
     if (href.startsWith('#')) {
       if (pathname !== '/') {
@@ -145,13 +154,16 @@ const Header: React.FC = () => {
         const element = document.getElementById(id);
         if (element) {
           if (window.lenis) {
-            window.lenis.scrollTo(element, { offset: -20 });
+            window.lenis.scrollTo(element, { offset: -24 });
           } else {
             element.scrollIntoView({ behavior: 'smooth' });
           }
         }
       }
-    } else if (href === '/') {
+      return;
+    }
+
+    if (href === '/') {
       if (pathname === '/') {
         if (window.lenis) {
           window.lenis.scrollTo(0);
@@ -161,95 +173,125 @@ const Header: React.FC = () => {
       } else {
         router.push('/');
       }
-    } else {
-      router.push(href);
+      return;
     }
+
+    router.push(href);
   };
 
+  const desktopLinks = menuLinks.filter((link) => !link.mobileOnly && !link.isCTA);
+  const ctaLink = menuLinks.find((link) => link.isCTA);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full transition-all duration-500 z-[60] ${visible ? 'translate-y-0' : '-translate-y-full'} ${scrolled
-          ? 'bg-slate-950/95 backdrop-blur-xl border-b border-slate-700/80 shadow-2xl shadow-teal-400/10'
-          : 'bg-slate-950/60 backdrop-blur-sm border-b border-slate-800/40'
-          }`}
-        style={{
-          background: scrolled
-            ? `radial-gradient(ellipse at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.1) 0%, rgba(15,23,42,0.95) 50%)`
-            : `radial-gradient(ellipse at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.05) 0%, rgba(15,23,42,0.6) 50%)`,
-          fontFamily: 'Exo2, sans-serif'
-        }}
+        className={`fixed top-0 left-0 w-full z-[60] transition-transform duration-500 ${
+          visible ? 'translate-y-0' : '-translate-y-full'
+        }`}
       >
-        <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
-            className="group flex-shrink-0 flex items-center gap-3 md:gap-4 transform transition-all duration-300 hover:scale-105"
+        <div className="px-4 md:px-6 pt-4">
+          <div
+            className={`mx-auto max-w-6xl rounded-[22px] border transition-all duration-300 ${
+              scrolled
+                ? 'border-white/12 bg-slate-950/78 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.28)]'
+                : 'border-white/8 bg-slate-950/58 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.18)]'
+            }`}
           >
-            <Image
-              src="/digituralogo.png"
-              alt="Digitura Logo"
-              width={40}
-              height={40}
-            />
-            <span
-              className="text-lg md:text-xl font-bold select-none text-white tracking-widest"
-              style={{
-                fontFamily: 'Ethnocentric, sans-serif',
-                letterSpacing: '0.12em',
-                textShadow: '0 2px 12px rgba(0,0,0,0.18)'
-              }}
-            >
-              DIGITURA
-            </span>
-          </Link>
-
-          <nav className={`hidden lg:flex items-center gap-6 mx-auto ${poppins.className}`}>
-            {/* Filtrăm aici să NU apară link-urile 'mobileOnly' în meniul de desktop */}
-            {menuLinks.filter(link => !link.isSpecial && !link.mobileOnly).map((link: MenuLink) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`relative transition-colors duration-300 font-medium px-5 py-2.5 leading-none group overflow-hidden ${link.label === 'Contact'
-                  ? 'text-teal-300 hover:text-white'
-                  : 'text-slate-200 hover:text-white'
-                  }`}
-                onClick={(e) => handleLinkClick(link.href, e)}
+            <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-3.5">
+              <Link
+                href="/"
+                onClick={(e: MouseEvent<HTMLAnchorElement>) => handleLinkClick('/', e)}
+                className="flex items-center gap-3 md:gap-4 shrink-0"
               >
-                <span className="magic-span absolute w-0 h-0 rounded-full bg-teal-400/60 blur-xl group-hover:w-40 group-hover:h-40 transition-all duration-500" style={{ transform: 'translate(-50%, -50%)' }} />
-                <span className="relative z-10">{link.label}</span>
-              </a>
-            ))}
-            <div className="h-6 border-l border-slate-700/40 mx-4"></div>
-            {menuLinks.filter(link => link.isSpecial).map((link: MenuLink) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-2.5 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 leading-none"
-                onClick={(e) => handleLinkClick(link.href, e)}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
+                <Image
+                  src="/digituralogo.png"
+                  alt="Digitura Logo"
+                  width={40}
+                  height={40}
+                  className="h-9 w-9 md:h-10 md:w-10"
+                />
+                <span
+                  className="text-base md:text-lg font-bold text-white tracking-[0.12em] select-none"
+                  style={{
+                    fontFamily: 'Ethnocentric, sans-serif',
+                    textShadow: '0 2px 12px rgba(0,0,0,0.18)',
+                  }}
+                >
+                  DIGITURA
+                </span>
+              </Link>
 
-          <button
-            className="lg:hidden flex-shrink-0 p-2 text-teal-300"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Deschide meniul"
-          >
-            <Menu size={28} />
-          </button>
+              <nav className={`hidden lg:flex items-center gap-1 xl:gap-2 ${poppins.className}`}>
+                <div
+                  ref={navRef}
+                  onMouseLeave={hidePill}
+                  className="relative flex items-center gap-1 xl:gap-2"
+                >
+                  <div
+                    ref={pillRef}
+                    className="pointer-events-none absolute top-0 h-full rounded-[12px] bg-white opacity-0"
+                    style={{ willChange: 'left, width, opacity' }}
+                  />
+
+                  {desktopLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(link.href, e)}
+                      onMouseEnter={(e) => movePillTo(e.currentTarget, link.href)}
+                      className={`relative z-10 px-4 xl:px-5 py-2.5 text-[15px] font-medium transition-colors duration-300 ${
+                        hoveredPath === link.href ? 'text-slate-900' : 'text-slate-200'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+
+                {ctaLink && (
+                  <>
+                    <div className="mx-2 h-6 w-px bg-white/10" />
+                    <a
+                      href={ctaLink.href}
+                      onClick={(e) => handleLinkClick(ctaLink.href, e)}
+                      className="inline-flex items-center justify-center rounded-[14px] border border-teal-400/20 bg-white text-slate-950 px-5 xl:px-6 py-2.5 text-[15px] font-semibold shadow-[0_8px_24px_rgba(255,255,255,0.12)] hover:scale-[1.02] transition-all duration-200"
+                    >
+                      {ctaLink.label}
+                    </a>
+                  </>
+                )}
+              </nav>
+
+              <button
+                className="lg:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2.5 text-white hover:bg-white/10 transition-colors"
+                onClick={() => setMobileOpen(true)}
+                aria-label="Deschide meniul"
+              >
+                <Menu size={22} />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
-      <div className={`fixed inset-0 z-[70] transition-opacity duration-300 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-slate-950 animated-gradient" onClick={() => setMobileOpen(false)} />
-        <nav className={`absolute top-0 right-0 h-full w-full max-w-sm bg-slate-900/80 backdrop-blur-2xl border-l border-slate-700/50 shadow-2xl flex flex-col transition-transform duration-500 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex justify-between items-center p-6 border-b border-slate-800">
+      <div
+        className={`fixed inset-0 z-[70] transition-opacity duration-300 ${
+          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div
+          className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        />
+
+        <nav
+          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-slate-950/92 backdrop-blur-2xl border-l border-white/10 shadow-2xl flex flex-col transition-transform duration-500 ease-in-out ${
+            mobileOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="flex items-center justify-between p-6 border-b border-white/10">
             <span
-              className="text-xl font-bold text-white"
+              className="text-lg font-bold text-white tracking-[0.12em]"
               style={{ fontFamily: 'Ethnocentric, sans-serif' }}
             >
               MENIU
@@ -257,25 +299,25 @@ const Header: React.FC = () => {
             <button
               onClick={() => setMobileOpen(false)}
               className="p-2 text-slate-400 hover:text-white transition-colors"
-              aria-label="Închide meniul"
+              aria-label="Inchide meniul"
             >
-              <X size={28} />
+              <X size={26} />
             </button>
           </div>
 
-          <div className="flex flex-col p-6 gap-2">
-            {menuLinks.map((link: MenuLink, index: number) => (
-              link.isSpecial ? (
+          <div className="flex flex-col gap-2 p-6">
+            {menuLinks.map((link, index) =>
+              link.isCTA ? (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group w-full text-center bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 font-semibold px-5 py-3 rounded-xl border border-teal-400/30 shadow-md shadow-teal-500/10 transition-all duration-300 hover:from-teal-500/30 hover:to-cyan-500/30 hover:text-white hover:shadow-lg hover:shadow-teal-500/20 text-lg"
-                  style={{
-                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
-                    opacity: mobileOpen ? 1 : 0,
-                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-                  }}
                   onClick={(e) => handleLinkClick(link.href, e, true)}
+                  className="mt-3 inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3.5 text-slate-950 text-base font-semibold"
+                  style={{
+                    transform: mobileOpen ? 'translateX(0)' : 'translateX(40px)',
+                    opacity: mobileOpen ? 1 : 0,
+                    transition: `transform 0.45s ${index * 0.06}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.45s ${index * 0.06}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+                  }}
                 >
                   {link.label}
                 </a>
@@ -283,47 +325,21 @@ const Header: React.FC = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group relative text-xl font-semibold text-slate-200 hover:text-white transition-all duration-300"
-                  style={{
-                    transform: mobileOpen ? 'translateX(0)' : 'translateX(50px)',
-                    opacity: mobileOpen ? 1 : 0,
-                    transition: `transform 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ${index * 0.07}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-                  }}
                   onClick={(e) => handleLinkClick(link.href, e, true)}
+                  className="rounded-2xl px-4 py-3 text-lg font-medium text-slate-200 hover:bg-white/5 hover:text-white transition-colors"
+                  style={{
+                    transform: mobileOpen ? 'translateX(0)' : 'translateX(40px)',
+                    opacity: mobileOpen ? 1 : 0,
+                    transition: `transform 0.45s ${index * 0.06}s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.45s ${index * 0.06}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+                  }}
                 >
-                  <div className="absolute -inset-x-3 -inset-y-2 z-0 rounded-full bg-slate-800/0 group-hover:bg-slate-800/80 scale-95 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                  <span className="relative z-10 block p-3">{link.label}</span>
+                  {link.label}
                 </a>
               )
-            ))}
+            )}
           </div>
-
         </nav>
       </div>
-
-      <style jsx>{`
-        @keyframes gradient-animation {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animated-gradient {
-          background: linear-gradient(-45deg, #0f172a, #1e293b, #0284c7, #14b8a6);
-          background-size: 400% 400%;
-          animation: gradient-animation 15s ease infinite;
-        }
-        @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 20px -5px rgba(20, 184, 166, 0.4), 0 0 30px -10px rgba(10, 150, 130, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 30px 0px rgba(20, 184, 166, 0.6), 0 0 45px -5px rgba(10, 150, 130, 0.5);
-          }
-        }
-        :global(.cta-button-glow) {
-          animation: pulse-glow 3s infinite ease-in-out;
-        }
-      `}</style>
     </>
   );
 };
