@@ -13,7 +13,7 @@ export default function AuditClient() {
     name: '',
     email: '',
     website: '',
-    deliveryMethod: 'email' as 'email' | 'phone', 
+    deliveryMethod: 'email' as 'email' | 'phone',
     phone: '',
     gdpr: false
   });
@@ -23,17 +23,25 @@ export default function AuditClient() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    // FIX #3: Skip animații pe mobile — Safari iOS nu le poate gestiona eficient
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      if (titleRef.current) titleRef.current.style.opacity = '1';
+      if (formRef.current) formRef.current.style.opacity = '1';
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
       tl.fromTo(
         titleRef.current,
-        { opacity: 0, x: -30, willChange: 'opacity, transform' },
-        { opacity: 1, x: 0, duration: 1, clearProps: 'willChange' }
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 1 }
       ).fromTo(
         formRef.current,
-        { opacity: 0, x: 30, willChange: 'opacity, transform' },
-        { opacity: 1, x: 0, duration: 1, clearProps: 'willChange' },
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 1 },
         "-=0.6"
       );
     }, containerRef);
@@ -53,8 +61,7 @@ export default function AuditClient() {
     e.preventDefault();
     setStatus('loading');
     setErrorMessage('');
-    
-    // Validări
+
     if (!formData.name.trim() || !formData.website.trim() || !formData.gdpr) {
       setErrorMessage('Te rugăm să completezi câmpurile obligatorii.');
       setStatus('error');
@@ -80,10 +87,9 @@ export default function AuditClient() {
       return;
     }
 
-    // Payload EXACT așa cum îl așteaptă API-ul tău (cu "nume", nu cu "name")
     const payload = {
       formType: "audit",
-      nume: formData.name, 
+      nume: formData.name,
       email: formData.email,
       website: formData.website,
       deliveryMethod: formData.deliveryMethod,
@@ -98,7 +104,6 @@ export default function AuditClient() {
       });
 
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.message || 'Eroare la trimitere.');
 
       setStatus('success');
@@ -110,22 +115,23 @@ export default function AuditClient() {
   };
 
   return (
-    <main 
-      ref={containerRef} 
+    <main
+      ref={containerRef}
       className="relative min-h-screen bg-slate-950 text-white flex items-center overflow-hidden py-20"
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
+      {/* FIX #2: blur redus de la 120px → 60px, fără transform-gpu */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-teal-500/10 blur-[120px] rounded-full transform-gpu" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full transform-gpu" />
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-teal-500/10 blur-[60px] rounded-full" />
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-500/10 blur-[60px] rounded-full" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        
-        {/* Partea din STÂNGA */}
-        <div ref={titleRef} className="text-left">
+
+        {/* Stânga */}
+        <div ref={titleRef} className="text-left" style={{ opacity: 0 }}>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white">
-            Audit gratuit <br /> 
+            Audit gratuit <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500">
               pentru site-ul tǎu
             </span>
@@ -135,9 +141,10 @@ export default function AuditClient() {
           </p>
         </div>
 
-        {/* Partea din DREAPTA: Formular */}
-        <div ref={formRef} className="w-full">
-          <div className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl">
+        {/* Dreapta: Formular */}
+        <div ref={formRef} className="w-full" style={{ opacity: 0 }}>
+          {/* FIX #1: backdrop-blur-xl eliminat, înlocuit cu bg mai opac */}
+          <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 shadow-2xl">
             <h2 className="text-xl font-semibold mb-8 text-slate-200">Completează datele</h2>
 
             {status === 'success' && (
@@ -153,33 +160,33 @@ export default function AuditClient() {
                 <p className="text-sm">{errorMessage}</p>
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit} noValidate className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label htmlFor="name" className="text-xs uppercase tracking-wider font-bold text-slate-500 ml-1">Nume</label>
-                  <input 
+                  <input
                     type="text" id="name" value={formData.name} onChange={handleChange} disabled={status === 'loading'}
-                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all" 
-                    placeholder="Ion Popescu" 
+                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all"
+                    placeholder="Ion Popescu"
                   />
                 </div>
                 <div className="space-y-1.5">
                   <label htmlFor="email" className="text-xs uppercase tracking-wider font-bold text-slate-500 ml-1">Email</label>
-                  <input 
+                  <input
                     type="email" id="email" value={formData.email} onChange={handleChange} disabled={status === 'loading'}
-                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all" 
-                    placeholder="contact@email.ro" 
+                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all"
+                    placeholder="contact@email.ro"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <label htmlFor="website" className="text-xs uppercase tracking-wider font-bold text-slate-500 ml-1">URL Website</label>
-                <input 
+                <input
                   type="url" id="website" value={formData.website} onChange={handleChange} disabled={status === 'loading'}
-                  className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all" 
-                  placeholder="https://site-ul-tau.ro" 
+                  className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all"
+                  placeholder="https://site-ul-tau.ro"
                 />
               </div>
 
@@ -190,7 +197,9 @@ export default function AuditClient() {
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, deliveryMethod: 'email' }))}
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl border transition-all cursor-pointer ${
-                      formData.deliveryMethod === 'email' ? 'bg-teal-500/10 border-teal-500 text-teal-400' : 'bg-transparent border-slate-800 text-slate-500 hover:border-slate-700'
+                      formData.deliveryMethod === 'email'
+                        ? 'bg-teal-500/10 border-teal-500 text-teal-400'
+                        : 'bg-transparent border-slate-800 text-slate-500 hover:border-slate-700'
                     }`}
                   >
                     <Mail size={16} /> Email
@@ -199,7 +208,9 @@ export default function AuditClient() {
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, deliveryMethod: 'phone' }))}
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl border transition-all cursor-pointer ${
-                      formData.deliveryMethod === 'phone' ? 'bg-blue-500/10 border-blue-500 text-blue-400' : 'bg-transparent border-slate-800 text-slate-500 hover:border-slate-700'
+                      formData.deliveryMethod === 'phone'
+                        ? 'bg-blue-500/10 border-blue-500 text-blue-400'
+                        : 'bg-transparent border-slate-800 text-slate-500 hover:border-slate-700'
                     }`}
                   >
                     <Phone size={16} /> Telefon
@@ -225,8 +236,8 @@ export default function AuditClient() {
                 </label>
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={status === 'loading' || status === 'success'}
                 className="w-full bg-white text-black py-4 rounded-xl font-bold text-lg hover:bg-teal-400 transition-all duration-300 disabled:opacity-50 flex items-center justify-center cursor-pointer disabled:cursor-not-allowed"
               >
