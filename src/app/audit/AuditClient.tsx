@@ -27,14 +27,15 @@ export default function AuditClient() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
+      // Adăugat willChange și clearProps pentru optimizare Safari
       tl.fromTo(
         titleRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2 }
+        { opacity: 0, y: 30, willChange: 'opacity, transform' },
+        { opacity: 1, y: 0, duration: 1.2, clearProps: 'willChange' }
       ).fromTo(
         formRef.current,
-        { opacity: 0, y: 40, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 1 },
+        { opacity: 0, y: 40, scale: 0.95, willChange: 'opacity, transform' },
+        { opacity: 1, y: 0, scale: 1, duration: 1, clearProps: 'willChange' },
         "-=0.8"
       );
     }, containerRef);
@@ -136,8 +137,9 @@ export default function AuditClient() {
       style={{ fontFamily: 'Exo2, sans-serif' }}
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-500/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full" />
+        {/* Optimizat Blur pe Mobile + transform-gpu */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-500/10 blur-[64px] md:blur-[120px] rounded-full transform-gpu" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[64px] md:blur-[120px] rounded-full transform-gpu" />
         <div 
           className="absolute inset-0 opacity-30"
           style={{
@@ -159,9 +161,10 @@ export default function AuditClient() {
           </p>
         </div>
 
+        {/* Optimizat Backdrop Blur pe Mobile + transform-gpu */}
         <div 
           ref={formRef}
-          className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-teal-500/5 group hover:border-teal-500/30 transition-colors duration-500 max-w-3xl mx-auto"
+          className="relative bg-slate-900/50 backdrop-blur-md md:backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-teal-500/5 group hover:border-teal-500/30 transition-colors duration-500 max-w-3xl mx-auto transform-gpu"
         >
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -246,7 +249,6 @@ export default function AuditClient() {
                 />
               </div>
 
-              {/* SECTIUNEA NOUA: UNDE VREI SA PRIMESTI REZULTATUL */}
               <div className="space-y-4">
                 <label className="block text-sm font-semibold text-slate-300 pl-1">
                   Unde vrei să primești rezultatul? <span className="text-teal-400">*</span>
@@ -278,7 +280,6 @@ export default function AuditClient() {
                   </button>
                 </div>
 
-                {/* Casuta conditionata pentru Telefon */}
                 {formData.deliveryMethod === 'phone' && (
                   <div className="animate-in fade-in slide-in-from-top-2 duration-300">
                     <label htmlFor="phone" className="block text-sm font-semibold text-slate-300 mb-1.5 pl-1">
