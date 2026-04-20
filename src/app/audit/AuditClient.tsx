@@ -54,30 +54,58 @@ export default function AuditClient() {
     setStatus('loading');
     setErrorMessage('');
     
+    // Validări
     if (!formData.name.trim() || !formData.website.trim() || !formData.gdpr) {
       setErrorMessage('Te rugăm să completezi câmpurile obligatorii.');
       setStatus('error');
       return;
     }
 
+    if (formData.deliveryMethod === 'phone' && (!formData.phone || formData.phone.length < 10)) {
+      setErrorMessage('Te rugăm să introduci un număr de telefon valid.');
+      setStatus('error');
+      return;
+    }
+
+    if (!formData.website.includes('.') || formData.website.length < 4) {
+      setErrorMessage('Te rugăm să introduci un link valid pentru website.');
+      setStatus('error');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      setErrorMessage('Te rugăm să introduci o adresă de email validă.');
+      setStatus('error');
+      return;
+    }
+
+    // Payload EXACT așa cum îl așteaptă API-ul tău (cu "nume", nu cu "name")
+    const payload = {
+      formType: "audit",
+      nume: formData.name, 
+      email: formData.email,
+      website: formData.website,
+      deliveryMethod: formData.deliveryMethod,
+      phone: formData.deliveryMethod === 'phone' ? formData.phone : 'N/A'
+    };
+
     try {
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          formType: "audit",
-          phone: formData.deliveryMethod === 'phone' ? formData.phone : 'N/A'
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error('Eroare la trimitere.');
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message || 'Eroare la trimitere.');
 
       setStatus('success');
       setFormData({ name: '', email: '', website: '', deliveryMethod: 'email', phone: '', gdpr: false });
     } catch (error: any) {
       setStatus('error');
-      setErrorMessage('Eroare la trimiterea mesajului. Încearcă din nou.');
+      setErrorMessage(error.message || 'Eroare la trimiterea mesajului. Încearcă din nou.');
     }
   };
 
@@ -103,7 +131,7 @@ export default function AuditClient() {
             </span>
           </h1>
           <p className="mt-6 text-slate-400 text-lg md:text-xl max-w-md">
-            Analizăm problemele care îți încetinesc site-ul și îți trimitem raportul complet pe mail sau telefon.
+            Verificăm performanța site-ului, nivelul de securitate și conformitatea cu normele GDPR. Îți trimitem apoi raportul complet pe mail sau telefon.
           </p>
         </div>
 
