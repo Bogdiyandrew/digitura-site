@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PhoneCallIcon } from "@phosphor-icons/react";
+
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -192,23 +193,29 @@ const Hero = () => {
           </h1>
 
           {/* CTA */}
-          <div ref={ctaRef} className="mt-10">
-            <button
-              className="group relative flex items-center gap-3 overflow-hidden rounded-xl px-7 py-4 text-md font-bold transition-all duration-300 hover:scale-[1.03] cursor-pointer"
-              style={{
-                background: 'white',
-                boxShadow: '0 0 32px rgba(20,184,166,0.25)',
-              }}
-              onClick={() => {
-                const el = document.getElementById('contact');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              type="button"
-            >
-              <span className="relative z-10 text-black">Discută cu noi</span>
-              <ArrowRight size={18} className="relative z-10 text-black transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
+<div ref={ctaRef} className="mt-10">
+  <button
+    className="group relative flex items-center gap-3 overflow-hidden rounded-xl px-7 py-4 text-md font-bold transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+    style={{
+      background: 'white',
+      boxShadow: '0 0 32px rgba(20,184,166,0.25)',
+    }}
+    onClick={() => {
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }}
+    type="button"
+  >
+    {/* Iconița este acum prima */}
+    <PhoneCallIcon 
+      size={20} 
+      className="relative z-10 text-black transition-transform group-hover:-translate-x-1" 
+    />
+    
+    {/* Textul urmează după iconiță */}
+    <span className="relative z-10 text-black">Discută cu noi</span>
+  </button>
+</div>
 
         </div>
       </div>

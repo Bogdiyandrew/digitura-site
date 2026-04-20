@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, Globe, Target, Zap, Wrench, TrendingUp, X, LucideIcon, Sparkles } from 'lucide-react';
+import { ShoppingCart, Globe, Wrench, TrendingUp, X, LucideIcon } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useMediaQuery from '../hooks/useMediaQuery';
+import { FingerprintIcon , TargetIcon, ArrowsClockwiseIcon} from "@phosphor-icons/react";
+
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -34,13 +36,13 @@ const servicesData: ServiceData[] = [
   {
     id: 'landing', title: 'Landing page', tagline: 'O ofertă prezentată clar',
     desc: 'Construim landing pages pentru campanii, servicii sau lansări, cu focus pe claritate, structură și conversie.',
-    icon: Target, position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } },
+    icon: TargetIcon, position: { desktop: { x: 74, y: 32 }, mobile: { x: 80, y: 32 } },
     image: '/services/LGPAGE.webp', color: 'teal',
   },
   {
     id: 'automation', title: 'Automatizare', tagline: 'Mai puțină muncă manuală',
     desc: 'Automatizăm procese repetitive pentru ca echipa ta să economisească timp, să reducă erorile și să lucreze mai eficient în activitățile de zi cu zi.',
-    icon: Zap, position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } },
+    icon: ArrowsClockwiseIcon, position: { desktop: { x: 26, y: 70 }, mobile: { x: 20, y: 64 } },
     image: '/services/AUTO.webp', color: 'blue',
   },
   {
@@ -58,7 +60,7 @@ const servicesData: ServiceData[] = [
   {
     id: 'branding', title: 'Branding', tagline: 'Claritate pentru brandul tău',
     desc: 'Construim o identitate vizuală coerentă și ușor de recunoscut, ca brandul tău să fie perceput mai clar și ținut minte mai ușor.',
-    icon: Sparkles, position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } },
+    icon: FingerprintIcon, position: { desktop: { x: 50, y: 14 }, mobile: { x: 50, y: 16 } },
     image: '/services/BRAND.webp', color: 'blue',
   },
 ];
