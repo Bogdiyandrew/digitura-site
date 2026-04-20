@@ -315,7 +315,7 @@ export default function AuditClient() {
               <button 
                 type="submit" 
                 disabled={status === 'loading' || status === 'success'}
-                className="group relative w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-teal-500/30 hover:scale-[1.02] cursor-pointer overflow-hidden mt-6 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
+                className="group relative w-full flex items-center justify-center gap-3 rounded-xl bg-white text-black px-8 py-4 text-lg font-semibold shadow-lg transition-all duration-300 cursor-pointer overflow-hidden mt-6 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="relative z-10">

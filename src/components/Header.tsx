@@ -43,6 +43,7 @@ const menuLinks: MenuLink[] = [
   { href: '#servicii', label: 'Servicii' },
   { href: '#preturi', label: 'Preturi' },
   { href: '#contact', label: 'Contact' },
+  { href: '/portofoliu', label: 'Studii de caz', },
   { href: '/audit', label: 'Audit gratuit', isCTA: true },
 ];
 

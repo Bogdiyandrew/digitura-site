@@ -39,7 +39,7 @@ const NotFound = () => {
             className="mt-10 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-teal-400/40 transition-all duration-300 transform hover:scale-105 group"
           >
             <Home className="transition-transform" />
-            <span>Înapoi la acasă</span>
+            <span>Înapoi acasă</span>
           </Link>
         </div>
 

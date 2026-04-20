@@ -438,7 +438,7 @@ const Contact: React.FC = () => {
             <button
               type="submit"
               disabled={isSending}
-              className="w-full mt-2 bg-gradient-to-r from-teal-500 via-blue-500 to-cyan-500 text-white font-bold px-6 py-3 md:py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all duration-300 text-base md:text-lg hover:shadow-xl hover:shadow-teal-500/40 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full mt-2 bg-white text-black font-bold px-6 py-3 md:py-4 rounded-xl flex items-center justify-center gap-3 shadow-lg transition-all duration-300 text-base md:text-lg hover:shadow-xl hover:shadow-teal-500/40 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSending ? (
                 <>

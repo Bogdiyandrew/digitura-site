@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
               DIGITURA
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Transformăm idei în experiențe digitale de impact. Construim viitorul web, un proiect odată.
+              Construim site-uri web care duc afacerile mai departe.
             </p>
             <div className="flex gap-4 mt-4">
               <a
@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
                 onClick={(e) => handleLinkClick(e, pathname === '/' ? '#portofoliu' : '/portofoliu')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Portofoliu
+                Studii de caz
               </Link>
               <Link
                 href="#preturi"
