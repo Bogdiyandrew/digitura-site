@@ -52,24 +52,23 @@ const Footer: React.FC = () => {
   }, []);
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, href: string): void => {
+    // Dacă este un link extern sau o pagină diferită, lăsăm comportamentul default al Link-ului
+    if (!href.startsWith('#')) return;
+
     e.preventDefault();
 
-    if (href.startsWith('#')) {
-      if (pathname === '/') {
-        const id = href.substring(1);
-        const element = document.getElementById(id);
-        if (element) {
-          if (window.lenis) {
-            window.lenis.scrollTo(element, { offset: -20 });
-          } else {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
+    if (pathname === '/') {
+      const id = href.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        if (window.lenis) {
+          window.lenis.scrollTo(element, { offset: -20 });
+        } else {
+          element.scrollIntoView({ behavior: 'smooth' });
         }
-      } else {
-        router.push(`/${href}`);
       }
     } else {
-      router.push(href);
+      router.push(`/${href}`);
     }
   };
 
@@ -145,16 +144,10 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
+          {/* SECȚIUNEA ACTUALIZATĂ AICI */}
           <div>
             <h3 className="font-semibold text-white mb-4 tracking-wider">Link-uri utile</h3>
             <nav className="flex flex-col gap-3">
-              <Link
-                href="#despre"
-                onClick={(e) => handleLinkClick(e, '#despre')}
-                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
-              >
-                Despre noi
-              </Link>
               <Link
                 href="#servicii"
                 onClick={(e) => handleLinkClick(e, '#servicii')}
@@ -163,18 +156,30 @@ const Footer: React.FC = () => {
                 Servicii
               </Link>
               <Link
-                href="#portofoliu"
-                onClick={(e) => handleLinkClick(e, pathname === '/' ? '#portofoliu' : '/portofoliu')}
-                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
-              >
-                Studii de caz
-              </Link>
-              <Link
                 href="#preturi"
                 onClick={(e) => handleLinkClick(e, '#preturi')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Prețuri
+              </Link>
+              <Link
+                href="#contact"
+                onClick={(e) => handleLinkClick(e, '#contact')}
+                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
+              >
+                Contact
+              </Link>
+              <Link
+                href="/portofoliu"
+                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
+              >
+                Studii de caz
+              </Link>
+              <Link
+                href="/audit"
+                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
+              >
+                Audit Gratuit
               </Link>
             </nav>
           </div>
@@ -184,21 +189,18 @@ const Footer: React.FC = () => {
             <nav className="flex flex-col gap-3">
               <Link
                 href="/termeni"
-                onClick={(e) => handleLinkClick(e, '/termeni')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Termeni și condiții
               </Link>
               <Link
                 href="/politica-de-confidentialitate"
-                onClick={(e) => handleLinkClick(e, '/politica-de-confidentialitate')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Politica de confidențialitate
               </Link>
               <Link
                 href="/politica-cookies"
-                onClick={(e) => handleLinkClick(e, '/politica-cookies')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Politica cookies
@@ -207,7 +209,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wider">Contact</h3>
+            <h3 className="font-semibold text-white mb-4 tracking-wider">Contact Direct</h3>
             <div className="flex flex-col gap-4">
               <a href="mailto:suport@digitura.ro" className="flex items-center gap-3 group">
                 <Mail size={20} className="text-slate-400 group-hover:text-teal-400 transition-colors duration-300" />
@@ -232,7 +234,6 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="transform hover:scale-105 transition-transform duration-300"
-              aria-label="Soluționarea Alternativă a Litigiilor (ANPC)"
             >
               <img
                 src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sal.svg"
@@ -247,7 +248,6 @@ const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="transform hover:scale-105 transition-transform duration-300"
-              aria-label="Soluționarea Online a Litigiilor (UE)"
             >
               <img
                 src="https://etamade-com.github.io/anpc-sal-sol-logo/anpc-sol.svg"
