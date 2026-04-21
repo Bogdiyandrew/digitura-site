@@ -1,8 +1,6 @@
 'use client';
 
-import Head from 'next/head';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -24,22 +22,30 @@ export default function PortofoliuPage() {
         });
       }
 
-      gsap.fromTo('.anim-tag',
+      gsap.fromTo(
+        '.anim-tag',
         { opacity: 0, y: 10, letterSpacing: '0.4em' },
         { opacity: 1, y: 0, letterSpacing: '0.25em', duration: 0.8, ease: 'power3.out', delay: 0.5 }
       );
-      gsap.fromTo('.anim-title span',
+
+      gsap.fromTo(
+        '.anim-title span',
         { opacity: 0, y: 60, skewY: 4 },
         { opacity: 1, y: 0, skewY: 0, duration: 1, ease: 'expo.out', stagger: 0.12, delay: 0.7 }
       );
-      gsap.fromTo('.anim-sub',
+
+      gsap.fromTo(
+        '.anim-sub',
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 1.3 }
       );
-      gsap.fromTo('.anim-dot',
+
+      gsap.fromTo(
+        '.anim-dot',
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)', stagger: 0.15, delay: 1.6 }
       );
+
       gsap.to('.pulse-dot', {
         scale: 1.4,
         opacity: 0.4,
@@ -49,6 +55,7 @@ export default function PortofoliuPage() {
         repeat: -1,
         stagger: { each: 0.4, from: 'random' },
       });
+
       gsap.to('.bg-particle', {
         y: -30,
         duration: 4,
@@ -65,7 +72,7 @@ export default function PortofoliuPage() {
   const particles = [
     { w: 3, h: 3, top: 15, left: 10, teal: true },
     { w: 5, h: 5, top: 25, left: 85, teal: false },
-    { w: 2, h: 2, top: 60, left: 5,  teal: true },
+    { w: 2, h: 2, top: 60, left: 5, teal: true },
     { w: 4, h: 4, top: 75, left: 90, teal: false },
     { w: 3, h: 3, top: 40, left: 50, teal: true },
     { w: 6, h: 6, top: 80, left: 20, teal: false },
@@ -75,10 +82,6 @@ export default function PortofoliuPage() {
 
   return (
     <>
-      <Head>
-        <title>Portofoliu | Digitura</title>
-        <meta name="description" content="Portofoliul Digitura — în curând." />
-      </Head>
       <Header />
 
       <main
@@ -86,11 +89,9 @@ export default function PortofoliuPage() {
         className="relative min-h-screen bg-slate-950 text-white overflow-hidden flex flex-col items-center justify-center"
         style={{ fontFamily: 'Exo2, sans-serif' }}
       >
-        {/* Background Gradients */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_40%,rgba(20,184,166,0.07),transparent)] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_20%_70%,rgba(59,130,246,0.05),transparent)] pointer-events-none" />
 
-        {/* Particles */}
         {particles.map((p, i) => (
           <div
             key={i}
@@ -105,7 +106,6 @@ export default function PortofoliuPage() {
           />
         ))}
 
-        {/* Animated Line SVG */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 1200 700"
@@ -160,7 +160,6 @@ export default function PortofoliuPage() {
             ))}
           </div>
 
-          {/* BUTONUL CORECTAT AICI: */}
           <a
             href="/#contact"
             className="anim-sub opacity-0 group inline-flex items-center gap-3 border border-teal-500/40 hover:border-teal-400 text-teal-300 hover:text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-teal-500/10 backdrop-blur-sm"
@@ -172,8 +171,6 @@ export default function PortofoliuPage() {
 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700/50 to-transparent" />
       </main>
-
-      <Footer />
     </>
   );
 }
