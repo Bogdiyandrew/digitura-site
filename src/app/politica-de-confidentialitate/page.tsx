@@ -30,7 +30,7 @@ export default function PoliticaDeConfidentialitatePage() {
           <div className="space-y-10 text-base leading-7">
             <section>
               <p>
-                Această pagină explică modul în care <strong>digitura</strong>,
+                Această pagină explică modul în care <strong>Digitura</strong>,
                 prin <strong>VOLTARISS S.R.L.</strong>, colectează, utilizează și
                 protejează datele personale ale utilizatorilor site-ului
                 <strong> digitura.ro</strong>.
