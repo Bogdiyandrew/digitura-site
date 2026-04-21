@@ -246,9 +246,6 @@ const Pricing: React.FC = () => {
         }
       );
 
-      // Animația pentru pricing-note a fost păstrată deși elementul este scos pentru a nu cauza erori GSAP, 
-      // dar poate fi ștearsă dacă nu mai există selectorul în HTML.
-
       gsap.fromTo(
         '.pricing-toggle',
         { opacity: 0, scale: 0.9 },
@@ -322,15 +319,12 @@ const Pricing: React.FC = () => {
           </h2>
 
           <p className="pricing-subtitle text-base sm:text-lg md:text-xl text-slate-400 leading-relaxed opacity-0 px-4 sm:px-0 max-w-2xl mx-auto">
-            Alege între <strong className="text-slate-200">abonament lunar</strong> și{' '}
-            <strong className="text-slate-200">plată unică</strong>, în funcție de ce are nevoie{' '}
-            <strong className="text-slate-200">afacerea ta</strong>.
-          </p>
-          
-          {/* TEXTUL A FOST ELIMINAT DE AICI (Secțiunea pricing-note) */}
+          Îți punem la dispoziție <strong className="text-slate-200">două opțiuni de plată </strong> 
+        adaptate pentru <strong className="text-slate-200">proiectul tău</strong>.
+      </p>
         </div>
 
-        <div className="pricing-toggle flex justify-center mb-14 sm:mb-16 opacity-0 relative z-20">
+        <div className="pricing-toggle flex justify-center mb-10 sm:mb-16 opacity-0 relative z-20">
           <div className="bg-slate-800/80 backdrop-blur-md p-1.5 rounded-full border border-slate-700 shadow-xl inline-flex relative">
             <div
               className={`absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 transition-all duration-300 ease-out shadow-lg ${
@@ -362,122 +356,129 @@ const Pricing: React.FC = () => {
           </div>
         </div>
 
-        <div
-          ref={cardsRef}
-          className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-8 mb-8 px-2 sm:px-0 max-w-6xl mx-auto"
-        >
-          {mainPlans.map((plan, index) => {
-            const activeData = plan[billingCycle];
+        {/* --- AICI ESTE MODIFICAREA PRINCIPALĂ PENTRU RESPONSIVITATE --- */}
+        <div className="relative w-full max-w-6xl mx-auto">
+          {/* Un indicator vizual subtil pe mobil că poți face swipe */}
+          <div className="md:hidden text-center text-slate-500 text-xs mb-3 animate-pulse">
+            ← Glisează pentru a vedea pachetele →
+          </div>
 
-            let cardStyle =
-              'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
-            let shimmerColor = 'rgba(71, 85, 105, 0.1)';
+          <div
+            ref={cardsRef}
+            className="pricing-grid flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 md:gap-5 lg:gap-8 mb-8 pb-6 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 hide-scrollbar"
+          >
+            {mainPlans.map((plan, index) => {
+              const activeData = plan[billingCycle];
 
-            if (plan.id === 'profesional') {
-              cardStyle =
-                'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
-              shimmerColor = 'rgba(20, 184, 166, 0.1)';
-            } else if (plan.id === 'ecommerce') {
-              cardStyle =
-                'bg-slate-800/35 border-emerald-500/30 hover:border-emerald-500/45';
-              shimmerColor = 'rgba(16, 185, 129, 0.05)';
-            }
+              let cardStyle =
+                'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
+              let shimmerColor = 'rgba(71, 85, 105, 0.1)';
 
-            return (
-              <div
-                key={plan.id}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`pricing-card relative group ${
-                  plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''
-                } opacity-0`}
-              >
+              if (plan.id === 'profesional') {
+                cardStyle =
+                  'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
+                shimmerColor = 'rgba(20, 184, 166, 0.1)';
+              } else if (plan.id === 'ecommerce') {
+                cardStyle =
+                  'bg-slate-800/35 border-emerald-500/30 hover:border-emerald-500/45';
+                shimmerColor = 'rgba(16, 185, 129, 0.05)';
+              }
+
+              return (
                 <div
-                  className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden border-2 ${cardStyle} ${
-                    hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''
+                  key={plan.id}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  className={`pricing-card relative group flex-shrink-0 w-[85vw] sm:w-[320px] md:w-auto snap-center opacity-0 ${
+                    plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''
                   }`}
-                  style={{ backdropFilter: 'blur(20px)' }}
                 >
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none`}
-                  />
+                    className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden border-2 ${cardStyle} ${
+                      hoveredCard === index ? 'lg:scale-[1.03] shadow-2xl' : ''
+                    }`}
+                    style={{ backdropFilter: 'blur(20px)' }}
+                  >
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-300 rounded-xl sm:rounded-2xl lg:rounded-3xl pointer-events-none`}
+                    />
 
-                  <div
-                    className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{
-                      background: `linear-gradient(135deg, transparent 0%, ${shimmerColor} 50%, transparent 100%)`,
-                      animation: 'shimmer 2s infinite'
-                    }}
-                  />
+                    <div
+                      className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `linear-gradient(135deg, transparent 0%, ${shimmerColor} 50%, transparent 100%)`,
+                        animation: 'shimmer 2s infinite'
+                      }}
+                    />
 
-                  <div className="pricing-card-content relative z-10 flex flex-col h-full">
-                    <div className="flex justify-center mb-4 sm:mb-6">
-                      <div
-                        className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <div className="text-white">{plan.icon}</div>
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
-                      {plan.name}
-                    </h3>
-
-                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2 min-h-[64px] flex items-center justify-center">
-                      {activeData.subtitle}
-                    </p>
-
-                    <div className="text-center mb-6 sm:mb-8 min-h-[60px] flex flex-col justify-center">
-                      <div className="flex items-center justify-center text-white">
-                        {billingCycle === 'onetime' && (
-                          <span className="text-slate-400 text-xs sm:text-sm mr-2 font-medium">
-                            de la
-                          </span>
-                        )}
-
-                        <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">
-                          {activeData.price}
-                        </span>
-                        <div className="flex flex-col items-start ml-2 leading-none">
-                          {activeData.cents && (
-                            <span className="text-xl sm:text-2xl font-bold">
-                              ,{activeData.cents}
-                            </span>
-                          )}
-                          <span className="text-slate-400 text-[10px] sm:text-xs uppercase font-medium mt-1">
-                            {billingCycle === 'monthly' ? 'Lei / Lună' : 'Lei'}
-                          </span>
+                    <div className="pricing-card-content relative z-10 flex flex-col h-full">
+                      <div className="flex justify-center mb-4 sm:mb-6">
+                        <div
+                          className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${plan.gradient} shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <div className="text-white">{plan.icon}</div>
                         </div>
                       </div>
-                    </div>
 
-                    <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
-                      {activeData.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2 sm:gap-3">
-                          <div
-                            className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}
-                          >
-                            <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
+                        {plan.name}
+                      </h3>
+
+                      <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2 min-h-[64px] flex items-center justify-center">
+                        {activeData.subtitle}
+                      </p>
+
+                      <div className="text-center mb-6 sm:mb-8 min-h-[60px] flex flex-col justify-center">
+                        <div className="flex items-center justify-center text-white">
+                          {billingCycle === 'onetime' && (
+                            <span className="text-slate-400 text-xs sm:text-sm mr-2 font-medium">
+                              de la
+                            </span>
+                          )}
+
+                          <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">
+                            {activeData.price}
+                          </span>
+                          <div className="flex flex-col items-start ml-2 leading-none">
+                            {activeData.cents && (
+                              <span className="text-xl sm:text-2xl font-bold">
+                                ,{activeData.cents}
+                              </span>
+                            )}
+                            <span className="text-slate-400 text-[10px] sm:text-xs uppercase font-medium mt-1">
+                              {billingCycle === 'monthly' ? 'Lei / Lună' : 'Lei'}
+                            </span>
                           </div>
-                          <span
-                            className="text-slate-200 text-xs sm:text-sm leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: feature }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
+                        </div>
+                      </div>
+
+                      <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
+                        {activeData.features.map((feature, i) => (
+                          <li key={i} className="flex items-start gap-2 sm:gap-3">
+                            <div
+                              className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}
+                            >
+                              <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
+                            </div>
+                            <span
+                              className="text-slate-200 text-xs sm:text-sm leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: feature }}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-
-        {/* TEXTUL A FOST ELIMINAT DE AICI (Secțiunea de sub carduri) */}
+        {/* --- SFÂRȘIT MODIFICARE --- */}
 
         <div className="text-center mb-16 sm:mb-20">
           <p className="text-slate-400 text-sm sm:text-base mb-5">
-            Prețurile afișate sunt orientative și variază în funcție de cerințele proiectului.
+            !! Prețurile afișate sunt orientative și variază în funcție de cerințele proiectului.
             După o discuție, îți putem face oferta finală.
           </p>
           <button
@@ -519,6 +520,15 @@ const Pricing: React.FC = () => {
       </div>
 
       <style jsx>{`
+        /* Ascunde scrollbar-ul pentru un design curat pe mobil */
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
         @keyframes gradient {
           0%,
           100% {
