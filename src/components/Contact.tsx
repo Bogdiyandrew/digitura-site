@@ -2,6 +2,9 @@
 
 import React, { useRef, useState, useEffect, FormEvent } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { WhatsappLogoIcon } from "@phosphor-icons/react";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Mail,
   Phone,
@@ -19,7 +22,12 @@ import {
   LucideIcon,
   Calendar,
   CreditCard,
+  ChevronDown
 } from 'lucide-react';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ToastProps {
   message: string;
@@ -36,7 +44,7 @@ interface PricingPackage {
 }
 
 interface ContactItem {
-  icon: LucideIcon;
+  icon: React.ElementType; // Actualizat pentru a accepta Phosphor Icons și Lucide
   label: string;
   value: string;
   href: string;
@@ -80,9 +88,9 @@ const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedPackage, setSelectedPackage] = useState<string>('');
   const [billingCycle, setBillingCycle] = useState<string>('');
+  const [isPackageOpen, setIsPackageOpen] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
@@ -123,7 +131,7 @@ const Contact: React.FC = () => {
       color: 'teal',
     },
     {
-      icon: Phone,
+      icon: WhatsappLogoIcon,
       label: 'WhatsApp & telefon',
       value: '+40 750 414 296',
       href: 'https://wa.me/40750414296',
@@ -131,22 +139,39 @@ const Contact: React.FC = () => {
     },
   ];
 
+  // GSAP Animations
   useEffect(() => {
-    const sectionElement = sectionRef.current;
-    if (!sectionElement) return;
+    if (typeof window === 'undefined') return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          once: true,
         }
-      },
-      { threshold: 0.1 }
-    );
+      });
 
-    observer.observe(sectionElement);
-    return () => observer.unobserve(sectionElement);
+      tl.fromTo(
+        '.gsap-header',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+      )
+      .fromTo(
+        '.gsap-form',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        '-=0.4'
+      )
+      .fromTo(
+        '.gsap-contact-card',
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: 'power3.out' },
+        '-=0.4'
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {
@@ -160,26 +185,21 @@ const Contact: React.FC = () => {
           pkg.id.toLowerCase() === decodedParam.toLowerCase() ||
           pkg.name.toLowerCase() === decodedParam.toLowerCase()
       );
-      if (matchedPackage) setSelectedPackage(matchedPackage.name);
+      if (matchedPackage) {
+        setSelectedPackage(matchedPackage.name);
+        setIsPackageOpen(true);
+      }
     }
 
-    if (billingParam) setBillingCycle(billingParam);
+    if (billingParam) {
+      setBillingCycle(billingParam);
+    }
   }, [searchParams]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
-    if (!selectedPackage) {
-      setToast({ show: true, message: 'Te rugăm să selectezi un pachet.', type: 'error' });
-      return;
-    }
-
-    if (!billingCycle) {
-      setToast({ show: true, message: 'Te rugăm să selectezi tipul de plată.', type: 'error' });
-      return;
-    }
-
     setIsSending(true);
+
     if (!formRef.current) {
       setIsSending(false);
       return;
@@ -187,9 +207,10 @@ const Contact: React.FC = () => {
 
     const formData = new FormData(formRef.current);
     const data: Record<string, any> = Object.fromEntries(formData.entries());
+    
     data.formType = 'contact';
-    data.package = selectedPackage;
-    data.billing = billingCycle === 'monthly' ? 'Lunar (Abonament)' : 'Plată unică';
+    data.package = selectedPackage || 'Nespecificat';
+    data.billing = billingCycle === 'monthly' ? 'Lunar (Abonament)' : billingCycle === 'onetime' ? 'Plată unică' : 'Nespecificat';
 
     try {
       const response = await fetch('/api/send-email', {
@@ -205,6 +226,7 @@ const Contact: React.FC = () => {
       formRef.current.reset();
       setSelectedPackage('');
       setBillingCycle('');
+      setIsPackageOpen(false);
       router.replace(pathname, { scroll: false });
     } catch {
       setToast({ show: true, message: 'A apărut o eroare. Încearcă din nou.', type: 'error' });
@@ -283,11 +305,7 @@ const Contact: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full z-10">
-        <div
-          className={`text-center mb-10 md:mb-16 transition-all duration-1000 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
+        <div className="gsap-header text-center mb-10 md:mb-16 opacity-0">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-teal-300 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
             Contactează-ne
           </h2>
@@ -307,89 +325,26 @@ const Contact: React.FC = () => {
           <form
             onSubmit={handleSubmit}
             ref={formRef}
-            className={`lg:col-span-3 bg-slate-900/50 backdrop-blur-lg rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-5 md:gap-6 shadow-2xl border border-slate-800 transition-all duration-1000 ease-out delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
+            className="gsap-form opacity-0 lg:col-span-3 bg-slate-900/50 backdrop-blur-lg rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col gap-6 md:gap-8 shadow-2xl border border-slate-800"
           >
-            <div>
-              <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg flex items-center gap-2">
-                1. Alege varianta potrivită
-              </h3>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
-                {pricingPackages.map((pkg) => (
-                  <button
-                    key={pkg.id}
-                    type="button"
-                    onClick={() => togglePackage(pkg.name)}
-                    className={`text-center p-2 sm:p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[90px] md:min-h-[110px] ${
-                      pkg.id === 'e-commerce' ? 'col-span-2 sm:col-span-1' : ''
-                    } ${
-                      selectedPackage === pkg.name
-                        ? `${pkg.activeClass} scale-[1.02] md:scale-105 z-10`
-                        : 'bg-slate-800/80 border-slate-700/60 hover:border-slate-500 hover:bg-slate-800'
-                    }`}
-                  >
-                    <div
-                      className={`${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-400'} mb-1 md:mb-2`}
-                    >
-                      {pkg.icon}
-                    </div>
-                    <span
-                      className={`font-bold text-[10px] sm:text-xs md:text-sm uppercase ${
-                        selectedPackage === pkg.name ? pkg.textClass : 'text-slate-300'
-                      }`}
-                    >
-                      {pkg.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => toggleBilling('monthly')}
-                  className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-xs sm:text-sm cursor-pointer ${
-                    billingCycle === 'monthly'
-                      ? 'bg-teal-500/10 border-teal-500 text-teal-300 shadow-[0_0_15px_rgba(20,184,166,0.15)]'
-                      : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
-                  }`}
-                >
-                  <Calendar className="w-4 h-4" />
-                  <span>Abonament lunar</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => toggleBilling('onetime')}
-                  className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-xs sm:text-sm cursor-pointer ${
-                    billingCycle === 'onetime'
-                      ? 'bg-blue-500/10 border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]'
-                      : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
-                  }`}
-                >
-                  <CreditCard className="w-4 h-4" />
-                  <span>Plată unică</span>
-                </button>
-              </div>
-            </div>
-
+            
+            {/* 1. Date Contact */}
             <div>
               <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg">
-                2. Lasă-ne datele tale
+                Datele tale de contact
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {renderInputField('nume', 'Nume complet', 'text', true, User)}
                 {renderInputField('company_name', 'Numele firmei (Opțional)', 'text', false, Building)}
                 {renderInputField('email', 'Email (Opțional)', 'email', false, Mail)}
-                {renderInputField('phone', 'Telefon', 'tel', false, Phone)}
+                {renderInputField('phone', 'Telefon', 'tel', true, Phone)}
               </div>
             </div>
 
+            {/* 2. Descriere Proiect */}
             <div>
               <h3 className="text-slate-200 font-semibold mb-3 md:mb-4 text-base md:text-lg">
-                3. Spune-ne despre proiect
+                Spune-ne despre proiect
               </h3>
               <div className="flex flex-col gap-3 md:gap-4">
                 <div className="relative group">
@@ -398,11 +353,96 @@ const Contact: React.FC = () => {
                   </div>
                   <textarea
                     name="project_details"
-                    placeholder="Spune-ne pe scurt ce ai nevoie."
+                    placeholder="Care sunt obiectivele tale? Cum te putem ajuta?"
                     rows={4}
                     required
                     className="w-full bg-slate-900/60 border border-slate-700/50 rounded-xl py-3 md:py-4 pl-11 md:pl-12 pr-4 text-sm md:text-base text-white placeholder-slate-500 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400/50 transition-all duration-300 resize-none"
                   />
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Acordeon Pachete (Opțional) */}
+            <div className="border border-slate-700/50 rounded-xl overflow-hidden bg-slate-800/20">
+              <button
+                type="button"
+                onClick={() => setIsPackageOpen(!isPackageOpen)}
+                className="w-full px-4 md:px-5 py-4 flex justify-between items-center text-left hover:bg-slate-800/40 transition-colors focus:outline-none cursor-pointer"
+              >
+                <span className="font-semibold text-slate-200 text-sm md:text-base flex items-center gap-2">
+                  <Target size={18} className="text-teal-400" />
+                  Știi deja ce pachet să alegi? (opțional)
+                </span>
+                <ChevronDown
+                  className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${
+                    isPackageOpen ? 'rotate-180 text-teal-400' : ''
+                  }`}
+                />
+              </button>
+
+              <div
+                className={`transition-all duration-400 ease-in-out ${
+                  isPackageOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="p-4 md:p-5 border-t border-slate-700/50 bg-slate-900/40">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                    {pricingPackages.map((pkg) => (
+                      <button
+                        key={pkg.id}
+                        type="button"
+                        onClick={() => togglePackage(pkg.name)}
+                        className={`text-center p-2 sm:p-4 border-2 rounded-xl transition-all duration-300 cursor-pointer flex flex-col items-center justify-center min-h-[90px] md:min-h-[110px] ${
+                          pkg.id === 'e-commerce' ? 'col-span-2 sm:col-span-1' : ''
+                        } ${
+                          selectedPackage === pkg.name
+                            ? `${pkg.activeClass} scale-[1.02] md:scale-105 z-10`
+                            : 'bg-slate-800/80 border-slate-700/60 hover:border-slate-500 hover:bg-slate-800'
+                        }`}
+                      >
+                        <div
+                          className={`${selectedPackage === pkg.name ? pkg.textClass : 'text-slate-400'} mb-1 md:mb-2`}
+                        >
+                          {pkg.icon}
+                        </div>
+                        <span
+                          className={`font-bold text-[10px] sm:text-xs md:text-sm uppercase ${
+                            selectedPackage === pkg.name ? pkg.textClass : 'text-slate-300'
+                          }`}
+                        >
+                          {pkg.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => toggleBilling('monthly')}
+                      className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-xs sm:text-sm cursor-pointer ${
+                        billingCycle === 'monthly'
+                          ? 'bg-teal-500/10 border-teal-500 text-teal-300 shadow-[0_0_15px_rgba(20,184,166,0.15)]'
+                          : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
+                      }`}
+                    >
+                      <Calendar className="w-4 h-4" />
+                      <span>Abonament lunar</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => toggleBilling('onetime')}
+                      className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 p-3 rounded-xl border transition-all duration-300 font-semibold text-xs sm:text-sm cursor-pointer ${
+                        billingCycle === 'onetime'
+                          ? 'bg-blue-500/10 border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.15)]'
+                          : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:border-slate-600 hover:bg-slate-800'
+                      }`}
+                    >
+                      <CreditCard className="w-4 h-4" />
+                      <span>Plată unică</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -454,18 +494,13 @@ const Contact: React.FC = () => {
             </button>
           </form>
 
-          <div
-            id="direct-contact"
-            className={`lg:col-span-2 flex flex-col gap-4 md:gap-8 transition-all duration-1000 ease-out delay-300 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <h3 className="text-xl md:text-2xl font-bold text-white text-center lg:text-left mt-4 lg:mt-0">
+          <div id="direct-contact" className="lg:col-span-2 flex flex-col gap-4 md:gap-8">
+            <h3 className="gsap-contact-card text-xl md:text-2xl font-bold text-white text-center lg:text-left mt-4 lg:mt-0 opacity-0">
               Contactează-ne direct
             </h3>
 
             <div className="flex flex-col sm:flex-row lg:flex-col gap-4">
-              {contactItems.map((item) => {
+              {contactItems.map((item, index) => {
                 const Icon = item.icon;
                 const isWhatsApp = item.label === 'WhatsApp & telefon';
 
@@ -475,7 +510,7 @@ const Contact: React.FC = () => {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group flex-1 flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
+                    className={`gsap-contact-card opacity-0 group flex-1 flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] cursor-pointer ${
                       isWhatsApp
                         ? 'bg-gradient-to-br from-blue-600/20 to-slate-800/30 border-2 border-blue-500/50 shadow-lg shadow-blue-500/10 hover:border-blue-400'
                         : 'bg-slate-800/30 border border-slate-700/30 hover:border-slate-500/50'
@@ -499,23 +534,6 @@ const Contact: React.FC = () => {
                 );
               })}
             </div>
-
-            <div className="p-5 md:p-6 rounded-2xl bg-gradient-to-br from-slate-800/20 to-slate-900/20 backdrop-blur-sm border border-slate-700/30 text-center">
-              <h4 className="text-lg md:text-xl font-bold mb-2 bg-gradient-to-r from-teal-300 to-blue-300 bg-clip-text text-transparent">
-                Răspuns rapid
-              </h4>
-              <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-                Ai nevoie de un răspuns rapid?
-                <a
-                  href="https://api.whatsapp.com/send/?phone=40750414296&text&type=phone_number&app_absent=0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 font-semibold block sm:inline sm:ml-1 mt-1 sm:mt-0 hover:underline"
-                >
-                  Scrie-ne direct pe WhatsApp.
-                </a>
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -534,7 +552,7 @@ const Contact: React.FC = () => {
         .animate-slide-in-right {
           animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
         }
-        .bg-grid-slate-800\$begin:math:display$0\\\\\.2\\$end:math:display$ {
+        .bg-grid-slate-800\\/\\[0\\.2\\] {
           background-image: linear-gradient(to right, rgba(203, 213, 225, 0.1) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(203, 213, 225, 0.1) 1px, transparent 1px);
           background-size: 3rem 3rem;

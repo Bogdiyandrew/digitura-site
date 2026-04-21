@@ -4,7 +4,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Check, ArrowRight, ChevronDown, Target, Globe, ShoppingCart, Calendar, CreditCard } from 'lucide-react';
+import {
+  Check,
+  ArrowRight,
+  ChevronDown,
+  Target,
+  Globe,
+  ShoppingCart,
+  Calendar,
+  CreditCard,
+  Info
+} from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -29,29 +39,27 @@ type PricingPlan = {
 };
 
 const esentialFeatures = [
-  'Site clar și ușor de înțeles pentru clienți',
-  'Pagină unică pentru prezentare și contact',
-  'Design adaptat brandului tău',
-  'Încărcare rapidă și experiență bună pe mobil',
-  'Configurare Google Business Profile'
+  'O pagină de prezentare (landing page)',
+  'Adaptată pentru telefon și desktop',
+  'Elemente de contact (formular, WhatsApp sau apel)',
+  'Configurare și indexare în Google (Search Console)'
 ];
 
 const profesionalFeatures = [
   'Include tot ce este în pachetul Esențial',
-  'Pagini dedicate pentru servicii sau produse',
-  'Structură mai clară pentru prezentare și contact',
-  'Optimizare SEO pentru căutări relevante',
-  'Monitorizare prin GA4 și Search Console',
-  'Raport lunar ușor de urmărit'
+  'Pagini separate pentru servicii sau produse',
+  'Configurare Google Business Profile',
+  'Email profesional pe domeniul tău',
+  'Configurare Google Analytics (GA4)',
+  'Optimizare SEO de bază pentru paginile principale'
 ];
 
 const ecommerceFeatures = [
   'Include tot ce este în pachetul Profesional',
-  'Magazin online ușor de administrat',
-  'Gestionare produse, comenzi și stocuri',
-  'Integrare cu plăți, curieri și facturare',
-  'Structură clară pentru prezentarea produselor',
-  'Optimizare SEO pentru produse'
+  'Magazin online pregătit pentru vânzare',
+  'Administrare produse, comenzi și stocuri dintr-un singur panou',
+  'Integrare cu plăți online, livrare și facturare',
+  'Optimizare SEO pentru produse și categorii'
 ];
 
 const mainPlans: PricingPlan[] = [
@@ -65,13 +73,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '300',
       cents: '00',
-      subtitle: 'Pentru afaceri care au nevoie de un site simplu, clar și credibil.',
+      subtitle: 'Pentru afaceri care au nevoie de o prezență online simplă și profesionistă.',
       features: esentialFeatures
     },
     onetime: {
       price: '2.000',
       cents: '',
-      subtitle: 'Pentru afaceri care au nevoie de un site simplu, clar și credibil.',
+      subtitle: 'Pentru afaceri care au nevoie de o prezență online simplă și profesionistă.',
       features: esentialFeatures
     }
   },
@@ -85,13 +93,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '500',
       cents: '00',
-      subtitle: 'Pentru afaceri care vor un site mai bine organizat și mai convingător.',
+      subtitle: 'Pentru afaceri care au nevoie de un site mai bine structurat, cu pagini separate și mai mult spațiu pentru prezentare.',
       features: profesionalFeatures
     },
     onetime: {
       price: '5.000',
       cents: '',
-      subtitle: 'Pentru afaceri care vor un site mai bine organizat și mai convingător.',
+      subtitle: 'Pentru afaceri care au nevoie de un site mai bine structurat, cu pagini separate și mai mult spațiu pentru prezentare.',
       features: profesionalFeatures
     }
   },
@@ -105,13 +113,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '1000',
       cents: '00',
-      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin clar și ușor de administrat.',
+      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin pregătit pentru comenzi.',
       features: ecommerceFeatures
     },
     onetime: {
       price: '10.000',
       cents: '',
-      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin clar și ușor de administrat.',
+      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin pregătit pentru comenzi.',
       features: ecommerceFeatures
     }
   }
@@ -238,6 +246,9 @@ const Pricing: React.FC = () => {
         }
       );
 
+      // Animația pentru pricing-note a fost păstrată deși elementul este scos pentru a nu cauza erori GSAP, 
+      // dar poate fi ștearsă dacă nu mai există selectorul în HTML.
+
       gsap.fromTo(
         '.pricing-toggle',
         { opacity: 0, scale: 0.9 },
@@ -247,7 +258,7 @@ const Pricing: React.FC = () => {
           duration: 0.6,
           ease: 'back.out(1.7)',
           scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', once: true },
-          delay: 0.3
+          delay: 0.35
         }
       );
 
@@ -315,13 +326,17 @@ const Pricing: React.FC = () => {
             <strong className="text-slate-200">plată unică</strong>, în funcție de ce are nevoie{' '}
             <strong className="text-slate-200">afacerea ta</strong>.
           </p>
+          
+          {/* TEXTUL A FOST ELIMINAT DE AICI (Secțiunea pricing-note) */}
         </div>
 
         <div className="pricing-toggle flex justify-center mb-14 sm:mb-16 opacity-0 relative z-20">
           <div className="bg-slate-800/80 backdrop-blur-md p-1.5 rounded-full border border-slate-700 shadow-xl inline-flex relative">
             <div
               className={`absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 transition-all duration-300 ease-out shadow-lg ${
-                billingCycle === 'monthly' ? 'left-1.5 w-[calc(50%-6px)]' : 'left-[50%] w-[calc(50%-6px)]'
+                billingCycle === 'monthly'
+                  ? 'left-1.5 w-[calc(50%-6px)]'
+                  : 'left-[50%] w-[calc(50%-6px)]'
               }`}
             />
 
@@ -347,19 +362,25 @@ const Pricing: React.FC = () => {
           </div>
         </div>
 
-        <div ref={cardsRef} className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-8 mb-20 px-2 sm:px-0 max-w-6xl mx-auto">
+        <div
+          ref={cardsRef}
+          className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-5 lg:gap-8 mb-8 px-2 sm:px-0 max-w-6xl mx-auto"
+        >
           {mainPlans.map((plan, index) => {
             const activeData = plan[billingCycle];
 
-            let cardStyle = 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
+            let cardStyle =
+              'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/80';
             let shimmerColor = 'rgba(71, 85, 105, 0.1)';
 
             if (plan.id === 'profesional') {
-            cardStyle = 'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
-           shimmerColor = 'rgba(20, 184, 166, 0.1)';
-          } else if (plan.id === 'ecommerce') {
-           cardStyle = 'bg-slate-800/35 border-emerald-500/30 hover:border-emerald-500/45';
-            shimmerColor = 'rgba(16, 185, 129, 0.05)';
+              cardStyle =
+                'bg-slate-800/50 border-teal-500/50 shadow-2xl shadow-teal-500/20';
+              shimmerColor = 'rgba(20, 184, 166, 0.1)';
+            } else if (plan.id === 'ecommerce') {
+              cardStyle =
+                'bg-slate-800/35 border-emerald-500/30 hover:border-emerald-500/45';
+              shimmerColor = 'rgba(16, 185, 129, 0.05)';
             }
 
             return (
@@ -367,7 +388,9 @@ const Pricing: React.FC = () => {
                 key={plan.id}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className={`pricing-card relative group ${plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''} opacity-0`}
+                className={`pricing-card relative group ${
+                  plan.isPopular ? 'lg:-mt-4 lg:mb-4' : ''
+                } opacity-0`}
               >
                 <div
                   className={`h-full rounded-xl sm:rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 flex flex-col transition-all duration-300 relative overflow-hidden border-2 ${cardStyle} ${
@@ -396,21 +419,31 @@ const Pricing: React.FC = () => {
                       </div>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">{plan.name}</h3>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center mb-2">
+                      {plan.name}
+                    </h3>
 
-                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2 min-h-[40px] flex items-center justify-center">
+                    <p className="text-slate-400 text-center text-xs sm:text-sm mb-4 sm:mb-6 font-medium leading-relaxed px-2 min-h-[64px] flex items-center justify-center">
                       {activeData.subtitle}
                     </p>
 
                     <div className="text-center mb-6 sm:mb-8 min-h-[60px] flex flex-col justify-center">
                       <div className="flex items-center justify-center text-white">
                         {billingCycle === 'onetime' && (
-                          <span className="text-slate-400 text-xs sm:text-sm mr-2 font-medium">de la</span>
+                          <span className="text-slate-400 text-xs sm:text-sm mr-2 font-medium">
+                            de la
+                          </span>
                         )}
 
-                        <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">{activeData.price}</span>
+                        <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">
+                          {activeData.price}
+                        </span>
                         <div className="flex flex-col items-start ml-2 leading-none">
-                          {activeData.cents && <span className="text-xl sm:text-2xl font-bold">,{activeData.cents}</span>}
+                          {activeData.cents && (
+                            <span className="text-xl sm:text-2xl font-bold">
+                              ,{activeData.cents}
+                            </span>
+                          )}
                           <span className="text-slate-400 text-[10px] sm:text-xs uppercase font-medium mt-1">
                             {billingCycle === 'monthly' ? 'Lei / Lună' : 'Lei'}
                           </span>
@@ -421,7 +454,9 @@ const Pricing: React.FC = () => {
                     <ul className="space-y-2.5 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
                       {activeData.features.map((feature, i) => (
                         <li key={i} className="flex items-start gap-2 sm:gap-3">
-                          <div className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}>
+                          <div
+                            className={`p-0.5 sm:p-1 rounded-full bg-gradient-to-br ${plan.iconGradient} flex-shrink-0 mt-0.5`}
+                          >
                             <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                           </div>
                           <span
@@ -438,9 +473,12 @@ const Pricing: React.FC = () => {
           })}
         </div>
 
+        {/* TEXTUL A FOST ELIMINAT DE AICI (Secțiunea de sub carduri) */}
+
         <div className="text-center mb-16 sm:mb-20">
           <p className="text-slate-400 text-sm sm:text-base mb-5">
-            Nu ești sigur ce variantă ți se potrivește? Discutăm și alegem împreună.
+            Prețurile afișate sunt orientative și variază în funcție de cerințele proiectului.
+            După o discuție, îți putem face oferta finală.
           </p>
           <button
             onClick={() => {
@@ -459,7 +497,9 @@ const Pricing: React.FC = () => {
         <div className="max-w-4xl mx-auto px-2 sm:px-0 faq-section">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">Întrebări</span>{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
+                Întrebări
+              </span>{' '}
               frecvente
             </h2>
           </div>
@@ -467,7 +507,11 @@ const Pricing: React.FC = () => {
           <div className="bg-slate-800/40 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-slate-700/50">
             {faqs.map((faq, index) => (
               <div key={index} className="faq-item">
-                <FaqItem faq={faq} isOpen={openFaq === index} onClick={() => handleFaqToggle(index)} />
+                <FaqItem
+                  faq={faq}
+                  isOpen={openFaq === index}
+                  onClick={() => handleFaqToggle(index)}
+                />
               </div>
             ))}
           </div>
@@ -484,10 +528,12 @@ const Pricing: React.FC = () => {
             background-position: 100% 50%;
           }
         }
+
         .animate-gradient {
           background-size: 200% 200%;
           animation: gradient 3s ease infinite;
         }
+
         @keyframes shimmer {
           0% {
             transform: translateX(-100%);
