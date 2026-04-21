@@ -93,13 +93,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '500',
       cents: '00',
-      subtitle: 'Pentru afaceri care au nevoie de un site complet, cu o prezentare clară și mai mult spațiu pentru informațiile importante.',
+      subtitle: 'Pentru afaceri care au nevoie de un site cu mai multe pagini și o structură mai clară a informației.',
       features: profesionalFeatures
     },
     onetime: {
       price: '5.000',
       cents: '',
-      subtitle: 'Pentru afaceri care au nevoie de un site complet, cu o prezentare clară și mai mult spațiu pentru informațiile importante.',
+      subtitle: 'Pentru afaceri care au nevoie de un site cu mai multe pagini și o structură mai clară a informației.',
       features: profesionalFeatures
     }
   },
