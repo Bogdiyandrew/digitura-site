@@ -93,13 +93,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '500',
       cents: '00',
-      subtitle: 'Pentru afaceri care au nevoie de un site mai bine structurat, cu pagini separate și mai mult spațiu pentru prezentare.',
+      subtitle: 'Pentru afaceri care au nevoie de un site complet, cu o prezentare clară și mai mult spațiu pentru informațiile importante.',
       features: profesionalFeatures
     },
     onetime: {
       price: '5.000',
       cents: '',
-      subtitle: 'Pentru afaceri care au nevoie de un site mai bine structurat, cu pagini separate și mai mult spațiu pentru prezentare.',
+      subtitle: 'Pentru afaceri care au nevoie de un site complet, cu o prezentare clară și mai mult spațiu pentru informațiile importante.',
       features: profesionalFeatures
     }
   },
@@ -113,13 +113,13 @@ const mainPlans: PricingPlan[] = [
     monthly: {
       price: '1000',
       cents: '00',
-      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin pregătit pentru comenzi.',
+      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin web.',
       features: ecommerceFeatures
     },
     onetime: {
       price: '10.000',
       cents: '',
-      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin pregătit pentru comenzi.',
+      subtitle: 'Pentru afaceri care vor să vândă online printr-un magazin web.',
       features: ecommerceFeatures
     }
   }
@@ -477,8 +477,8 @@ const Pricing: React.FC = () => {
         {/* --- SFÂRȘIT MODIFICARE --- */}
 
         <div className="text-center mb-16 sm:mb-20">
-          <p className="text-slate-400 text-sm sm:text-base mb-5">
-            !! Prețurile afișate sunt orientative și variază în funcție de cerințele proiectului.
+          <p className="text-red-400 text-sm sm:text-base mb-5">
+             Prețurile afișate sunt orientative și variază în funcție de cerințele proiectului.
             După o discuție, îți putem face oferta finală.
           </p>
           <button
