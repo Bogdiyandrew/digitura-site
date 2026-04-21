@@ -4,7 +4,7 @@ export default function sitemap() {
   const staticPages = [
     '/',
     '/portofoliu',
-    '/audit', // Am adăugat noua pagină aici
+    '/audit', 
     '/politica-cookies',
     '/politica-de-confidentialitate',
     '/termeni',

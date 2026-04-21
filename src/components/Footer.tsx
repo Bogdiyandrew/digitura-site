@@ -163,17 +163,17 @@ const Footer: React.FC = () => {
                 Prețuri
               </Link>
               <Link
+                href="/portofoliu"
+                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
+              >
+                Studii de caz
+              </Link>
+              <Link
                 href="#contact"
                 onClick={(e) => handleLinkClick(e, '#contact')}
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
                 Contact
-              </Link>
-              <Link
-                href="/portofoliu"
-                className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
-              >
-                Studii de caz
               </Link>
               <Link
                 href="/audit"
@@ -188,10 +188,10 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold text-white mb-4 tracking-wider">Legal & info</h3>
             <nav className="flex flex-col gap-3">
               <Link
-                href="/termeni"
+                href="/termeniisiconditii"
                 className="hover:text-teal-400 transition-colors duration-300 hover:translate-x-1"
               >
-                Termeni și condiții
+                Termenii și condiții
               </Link>
               <Link
                 href="/politica-de-confidentialitate"

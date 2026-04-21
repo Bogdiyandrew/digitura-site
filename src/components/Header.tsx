@@ -42,8 +42,8 @@ const menuLinks: MenuLink[] = [
   { href: '/', label: 'Acasa', mobileOnly: true },
   { href: '#servicii', label: 'Servicii' },
   { href: '#preturi', label: 'Preturi' },
+   { href: '/portofoliu', label: 'Studii de caz', },
   { href: '#contact', label: 'Contact' },
-  { href: '/portofoliu', label: 'Studii de caz', },
   { href: '/audit', label: 'Audit gratuit', isCTA: true },
 ];
 
