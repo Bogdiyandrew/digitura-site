@@ -182,7 +182,7 @@ export default function AuditClient() {
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="website" className="text-xs uppercase tracking-wider font-bold text-slate-500 ml-1">URL Website</label>
+                <label htmlFor="website" className="text-xs uppercase tracking-wider font-bold text-slate-500 ml-1">link website</label>
                 <input
                   type="url" id="website" value={formData.website} onChange={handleChange} disabled={status === 'loading'}
                   className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 focus:border-teal-500 focus:outline-none transition-all"
