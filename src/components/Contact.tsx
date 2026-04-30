@@ -335,8 +335,8 @@ const Contact: React.FC = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 {renderInputField('nume', 'Nume complet', 'text', true, User)}
-                {renderInputField('company_name', 'Numele firmei (Opțional)', 'text', false, Building)}
-                {renderInputField('email', 'Email (Opțional)', 'email', false, Mail)}
+                {renderInputField('company_name', 'Numele firmei (opțional)', 'text', false, Building)}
+                {renderInputField('email', 'Email (opțional)', 'email', false, Mail)}
                 {renderInputField('phone', 'Telefon', 'tel', true, Phone)}
               </div>
             </div>
