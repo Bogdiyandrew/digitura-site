@@ -4,8 +4,7 @@ import Services from '@/components/Services';
 import Pricing from '@/components/Pricing';
 import Contact from '@/components/Contact';
 
-// Am eliminat importurile pentru Header și Footer de aici, 
-// deoarece sunt deja în layout.tsx
+
 
 const ContactLoading = () => {
   return (

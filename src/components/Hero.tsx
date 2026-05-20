@@ -11,25 +11,54 @@ if (typeof window !== 'undefined') {
 }
 
 const lines = [
-  {
-    words: ['Construim'],
-    gradient: false,
-  },
-  {
-    words: ['site-uri', 'web'],
-    gradient: true,
-    gradientStyle: 'linear-gradient(90deg, #14b8a6 0%, #7dd3fc 55%, #3b82f6 100%)',
-  },
-  {
-    words: ['care', 'duc', 'afacerile'],
-    gradient: false,
-  },
-  {
-    words: ['mai', 'departe.'],
-    gradient: true,
-    gradientStyle: 'linear-gradient(90deg, #3b82f6 0%, #14b8a6 100%)',
-  },
+  [
+    { 
+      word: 'Lansăm și creștem', 
+      gradient: false 
+    }
+  ],
+  [
+    { 
+      word: 'afaceri', 
+      gradient: true, 
+      gradientStyle: 'linear-gradient(90deg, #14b8a6 0%, #7dd3fc 55%, #3b82f6 100%)' 
+    },
+    { 
+      word: 'în', 
+      gradient: false 
+    },
+    { 
+      word: 'online.', 
+      gradient: true, 
+      gradientStyle: 'linear-gradient(90deg, #3b82f6 0%, #14b8a6 100%)' 
+    }
+  ],
+  [
+    { 
+      word: 'De', 
+      gradient: false 
+    },
+    { 
+      word: 'la', 
+      gradient: false 
+    },
+    { 
+      word: 'A', 
+      gradient: true, 
+      gradientStyle: 'linear-gradient(90deg, #14b8a6 0%, #7dd3fc 100%)' 
+    },
+    { 
+      word: 'la', 
+      gradient: false 
+    },
+    { 
+      word: 'Z', 
+      gradient: true, 
+      gradientStyle: 'linear-gradient(90deg, #3b82f6 0%, #14b8a6 100%)' 
+    }
+  ]
 ];
+
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -169,23 +198,23 @@ const Hero = () => {
           >
             {lines.map((line, li) => (
               <span key={li} className="block">
-                {line.words.map((word, wi) => (
+                {line.map((item, wi) => (
                   <span
                     key={wi}
                     className="hero-word inline-block"
-                    style={
-                      line.gradient
+                    style={{
+                      marginRight: wi < line.length - 1 ? '0.3em' : 0,
+                      ...(item.gradient
                         ? {
-                            backgroundImage: line.gradientStyle,
+                            backgroundImage: item.gradientStyle,
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text',
-                            marginRight: wi < line.words.length - 1 ? '0.3em' : 0,
                           }
-                        : { marginRight: wi < line.words.length - 1 ? '0.3em' : 0 }
-                    }
+                        : {}),
+                    }}
                   >
-                    {word}
+                    {item.word}
                   </span>
                 ))}
               </span>
