@@ -52,7 +52,7 @@ const lines = [
       gradient: false 
     },
     { 
-      word: 'Z', 
+      word: 'Z.', 
       gradient: true, 
       gradientStyle: 'linear-gradient(90deg, #3b82f6 0%, #14b8a6 100%)' 
     }
