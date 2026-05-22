@@ -43,8 +43,8 @@ const menuLinks: MenuLink[] = [
   { href: '#servicii', label: 'Servicii' },
   { href: '#preturi', label: 'Preturi' },
    { href: '/portofoliu', label: 'Studii de caz', },
-  { href: '#contact', label: 'Contact' },
-  { href: '/audit', label: 'Audit gratuit', isCTA: true },
+   { href: '/audit', label: 'Audit gratuit', },
+  { href: '#contact', label: 'Contactează-ne', isCTA: true }
 ];
 
 const Header: React.FC = () => {
